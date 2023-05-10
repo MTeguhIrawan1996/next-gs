@@ -4,12 +4,11 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { Replay } from '@sentry/nextjs';
-import getConfig from 'next/config';
 
-const SENTRY_DSN = getConfig().publicRuntimeConfig.dsn;
+// const SENTRY_DSN = getConfig().publicRuntimeConfig.dsn;
 
 Sentry.init({
-  dsn: SENTRY_DSN,
+  dsn: process.env.SENTRY_DSN,
   sampleRate: 0.65,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
