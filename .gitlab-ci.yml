@@ -1,0 +1,16 @@
+default:
+  image: node:18.6.0-slim
+
+deploy_vercel:
+  variables:
+    VERCEL_TOKEN: pKHtt6UJjyHKAeUGCwMwtcTK
+  stage: deploy
+  except:
+    - main
+    - dev
+  script:
+    - npm install --global vercel
+    - vercel link --token=$VERCEL_TOKEN --project=gsms-landing-page --yes
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --token=$VERCEL_TOKEN --prod
