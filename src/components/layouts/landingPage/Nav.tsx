@@ -37,7 +37,7 @@ const Navbar = () => {
         {/* <Group spacing={40}>{items}</Group> */}
         <Flex gap="md" justify="center" align="center">
           <Link
-            href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}auth/login`}
+            href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/login`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -52,7 +52,7 @@ const Navbar = () => {
             </Button>
           </Link>
           <Link
-            href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}auth/register`}
+            href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
             target="_blank"
             rel="noopener noreferrer"
           >

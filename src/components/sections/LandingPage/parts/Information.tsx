@@ -46,12 +46,12 @@ const Information = () => {
               Unduh Juknis
             </Button>
             <Link
-              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}auth/register`}
+              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Button radius="lg" size="md" color="blue.6" fw={400} fz={16}>
-                Daftar sekarang!
+                Daftar sekarang
               </Button>
             </Link>
 

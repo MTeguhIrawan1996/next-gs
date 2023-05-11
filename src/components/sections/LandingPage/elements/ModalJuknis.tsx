@@ -14,7 +14,7 @@ const ModalJuknis: React.FC<IModalJuknisProps> = ({ isOpen, onCloseModal }) => {
         <Modal.Body>
           <Flex direction="column" gap="md">
             <iframe
-              src={`${process.env.NEXT_PUBLIC_URL}Juknis_PDF.pdf`}
+              src={`${process.env.NEXT_PUBLIC_URL}/Juknis_PDF.pdf`}
               width="100%"
               height="480"
             />
