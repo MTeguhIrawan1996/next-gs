@@ -1,14 +1,23 @@
 import { Box, Button, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import Image from 'next/image';
+import Link from 'next/link';
+import * as React from 'react';
 
 import landingPageStyle from '@/styles/LandingPage';
 
+import ModalJuknis from '../elements/ModalJuknis';
 import Img1 from '../../../../../public/assets/imformationImg1.jpeg';
 import Img2 from '../../../../../public/assets/imformationImg2.jpeg';
 import Img3 from '../../../../../public/assets/imformationImg3.jpeg';
 
 const Information = () => {
   const { classes } = landingPageStyle();
+
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+
+  const onOpenModal = async () => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <Stack className={classes.container}>
@@ -32,12 +41,21 @@ const Information = () => {
               size="md"
               fw={400}
               fz={16}
+              onClick={() => onOpenModal()}
             >
               Unduh Juknis
             </Button>
-            <Button radius="lg" size="md" color="blue.6" fw={400} fz={16}>
-              Daftar sekarng!
-            </Button>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}auth/register`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button radius="lg" size="md" color="blue.6" fw={400} fz={16}>
+                Daftar sekarang!
+              </Button>
+            </Link>
+
+            <ModalJuknis onCloseModal={onOpenModal} isOpen={isOpen} />
           </Flex>
         </Flex>
         <Flex className={classes.secondaryContentWrapper}>

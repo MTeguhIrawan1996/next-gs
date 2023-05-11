@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Hero, Information } from './parts';
 import Vector1 from '../../../../public/vector1.svg';
 import Vector2 from '../../../../public/vector2.svg';
+import Vector3 from '../../../../public/vector3.svg';
 
 const LandingPage = () => {
   return (
@@ -23,6 +24,16 @@ const LandingPage = () => {
         <Vector2 />
       </Box>
       <Information />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          transform: 'translateY(10%)',
+        }}
+      >
+        <Vector3 />
+      </Box>
     </>
   );
 };

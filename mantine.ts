@@ -1,6 +1,7 @@
 import { MantineProviderProps } from '@mantine/core';
 
 export const theme: MantineProviderProps['theme'] = {
+  fontFamily: 'Inter, sans-serif',
   breakpoints: {
     xs: '30em',
     sm: '48em',
@@ -15,7 +16,8 @@ export const theme: MantineProviderProps['theme'] = {
     lg: '23px',
   },
   headings: {
-    // properties for all headings
+    // properties for all headings\
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 400,
 
     // properties for individual headings, all of them are optional
