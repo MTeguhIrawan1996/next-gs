@@ -9,6 +9,8 @@ import {
 } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import * as React from 'react';
 
 import InternalLink from '@/components/elements/InternalLink';
 
@@ -23,7 +25,7 @@ const Links = [
   },
   {
     title: 'Peta Kegiatan',
-    link: '/peta',
+    link: '/peta-kegiatan',
   },
   {
     title: 'Galeri',
@@ -31,20 +33,32 @@ const Links = [
   },
   {
     title: 'Siswa Berprestasi',
-    link: '/siswa',
+    link: '/siswa-berprestasi',
   },
   {
     title: 'Berita',
-    link: '/siswa',
+    link: '/berita',
   },
 ];
 const Navbar = () => {
+  const router = useRouter();
   const { classes } = layoutStyle();
   const [opened, { toggle }] = useDisclosure(false);
   const smallScreen = useMediaQuery('(min-width: 62em)');
 
+  const activeLink = React.useMemo(() => {
+    const path = router.pathname;
+    const link = Links.find((menu) => menu.link === path);
+    return link;
+  }, [router.pathname]);
+
   const items = Links.map((link, i) => (
-    <InternalLink href={link.link} text={link.title} key={i} />
+    <InternalLink
+      href={link.link}
+      text={link.title}
+      key={i}
+      activeLink={activeLink}
+    />
   ));
 
   return (
