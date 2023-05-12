@@ -82,7 +82,6 @@ const layoutStyle = createStyles((theme) => ({
     },
   },
   footerConatiner: {
-    padding: '200px 0 0 0',
     maxWidth: '100%',
     position: 'relative',
   },
@@ -94,6 +93,54 @@ const layoutStyle = createStyles((theme) => ({
       'radial-gradient(100% 100% at 50% 0%, #FFFFFF 0%, #F8F9FA 100%);',
     borderRadius: '2rem 2rem 0rem 0rem',
     overflow: 'hidden',
+  },
+  footerWrapper: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.fn.largerThan('sm')]: {
+      flexDirection: 'row',
+    },
+  },
+  firstContent: {
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '1rem',
+    paddingLeft: 0,
+    width: '100%',
+    [theme.fn.largerThan('xs')]: {
+      flexDirection: 'row',
+      paddingLeft: theme.spacing.xl,
+    },
+  },
+  secondContent: {
+    width: '100%',
+    background: 'linear-gradient(180deg, #228BE6 -54.95%, #9775FA 100%)',
+    [theme.fn.largerThan('sm')]: {
+      flex: 0.95,
+    },
+  },
+  footerLogoContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '1rem',
+    width: '100%',
+    padding: theme.spacing.xl,
+    [theme.fn.largerThan('xs')]: {
+      flex: 1,
+      padding: 0,
+    },
+  },
+  footerAddressContent: {
+    padding: theme.spacing.sm,
+    [theme.fn.largerThan('xs')]: {
+      borderLeft: '2px solid #C1C2C5',
+      flex: 2,
+      paddingLeft: theme.spacing.lg,
+    },
   },
 }));
 

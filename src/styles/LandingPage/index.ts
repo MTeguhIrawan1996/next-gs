@@ -8,6 +8,13 @@ const landingPageStyle = createStyles((theme) => ({
       padding: '140px 80px 0px 80px',
     },
   },
+  bottomContainer: {
+    padding: '40px 40px 40px 40px',
+    position: 'relative',
+    [`@media (min-width: ${em(getBreakpointValue(theme.breakpoints.md))})`]: {
+      padding: '140px 80px 200px 80px',
+    },
+  },
   bannerContainer: {
     padding: '40px 40px 0px 40px',
     position: 'relative',
@@ -16,7 +23,6 @@ const landingPageStyle = createStyles((theme) => ({
     width: '100%',
     height: '460px',
     position: 'relative',
-    backgroundColor: theme.colors.brand[6],
     borderRadius: theme.radius.lg,
     overflow: 'hidden',
     zIndex: 1,

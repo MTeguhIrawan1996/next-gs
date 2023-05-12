@@ -24,7 +24,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   };
 
   return (
-    <Stack className={classes.container} ref={targetRef}>
+    <Stack className={classes.bottomContainer} ref={targetRef}>
       <Flex direction="row" justify="flex-start" gap="56px" align="flex-start">
         <Flex className={classes.primaryContentWrapper}>
           <Box>
@@ -37,7 +37,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             Daftar sekarang untuk menjadi partisipan program GSMS dan mulailah
             membuat perbedaan hari ini!
           </Text>
-          <Flex gap="md" justify="center" align="center">
+          <Flex gap="md" justify="center" align="center" sx={{ zIndex: 1 }}>
             <Button
               radius="lg"
               variant="light"

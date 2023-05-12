@@ -1,4 +1,5 @@
 import { Box, Flex, Group, Stack, Text } from '@mantine/core';
+import Link from 'next/link';
 
 import layoutStyle from '@/styles/Layout';
 
@@ -14,7 +15,7 @@ const Footer = () => {
   return (
     <Box className={classes.footerConatiner}>
       <Flex className={classes.footer}>
-        <Flex w="100%" justify="center" align="center">
+        <Flex className={classes.footerWrapper}>
           <Flex
             sx={{
               flex: 2,
@@ -22,24 +23,8 @@ const Footer = () => {
               padding: '2rem 1rem 2rem 1rem',
             }}
           >
-            <Flex
-              w="100%"
-              pl="xl"
-              sx={{
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                gap: '1rem',
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  flex: 1,
-                }}
-              >
+            <Flex className={classes.firstContent}>
+              <Box className={classes.footerLogoContent}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -55,10 +40,10 @@ const Footer = () => {
                   </Text>
                 </Box>
               </Box>
-              <Box sx={{ flex: 2, borderLeft: '2px solid #C1C2C5' }} pl="lg">
-                <Box w="80%">
+              <Box className={classes.footerAddressContent}>
+                <Box w={{ base: '100%', xs: '80%' }}>
                   <Text fw={300} fz={16} color="#5C5F66">
-                    Sekretariat Direktorat Jendral KebudayaanKementerian
+                    Sekertariat Direktorat Jenderal Kebudayaan Kementerian
                     Pendidikan, Kebudayaan, Riset dan Teknologi Komplek
                     Kemdikbudristek{' '}
                     <Text>Jl. Jenderal Sudirman Senayan Jakarta 10270</Text>
@@ -68,11 +53,7 @@ const Footer = () => {
             </Flex>
           </Flex>
           <Flex
-            sx={{
-              flex: 0.95,
-              background:
-                'linear-gradient(180deg, #228BE6 -54.95%, #9775FA 100%)',
-            }}
+            className={classes.secondContent}
             py="xl"
             px="lg"
             gap="xl"
@@ -90,35 +71,43 @@ const Footer = () => {
             <Stack spacing="xs">
               <Group spacing="sm" align="center">
                 <IconEmail />
-                <Text fw={400} fz={14} color="gray.0">
-                  gsms@kemdikbud.go.id
-                </Text>
+                <Link href="mailto:gsms@kemdikbud.go.id">
+                  <Text fw={400} fz={14} color="gray.0">
+                    gsms@kemdikbud.go.id
+                  </Text>
+                </Link>
               </Group>
               <Group spacing="sm" align="center">
                 <IconEmail />
-                <Text fw={400} fz={14} color="gray.0">
-                  gsms.dikes@gmail.com
-                </Text>
+                <Link href="mailto:gsms.dikes@gmail.com">
+                  <Text fw={400} fz={14} color="gray.0">
+                    gsms.dikes@gmail.com
+                  </Text>
+                </Link>
               </Group>
 
               <Group spacing="sm">
                 <Group spacing="sm">
                   <IconTel />
+                  <Link href="tel:0215725549">
+                    <Text fw={400} fz={14} color="gray.0">
+                      (021) 5725549
+                    </Text>
+                  </Link>
+                </Group>
+                <Link href="tel:0215725549">
                   <Text fw={400} fz={14} color="gray.0">
                     (021) 5725549
                   </Text>
-                </Group>
-                <Text fw={400} fz={14} color="gray.0">
-                  (021) 5725549
-                </Text>
+                </Link>
               </Group>
             </Stack>
           </Flex>
         </Flex>
-        <Stack py="6px" w="100%">
+        <Stack py="6px" w="100%" px={{ base: '2rem', xs: '4rem' }}>
           <Text
             fw={500}
-            fz={12}
+            fz={{ base: 8, sm: 12 }}
             color="#5C5F66"
             component="span"
             align="center"

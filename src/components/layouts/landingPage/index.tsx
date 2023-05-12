@@ -15,7 +15,7 @@ const LandingPageLayout = ({ children }: LayoutProps) => {
     <AppShell
       header={<Navbar />}
       footer={<Footer />}
-      padding="md"
+      padding="xs"
       className={classes.rootContainer}
     >
       {children}

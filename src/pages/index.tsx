@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
+import { LandingPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
-import LandingPage from '@/components/sections/LandingPage';
 
 import { NextPageWithLayout } from './_app';
 
