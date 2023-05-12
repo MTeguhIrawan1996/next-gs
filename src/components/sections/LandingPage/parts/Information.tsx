@@ -15,7 +15,7 @@ interface IInformationProps {
 }
 
 const Information: React.FC<IInformationProps> = ({ targetRef }) => {
-  const { classes } = landingPageStyle();
+  const { classes, cx } = landingPageStyle();
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -25,15 +25,15 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
 
   return (
     <Stack className={classes.bottomContainer} ref={targetRef}>
-      <Flex direction="row" justify="flex-start" gap="56px" align="flex-start">
+      <Flex className={classes.infoWrapper}>
         <Flex className={classes.primaryContentWrapper}>
           <Box>
-            <Title order={3} color="dark.6">
+            <Title order={3} fz={{ base: 24, sm: 34 }} color="dark.6">
               Membantu dalam membentuk perjalanan pendidikan mereka, tunggu apa
               lagi?
             </Title>
           </Box>
-          <Text color="dark.3" fz={22} fw={300}>
+          <Text color="dark.3" fz={{ base: 18, sm: 22 }} fw={300}>
             Daftar sekarang untuk menjadi partisipan program GSMS dan mulailah
             membuat perbedaan hari ini!
           </Text>
@@ -73,9 +73,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             <Paper
               shadow="xl"
               radius="lg"
-              h="240px"
-              w="240px"
-              className={classes.primaryCardWrapper}
+              className={cx(classes.primaryCardWrapper, classes.primaryRatio)}
             >
               <Image
                 src={Img2}
@@ -94,9 +92,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             <Paper
               shadow="xl"
               radius="lg"
-              h="240px"
-              w="240px"
-              className={classes.secondaryCardWrapper}
+              className={cx(classes.secondaryCardWrapper, classes.primaryRatio)}
             >
               <Image
                 src={Img3}
@@ -116,9 +112,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
           <Paper
             shadow="xl"
             radius="lg"
-            h="240px"
-            w="335px"
-            className={classes.primaryCardWrapper}
+            className={cx(classes.primaryCardWrapper, classes.secondaryRatio)}
           >
             <Image
               src={Img1}

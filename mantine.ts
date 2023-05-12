@@ -27,7 +27,7 @@ export const theme: MantineProviderProps['theme'] = {
       h3: { fontSize: '34px' },
       h4: { fontSize: '32px' },
       h5: { fontSize: '28px' },
-      h6: { fontSize: '25px' },
+      h6: { fontSize: '24px' },
     },
   },
 

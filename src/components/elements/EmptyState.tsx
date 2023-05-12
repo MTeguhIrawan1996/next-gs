@@ -1,10 +1,13 @@
 import { Box, Flex, Text, Title } from '@mantine/core';
 import Image from 'next/image';
 
+import emptyState from '@/styles/EmptyState';
+
 import EmptyImg from '../../../public/assets/emptystate.png';
 import Vector1 from '../../../public/vector1.svg';
 
 const EmptyState = () => {
+  const { classes } = emptyState();
   return (
     <Flex
       h="100vh"
@@ -30,13 +33,7 @@ const EmptyState = () => {
         gap="sm"
         py={8}
       >
-        <Box
-          sx={{
-            position: 'relative',
-            height: '320px',
-            width: '420px',
-          }}
-        >
+        <Box className={classes.imageBox}>
           <Image
             src={EmptyImg}
             quality={80}

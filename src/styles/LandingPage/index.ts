@@ -2,9 +2,9 @@ import { createStyles, em, getBreakpointValue } from '@mantine/core';
 
 const landingPageStyle = createStyles((theme) => ({
   container: {
-    padding: '40px 40px 40px 40px',
+    padding: '40px 20px 40px 20px',
     position: 'relative',
-    [`@media (min-width: ${em(getBreakpointValue(theme.breakpoints.md))})`]: {
+    [theme.fn.largerThan('md')]: {
       padding: '140px 80px 0px 80px',
     },
   },
@@ -28,6 +28,15 @@ const landingPageStyle = createStyles((theme) => ({
     zIndex: 1,
     cursor: 'pointer',
   },
+  infoWrapper: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: '56px',
+    flexDirection: 'column',
+    [theme.fn.largerThan('md')]: {
+      flexDirection: 'row',
+    },
+  },
   primaryContentWrapper: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -42,8 +51,31 @@ const landingPageStyle = createStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     position: 'relative',
-    flex: 1,
     paddingBottom: '40px',
+    width: '100%',
+    [theme.fn.largerThan('xs')]: {
+      padding: '0 60px 40px 60px',
+    },
+    [theme.fn.largerThan('md')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+  },
+  primaryRatio: {
+    height: '140px',
+    width: '140px',
+    [theme.fn.largerThan('sm')]: {
+      height: '240px',
+      width: '240px',
+    },
+  },
+  secondaryRatio: {
+    height: '140px',
+    width: '190px',
+    [theme.fn.largerThan('sm')]: {
+      height: '240px',
+      width: '330px',
+    },
   },
   primaryCardWrapper: {
     overflow: 'hidden',
@@ -53,17 +85,55 @@ const landingPageStyle = createStyles((theme) => ({
   secondaryCardWrapper: {
     overflow: 'hidden',
     position: 'absolute',
-    right: 40,
+    right: -5,
     bottom: 0,
     backgroundColor: 'transparent',
-    transform: 'translateY(20%)',
+    transform: 'translateY(30%)',
     zIndex: 1,
-    [theme.fn.largerThan('xl')]: {
-      right: 60,
+    [theme.fn.largerThan('xs')]: {
+      right: 30,
+      transform: 'translateY(40%)',
+    },
+    [theme.fn.largerThan('sm')]: {
+      right: 10,
+    },
+    [theme.fn.largerThan('md')]: {
+      right: 50,
+    },
+  },
+  textBox: {
+    width: '100%',
+    [theme.fn.largerThan('sm')]: {
+      width: '80%',
+    },
+  },
+  paragrafBox: {
+    width: '100%',
+    [theme.fn.largerThan('sm')]: {
+      width: '80%',
+    },
+    [theme.fn.largerThan('md')]: {
+      width: '60%',
     },
   },
   colorSpan: {
     color: theme.colors.brand[6],
+  },
+  primaryText: {
+    fontWeight: 700,
+    fontSize: '32px',
+    [theme.fn.largerThan('sm')]: {
+      fontWeight: 700,
+      fontSize: '56px',
+    },
+  },
+  secondaryText: {
+    fontWeight: 300,
+    fontSize: '16px',
+    [theme.fn.largerThan('sm')]: {
+      fontWeight: 300,
+      fontSize: '18px',
+    },
   },
 }));
 
