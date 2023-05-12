@@ -10,7 +10,11 @@ import Img1 from '../../../../../public/assets/imformationImg1.jpeg';
 import Img2 from '../../../../../public/assets/imformationImg2.jpeg';
 import Img3 from '../../../../../public/assets/imformationImg3.jpeg';
 
-const Information = () => {
+interface IInformationProps {
+  targetRef: React.MutableRefObject<HTMLDivElement>;
+}
+
+const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   const { classes } = landingPageStyle();
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -20,7 +24,7 @@ const Information = () => {
   };
 
   return (
-    <Stack className={classes.container}>
+    <Stack className={classes.container} ref={targetRef}>
       <Flex direction="row" justify="flex-start" gap="56px" align="flex-start">
         <Flex className={classes.primaryContentWrapper}>
           <Box>

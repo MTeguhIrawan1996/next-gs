@@ -8,6 +8,20 @@ const landingPageStyle = createStyles((theme) => ({
       padding: '140px 80px 0px 80px',
     },
   },
+  bannerContainer: {
+    padding: '40px 40px 0px 40px',
+    position: 'relative',
+  },
+  bannerBox: {
+    width: '100%',
+    height: '460px',
+    position: 'relative',
+    backgroundColor: theme.colors.brand[6],
+    borderRadius: theme.radius.lg,
+    overflow: 'hidden',
+    zIndex: 1,
+    cursor: 'pointer',
+  },
   primaryContentWrapper: {
     flexDirection: 'column',
     justifyContent: 'flex-start',

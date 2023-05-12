@@ -123,7 +123,7 @@ const Footer = () => {
             component="span"
             align="center"
           >
-            © Hak Cipta © Direktorat Kesenian, Direktorat Jenderal Kebudayaan,
+            © Hak Cipta Direktorat Kesenian, Direktorat Jenderal Kebudayaan,
             Kementerian Pendidikan, Kebudayaan, Riset Dan Teknologi Republik
             Indonesia.
           </Text>

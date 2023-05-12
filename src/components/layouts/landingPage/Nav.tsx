@@ -7,7 +7,7 @@ import {
   Paper,
   Transition,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import Link from 'next/link';
 
 import InternalLink from '@/components/elements/InternalLink';
@@ -22,21 +22,26 @@ const Links = [
     link: '/',
   },
   {
-    title: 'Seniman',
-    link: '/seniman',
+    title: 'Peta Kegiatan',
+    link: '/peta',
   },
   {
-    title: 'Galeri Pelaporan',
+    title: 'Galeri',
     link: '/galeri',
   },
   {
     title: 'Siswa Berprestasi',
     link: '/siswa',
   },
+  {
+    title: 'Berita',
+    link: '/siswa',
+  },
 ];
 const Navbar = () => {
   const { classes } = layoutStyle();
   const [opened, { toggle }] = useDisclosure(false);
+  const smallScreen = useMediaQuery('(min-width: 62em)');
 
   const items = Links.map((link, i) => (
     <InternalLink href={link.link} text={link.title} key={i} />
@@ -56,21 +61,23 @@ const Navbar = () => {
             align="center"
             className={classes.buttonBox}
           >
-            <Link
-              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/login`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                radius="lg"
-                variant="outline"
-                color="violet.6"
-                fz={14}
-                fw={400}
+            {smallScreen && (
+              <Link
+                href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/login`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Masuk
-              </Button>
-            </Link>
+                <Button
+                  radius="lg"
+                  variant="outline"
+                  color="violet.6"
+                  fz={14}
+                  fw={400}
+                >
+                  Masuk
+                </Button>
+              </Link>
+            )}
             <Link
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
               target="_blank"
@@ -101,21 +108,23 @@ const Navbar = () => {
                 p="sm"
                 className={classes.buttonBoxDropdown}
               >
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/login`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    radius="lg"
-                    variant="outline"
-                    color="violet.6"
-                    fz={14}
-                    fw={400}
+                {smallScreen && (
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/login`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Masuk
-                  </Button>
-                </Link>
+                    <Button
+                      radius="lg"
+                      variant="outline"
+                      color="violet.6"
+                      fz={14}
+                      fw={400}
+                    >
+                      Masuk
+                    </Button>
+                  </Link>
+                )}
                 <Link
                   href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
                   target="_blank"
