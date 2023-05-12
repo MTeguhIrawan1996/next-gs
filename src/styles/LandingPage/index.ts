@@ -53,11 +53,14 @@ const landingPageStyle = createStyles((theme) => ({
   secondaryCardWrapper: {
     overflow: 'hidden',
     position: 'absolute',
-    right: 0,
+    right: 40,
     bottom: 0,
     backgroundColor: 'transparent',
-    transform: 'translateX(-15%) translateY(-100%)',
+    transform: 'translateY(20%)',
     zIndex: 1,
+    [theme.fn.largerThan('xl')]: {
+      right: 60,
+    },
   },
   colorSpan: {
     color: theme.colors.brand[6],

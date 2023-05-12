@@ -63,27 +63,56 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
           </Flex>
         </Flex>
         <Flex className={classes.secondaryContentWrapper}>
-          <Paper
-            shadow="xl"
-            radius="lg"
-            h="240px"
-            w="240px"
-            className={classes.primaryCardWrapper}
+          <Flex
+            gap="3rem"
+            justify="flex-start"
+            align="flex-start"
+            w="100%"
+            sx={{ position: 'relative' }}
           >
-            <Image
-              src={Img2}
-              alt="img-1"
-              quality={100}
-              priority
-              placeholder="blur"
-              style={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          </Paper>
+            <Paper
+              shadow="xl"
+              radius="lg"
+              h="240px"
+              w="240px"
+              className={classes.primaryCardWrapper}
+            >
+              <Image
+                src={Img2}
+                alt="img-1"
+                quality={100}
+                priority
+                placeholder="blur"
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </Paper>
+            <Paper
+              shadow="xl"
+              radius="lg"
+              h="240px"
+              w="240px"
+              className={classes.secondaryCardWrapper}
+            >
+              <Image
+                src={Img3}
+                alt="img-3"
+                quality={100}
+                priority
+                placeholder="blur"
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </Paper>
+          </Flex>
           <Paper
             shadow="xl"
             radius="lg"
@@ -94,27 +123,6 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             <Image
               src={Img1}
               alt="img-2"
-              quality={100}
-              priority
-              placeholder="blur"
-              style={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          </Paper>
-          <Paper
-            shadow="xl"
-            radius="lg"
-            h="240px"
-            w="240px"
-            className={classes.secondaryCardWrapper}
-          >
-            <Image
-              src={Img3}
-              alt="img-3"
               quality={100}
               priority
               placeholder="blur"
