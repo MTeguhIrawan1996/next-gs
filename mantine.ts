@@ -3,11 +3,11 @@ import { MantineProviderProps } from '@mantine/core';
 export const theme: MantineProviderProps['theme'] = {
   fontFamily: 'Inter, sans-serif',
   breakpoints: {
-    xs: '30em',
+    xs: '36em',
     sm: '48em',
-    md: '64em',
-    lg: '74em',
-    xl: '90em',
+    md: '62em',
+    lg: '75em',
+    xl: '88em',
   },
   fontSizes: {
     xs: '16px',
@@ -30,4 +30,20 @@ export const theme: MantineProviderProps['theme'] = {
       h6: { fontSize: '25px' },
     },
   },
+
+  colors: {
+    brand: [
+      '#F3F0FF',
+      '#E5DBFF',
+      '#D0BFFF',
+      '#B197FC',
+      '#9775FA',
+      '#845EF7',
+      '#7950F2',
+      '#7048E8',
+      '#6741D9',
+      '#5F3DC4',
+    ],
+  },
+  primaryColor: 'brand',
 };

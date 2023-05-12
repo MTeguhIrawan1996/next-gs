@@ -71,7 +71,7 @@ const Footer = () => {
             sx={{
               flex: 0.95,
               background:
-                'linear-gradient(180deg, #228BE6 0%, #9775FA 142.92%)',
+                'linear-gradient(180deg, #228BE6 -54.95%, #9775FA 100%)',
             }}
             py="xl"
             px="lg"

@@ -39,6 +39,9 @@ const landingPageStyle = createStyles((theme) => ({
     transform: 'translateX(-15%) translateY(-100%)',
     zIndex: 1,
   },
+  colorSpan: {
+    color: theme.colors.brand[6],
+  },
 }));
 
 export default landingPageStyle;

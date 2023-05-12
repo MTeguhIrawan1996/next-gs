@@ -10,7 +10,7 @@ const Hero = () => {
         <Box w="80%">
           <Title order={1} color="dark.6" fw={700} fz={56} align="center">
             Program seniman memberikan{' '}
-            <span style={{ color: '#228BE6' }}>pembelajaran</span> kesenian di
+            <span className={classes.colorSpan}>pembelajaran</span> kesenian di
             sekolah
           </Title>
         </Box>

@@ -1,19 +1,29 @@
-import { Text } from '@mantine/core';
 import Link from 'next/link';
 import * as React from 'react';
+
+import layoutStyle from '@/styles/Layout';
 
 type ILinkNavProps = {
   href: string;
   text: string;
-  color?: string;
 };
 
-const InternalLink = ({ href, text, color }: ILinkNavProps) => {
+const InternalLink = ({ href, text }: ILinkNavProps) => {
+  const { classes, cx } = layoutStyle();
+
+  const [active, setActive] = React.useState<string>('/');
+
   return (
-    <Link href={href}>
-      <Text fz="12px" fw={400} color={color}>
-        {text}
-      </Text>
+    <Link
+      href={href}
+      className={cx(classes.link, {
+        [classes.linkActive]: active === href,
+      })}
+      onClick={() => {
+        setActive(href);
+      }}
+    >
+      {text}
     </Link>
   );
 };

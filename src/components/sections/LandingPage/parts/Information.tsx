@@ -37,8 +37,8 @@ const Information = () => {
             <Button
               radius="lg"
               variant="light"
-              color="blue"
               size="md"
+              color="brand.6"
               fw={400}
               fz={16}
               onClick={() => onOpenModal()}
@@ -50,7 +50,7 @@ const Information = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button radius="lg" size="md" color="blue.6" fw={400} fz={16}>
+              <Button radius="lg" size="md" fw={400} fz={16} color="brand.6">
                 Daftar sekarang
               </Button>
             </Link>

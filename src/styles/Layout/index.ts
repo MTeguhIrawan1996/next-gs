@@ -1,4 +1,6 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
+
+const HEADER_HEIGHT = rem(80);
 
 const layoutStyle = createStyles((theme) => ({
   rootContainer: {
@@ -14,6 +16,71 @@ const layoutStyle = createStyles((theme) => ({
     paddingRight: theme.spacing.xl,
     paddingLeft: '2rem',
   },
+  buttonBox: {
+    [theme.fn.smallerThan('xs')]: {
+      display: 'none',
+    },
+  },
+  links: {
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
+    },
+  },
+  burger: {
+    [theme.fn.largerThan('md')]: {
+      display: 'none',
+    },
+  },
+  dropdown: {
+    position: 'absolute',
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: 'hidden',
+
+    [theme.fn.largerThan('md')]: {
+      display: 'none',
+    },
+  },
+  buttonBoxDropdown: {
+    [theme.fn.largerThan('xs')]: {
+      display: 'none',
+    },
+  },
+  link: {
+    display: 'block',
+    lineHeight: 1,
+    borderRadius: theme.radius.sm,
+    textDecoration: 'none',
+    color: theme.colors.dark[6],
+    fontSize: '12px',
+    fontWeight: 400,
+
+    '&:hover': {
+      fontWeight: 600,
+
+      [theme.fn.smallerThan('md')]: {
+        backgroundColor:
+          theme.colorScheme === 'dark'
+            ? theme.colors.dark[6]
+            : theme.colors.gray[0],
+      },
+    },
+    [theme.fn.smallerThan('md')]: {
+      borderRadius: 0,
+      padding: theme.spacing.md,
+    },
+  },
+  linkActive: {
+    '&, &:hover': {
+      color: theme.colors.violet[6],
+      fontWeight: 600,
+    },
+  },
   footerConatiner: {
     padding: '200px 0 0 0',
     maxWidth: '100%',
@@ -27,7 +94,6 @@ const layoutStyle = createStyles((theme) => ({
       'radial-gradient(100% 100% at 50% 0%, #FFFFFF 0%, #F8F9FA 100%);',
     borderRadius: '2rem 2rem 0rem 0rem',
     overflow: 'hidden',
-    // paddingTop: theme.spacing.lg,
   },
 }));
 
