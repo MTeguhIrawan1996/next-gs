@@ -3,25 +3,26 @@ import * as React from 'react';
 
 import layoutStyle from '@/styles/Layout';
 
+type IActiveProps = {
+  title: string;
+  link: string;
+};
+
 type ILinkNavProps = {
   href: string;
   text: string;
+  activeLink?: IActiveProps;
 };
 
-const InternalLink = ({ href, text }: ILinkNavProps) => {
+const InternalLink = ({ href, text, activeLink }: ILinkNavProps) => {
   const { classes, cx } = layoutStyle();
-
-  const [active, setActive] = React.useState<string>('/');
 
   return (
     <Link
       href={href}
       className={cx(classes.link, {
-        [classes.linkActive]: active === href,
+        [classes.linkActive]: activeLink?.link === href,
       })}
-      onClick={() => {
-        setActive(href);
-      }}
     >
       {text}
     </Link>

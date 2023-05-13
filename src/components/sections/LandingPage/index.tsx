@@ -23,7 +23,7 @@ const LandingPage = () => {
           position: 'absolute',
           top: -20,
           right: 0,
-          transform: 'translateY(60%)',
+          transform: 'translateY(100%)',
         }}
       >
         <Vector2 />
@@ -34,7 +34,8 @@ const LandingPage = () => {
           position: 'absolute',
           bottom: 0,
           left: 0,
-          transform: 'translateY(10%)',
+          transform: 'translateY(-10%)',
+          zIndex: 0,
         }}
       >
         <Vector3 />

@@ -15,7 +15,7 @@ interface IInformationProps {
 }
 
 const Information: React.FC<IInformationProps> = ({ targetRef }) => {
-  const { classes } = landingPageStyle();
+  const { classes, cx } = landingPageStyle();
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -24,20 +24,20 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   };
 
   return (
-    <Stack className={classes.container} ref={targetRef}>
-      <Flex direction="row" justify="flex-start" gap="56px" align="flex-start">
+    <Stack className={classes.bottomContainer} ref={targetRef} align="center">
+      <Flex className={classes.infoWrapper}>
         <Flex className={classes.primaryContentWrapper}>
           <Box>
-            <Title order={3} color="dark.6">
+            <Title order={3} fz={{ base: 24, xs: 34 }} color="dark.6">
               Membantu dalam membentuk perjalanan pendidikan mereka, tunggu apa
               lagi?
             </Title>
           </Box>
-          <Text color="dark.3" fz={22} fw={300}>
+          <Text color="dark.3" fz={{ base: 18, sm: 22 }} fw={300}>
             Daftar sekarang untuk menjadi partisipan program GSMS dan mulailah
             membuat perbedaan hari ini!
           </Text>
-          <Flex gap="md" justify="center" align="center">
+          <Flex className={classes.buttonBox}>
             <Button
               radius="lg"
               variant="light"
@@ -46,6 +46,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               fw={400}
               fz={16}
               onClick={() => onOpenModal()}
+              className={classes.buttonStyle}
             >
               Unduh Juknis
             </Button>
@@ -53,8 +54,16 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
               target="_blank"
               rel="noopener noreferrer"
+              style={{ width: '100%' }}
             >
-              <Button radius="lg" size="md" fw={400} fz={16} color="brand.6">
+              <Button
+                radius="lg"
+                size="md"
+                fw={400}
+                fz={16}
+                color="brand.6"
+                className={classes.buttonStyle}
+              >
                 Daftar sekarang
               </Button>
             </Link>
@@ -63,58 +72,60 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
           </Flex>
         </Flex>
         <Flex className={classes.secondaryContentWrapper}>
-          <Paper
-            shadow="xl"
-            radius="lg"
-            h="240px"
-            w="240px"
-            className={classes.primaryCardWrapper}
+          <Flex
+            gap="3rem"
+            justify="flex-start"
+            align="flex-start"
+            w="100%"
+            sx={{ position: 'relative' }}
           >
-            <Image
-              src={Img2}
-              alt="img-1"
-              quality={100}
-              priority
-              placeholder="blur"
-              style={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          </Paper>
+            <Paper
+              shadow="xl"
+              radius="lg"
+              className={cx(classes.primaryCardWrapper, classes.primaryRatio)}
+            >
+              <Image
+                src={Img2}
+                alt="img-1"
+                quality={100}
+                priority
+                placeholder="blur"
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </Paper>
+            <Paper
+              shadow="xl"
+              radius="lg"
+              className={cx(classes.secondaryCardWrapper, classes.primaryRatio)}
+            >
+              <Image
+                src={Img3}
+                alt="img-3"
+                quality={100}
+                priority
+                placeholder="blur"
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </Paper>
+          </Flex>
           <Paper
             shadow="xl"
             radius="lg"
-            h="240px"
-            w="335px"
-            className={classes.primaryCardWrapper}
+            className={cx(classes.primaryCardWrapper, classes.secondaryRatio)}
           >
             <Image
               src={Img1}
               alt="img-2"
-              quality={100}
-              priority
-              placeholder="blur"
-              style={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          </Paper>
-          <Paper
-            shadow="xl"
-            radius="lg"
-            h="240px"
-            w="240px"
-            className={classes.secondaryCardWrapper}
-          >
-            <Image
-              src={Img3}
-              alt="img-3"
               quality={100}
               priority
               placeholder="blur"

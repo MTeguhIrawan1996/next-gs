@@ -1,16 +1,11 @@
-import Head from 'next/head';
-
+import { LandingPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
-import LandingPage from '@/components/sections/LandingPage';
 
 import { NextPageWithLayout } from './_app';
 
 const Home: NextPageWithLayout = () => {
   return (
     <>
-      <Head>
-        <title>Landing Page</title>
-      </Head>
       <LandingPage />
     </>
   );
