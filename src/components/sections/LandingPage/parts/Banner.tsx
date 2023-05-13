@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import landingPageStyle from '@/styles/LandingPage';
 
-import BannerSample from '../../../../../public/assets/bannersample.png';
+import BannerImg from '../../../../../public/assets/banner.png';
 
 interface IBannerProps {
   scrollIntoView: () => void;
@@ -16,7 +16,7 @@ const Banner: React.FC<IBannerProps> = ({ scrollIntoView }) => {
     <Stack className={classes.bannerContainer}>
       <Box className={classes.bannerBox} onClick={() => scrollIntoView()}>
         <Image
-          src={BannerSample}
+          src={BannerImg}
           alt="Banner"
           quality={100}
           priority

@@ -49,7 +49,7 @@ const EmptyState = () => {
           />
         </Box>
         <Title order={1} fz={26} fw={700} color="dark.6">
-          Cooming Soon
+          Coming Soon
         </Title>
         <Text fw={400} fz={14} color="dark.3" align="center">
           Terima kasih atas dukungan Anda, dan tunggu kabar selanjutnya dari
