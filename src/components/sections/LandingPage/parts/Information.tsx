@@ -24,11 +24,11 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   };
 
   return (
-    <Stack className={classes.bottomContainer} ref={targetRef}>
+    <Stack className={classes.bottomContainer} ref={targetRef} align="center">
       <Flex className={classes.infoWrapper}>
         <Flex className={classes.primaryContentWrapper}>
           <Box>
-            <Title order={3} fz={{ base: 24, sm: 34 }} color="dark.6">
+            <Title order={3} fz={{ base: 24, xs: 34 }} color="dark.6">
               Membantu dalam membentuk perjalanan pendidikan mereka, tunggu apa
               lagi?
             </Title>
@@ -37,7 +37,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             Daftar sekarang untuk menjadi partisipan program GSMS dan mulailah
             membuat perbedaan hari ini!
           </Text>
-          <Flex gap="md" justify="center" align="center" sx={{ zIndex: 1 }}>
+          <Flex className={classes.buttonBox}>
             <Button
               radius="lg"
               variant="light"

@@ -1,4 +1,4 @@
-import { createStyles, em, getBreakpointValue } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 const landingPageStyle = createStyles((theme) => ({
   container: {
@@ -9,9 +9,21 @@ const landingPageStyle = createStyles((theme) => ({
     },
   },
   bottomContainer: {
-    padding: '40px 40px 40px 40px',
+    padding: '5px 10px 5px 10px',
     position: 'relative',
-    [`@media (min-width: ${em(getBreakpointValue(theme.breakpoints.md))})`]: {
+    [theme.fn.largerThan('xs')]: {
+      padding: '60px 20px 90px 20px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      padding: '90px 70px 160px 70px',
+    },
+    [theme.fn.largerThan('md')]: {
+      padding: '100px 20px 180px 20px',
+    },
+    [theme.fn.largerThan('lg')]: {
+      padding: '110px 50px 200px 50px',
+    },
+    [theme.fn.largerThan('xl')]: {
       padding: '140px 80px 200px 80px',
     },
   },
@@ -20,21 +32,46 @@ const landingPageStyle = createStyles((theme) => ({
     position: 'relative',
   },
   bannerBox: {
-    width: '100%',
-    height: '460px',
+    width: '312px',
+    height: '114px',
     position: 'relative',
     borderRadius: theme.radius.lg,
     overflow: 'hidden',
     zIndex: 1,
     cursor: 'pointer',
+
+    [theme.fn.largerThan('xs')]: {
+      width: '100%',
+      height: '160px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      width: '100%',
+      height: '240px',
+    },
+    [theme.fn.largerThan('md')]: {
+      width: '100%',
+      height: '328px',
+    },
+    [theme.fn.largerThan('lg')]: {
+      maxWidth: '1288px',
+      height: '440px',
+    },
+    [theme.fn.largerThan('xl')]: {
+      maxWidth: '1288px',
+      height: '467px',
+    },
   },
   infoWrapper: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: '56px',
     flexDirection: 'column',
+    width: '100%',
     [theme.fn.largerThan('md')]: {
       flexDirection: 'row',
+    },
+    [theme.fn.largerThan('xl')]: {
+      maxWidth: '1288px',
     },
   },
   primaryContentWrapper: {
@@ -52,11 +89,24 @@ const landingPageStyle = createStyles((theme) => ({
     alignItems: 'flex-start',
     position: 'relative',
     paddingBottom: '40px',
-    width: '100%',
+    width: '312px',
     [theme.fn.largerThan('xs')]: {
-      padding: '0 60px 40px 60px',
+      width: '100%',
+      padding: '0 10px 40px 20px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      width: '100%',
+      padding: '0 30px 40px 60px',
     },
     [theme.fn.largerThan('md')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+    [theme.fn.largerThan('lg')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+    [theme.fn.largerThan('xl')]: {
       padding: '0 0 40px 0',
       flex: 1,
     },
@@ -64,7 +114,7 @@ const landingPageStyle = createStyles((theme) => ({
   primaryRatio: {
     height: '140px',
     width: '140px',
-    [theme.fn.largerThan('sm')]: {
+    [theme.fn.largerThan('xs')]: {
       height: '240px',
       width: '240px',
     },
@@ -72,7 +122,8 @@ const landingPageStyle = createStyles((theme) => ({
   secondaryRatio: {
     height: '140px',
     width: '190px',
-    [theme.fn.largerThan('sm')]: {
+
+    [theme.fn.largerThan('xs')]: {
       height: '240px',
       width: '330px',
     },
@@ -91,14 +142,20 @@ const landingPageStyle = createStyles((theme) => ({
     transform: 'translateY(30%)',
     zIndex: 1,
     [theme.fn.largerThan('xs')]: {
-      right: 30,
+      right: 5,
       transform: 'translateY(40%)',
     },
     [theme.fn.largerThan('sm')]: {
       right: 10,
     },
     [theme.fn.largerThan('md')]: {
-      right: 50,
+      right: -10,
+    },
+    [theme.fn.largerThan('lg')]: {
+      right: 10,
+    },
+    [theme.fn.largerThan('xl')]: {
+      right: 80,
     },
   },
   textBox: {
@@ -133,6 +190,18 @@ const landingPageStyle = createStyles((theme) => ({
     [theme.fn.largerThan('sm')]: {
       fontWeight: 300,
       fontSize: '18px',
+    },
+  },
+  buttonBox: {
+    gap: theme.spacing.md,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    zIndex: 1,
+    [theme.fn.largerThan('xs')]: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   },
 }));
