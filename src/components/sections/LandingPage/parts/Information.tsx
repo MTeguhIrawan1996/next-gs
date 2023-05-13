@@ -46,6 +46,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               fw={400}
               fz={16}
               onClick={() => onOpenModal()}
+              className={classes.buttonStyle}
             >
               Unduh Juknis
             </Button>
@@ -53,8 +54,16 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
               target="_blank"
               rel="noopener noreferrer"
+              style={{ width: '100%' }}
             >
-              <Button radius="lg" size="md" fw={400} fz={16} color="brand.6">
+              <Button
+                radius="lg"
+                size="md"
+                fw={400}
+                fz={16}
+                color="brand.6"
+                className={classes.buttonStyle}
+              >
                 Daftar sekarang
               </Button>
             </Link>

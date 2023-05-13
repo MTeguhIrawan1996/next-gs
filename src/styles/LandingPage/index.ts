@@ -198,10 +198,17 @@ const landingPageStyle = createStyles((theme) => ({
     alignItems: 'flex-start',
     flexDirection: 'column',
     zIndex: 1,
+    width: '100%',
     [theme.fn.largerThan('xs')]: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+  },
+  buttonStyle: {
+    width: '100%',
+    [theme.fn.largerThan('md')]: {
+      width: 'auto',
     },
   },
 }));
