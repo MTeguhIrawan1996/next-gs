@@ -1,0 +1,216 @@
+import { createStyles } from '@mantine/core';
+
+const landingPageStyle = createStyles((theme) => ({
+  container: {
+    padding: '40px 20px 40px 20px',
+    position: 'relative',
+    [theme.fn.largerThan('md')]: {
+      padding: '140px 80px 0px 80px',
+    },
+  },
+  bottomContainer: {
+    padding: '5px 10px 5px 10px',
+    position: 'relative',
+    [theme.fn.largerThan('xs')]: {
+      padding: '60px 20px 90px 20px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      padding: '90px 70px 160px 70px',
+    },
+    [theme.fn.largerThan('md')]: {
+      padding: '100px 20px 180px 20px',
+    },
+    [theme.fn.largerThan('lg')]: {
+      padding: '110px 50px 200px 50px',
+    },
+    [theme.fn.largerThan('xl')]: {
+      padding: '140px 80px 200px 80px',
+    },
+  },
+  bannerContainer: {
+    padding: '40px 40px 0px 40px',
+    position: 'relative',
+  },
+  bannerBox: {
+    width: '312px',
+    height: '114px',
+    position: 'relative',
+    borderRadius: theme.radius.lg,
+    overflow: 'hidden',
+    zIndex: 1,
+    cursor: 'pointer',
+
+    [theme.fn.largerThan('xs')]: {
+      width: '100%',
+      height: '160px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      width: '100%',
+      height: '240px',
+    },
+    [theme.fn.largerThan('md')]: {
+      width: '100%',
+      height: '328px',
+    },
+    [theme.fn.largerThan('lg')]: {
+      maxWidth: '1288px',
+      height: '440px',
+    },
+    [theme.fn.largerThan('xl')]: {
+      maxWidth: '1288px',
+      height: '467px',
+    },
+  },
+  infoWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '56px',
+    flexDirection: 'column',
+    width: '100%',
+    [theme.fn.largerThan('md')]: {
+      flexDirection: 'row',
+    },
+    [theme.fn.largerThan('xl')]: {
+      maxWidth: '1288px',
+    },
+  },
+  primaryContentWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: '32px',
+    paddingTop: '60px',
+    flex: 1,
+  },
+  secondaryContentWrapper: {
+    flexDirection: 'column',
+    gap: theme.spacing.xl,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    position: 'relative',
+    paddingBottom: '40px',
+    width: '312px',
+    [theme.fn.largerThan('xs')]: {
+      width: '100%',
+      padding: '0 10px 40px 20px',
+    },
+    [theme.fn.largerThan('sm')]: {
+      width: '100%',
+      padding: '0 30px 40px 60px',
+    },
+    [theme.fn.largerThan('md')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+    [theme.fn.largerThan('lg')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+    [theme.fn.largerThan('xl')]: {
+      padding: '0 0 40px 0',
+      flex: 1,
+    },
+  },
+  primaryRatio: {
+    height: '140px',
+    width: '140px',
+    [theme.fn.largerThan('xs')]: {
+      height: '240px',
+      width: '240px',
+    },
+  },
+  secondaryRatio: {
+    height: '140px',
+    width: '190px',
+
+    [theme.fn.largerThan('xs')]: {
+      height: '240px',
+      width: '330px',
+    },
+  },
+  primaryCardWrapper: {
+    overflow: 'hidden',
+    position: 'relative',
+    backgroundColor: 'transparent',
+  },
+  secondaryCardWrapper: {
+    overflow: 'hidden',
+    position: 'absolute',
+    right: -5,
+    bottom: 0,
+    backgroundColor: 'transparent',
+    transform: 'translateY(30%)',
+    zIndex: 1,
+    [theme.fn.largerThan('xs')]: {
+      right: 5,
+      transform: 'translateY(40%)',
+    },
+    [theme.fn.largerThan('sm')]: {
+      right: 10,
+    },
+    [theme.fn.largerThan('md')]: {
+      right: -10,
+    },
+    [theme.fn.largerThan('lg')]: {
+      right: 10,
+    },
+    [theme.fn.largerThan('xl')]: {
+      right: 80,
+    },
+  },
+  textBox: {
+    width: '100%',
+    [theme.fn.largerThan('sm')]: {
+      width: '80%',
+    },
+  },
+  paragrafBox: {
+    width: '100%',
+    [theme.fn.largerThan('sm')]: {
+      width: '80%',
+    },
+    [theme.fn.largerThan('md')]: {
+      width: '60%',
+    },
+  },
+  colorSpan: {
+    color: theme.colors.brand[6],
+  },
+  primaryText: {
+    fontWeight: 700,
+    fontSize: '32px',
+    [theme.fn.largerThan('sm')]: {
+      fontWeight: 700,
+      fontSize: '56px',
+    },
+  },
+  secondaryText: {
+    fontWeight: 300,
+    fontSize: '16px',
+    [theme.fn.largerThan('sm')]: {
+      fontWeight: 300,
+      fontSize: '18px',
+    },
+  },
+  buttonBox: {
+    gap: theme.spacing.md,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    zIndex: 1,
+    width: '100%',
+    [theme.fn.largerThan('xs')]: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+  buttonStyle: {
+    width: '100%',
+    [theme.fn.largerThan('md')]: {
+      width: 'auto',
+    },
+  },
+}));
+
+export default landingPageStyle;
