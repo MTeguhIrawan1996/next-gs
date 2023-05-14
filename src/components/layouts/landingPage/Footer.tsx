@@ -32,7 +32,7 @@ const Footer = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <TutwuriLogo />
+                  <TutwuriLogo style={{ height: '56px', width: '56px' }} />
                 </Box>
                 <Box>
                   <Text fw={400} fz={16} color="#5C5F66">
@@ -52,13 +52,7 @@ const Footer = () => {
               </Box>
             </Flex>
           </Flex>
-          <Flex
-            className={classes.secondContent}
-            py="xl"
-            px="lg"
-            gap="xl"
-            direction="column"
-          >
+          <Flex className={classes.secondContent} gap="xl" direction="column">
             <Stack spacing="sm">
               <Text fw={400} fz={14} color="gray.0">
                 Ikuti sosial media kami untuk berita terbaru
@@ -71,21 +65,12 @@ const Footer = () => {
             <Stack spacing="xs">
               <Group spacing="sm" align="center">
                 <IconEmail />
-                <Link href="mailto:gsms@kemdikbud.go.id">
+                <Link href="mailto:gsms.ditppk@gmail.com">
                   <Text fw={400} fz={14} color="gray.0">
-                    gsms@kemdikbud.go.id
+                    gsms.ditppk@gmail.com
                   </Text>
                 </Link>
               </Group>
-              <Group spacing="sm" align="center">
-                <IconEmail />
-                <Link href="mailto:gsms.dikes@gmail.com">
-                  <Text fw={400} fz={14} color="gray.0">
-                    gsms.dikes@gmail.com
-                  </Text>
-                </Link>
-              </Group>
-
               <Group spacing="sm">
                 <Group spacing="sm">
                   <IconTel />
@@ -95,11 +80,6 @@ const Footer = () => {
                     </Text>
                   </Link>
                 </Group>
-                <Link href="tel:0215725549">
-                  <Text fw={400} fz={14} color="gray.0">
-                    (021) 5725549
-                  </Text>
-                </Link>
               </Group>
             </Stack>
           </Flex>

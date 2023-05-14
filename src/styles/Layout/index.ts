@@ -117,9 +117,16 @@ const layoutStyle = createStyles((theme) => ({
   },
   secondContent: {
     width: '100%',
+    padding: '2rem 1rem 2rem 1rem',
     background: 'linear-gradient(180deg, #228BE6 -54.95%, #9775FA 100%)',
-    [theme.fn.largerThan('sm')]: {
+    [theme.fn.largerThan('xs')]: {
       flex: 0.95,
+    },
+    [theme.fn.largerThan('sm')]: {
+      padding: '4rem 1rem 4rem 1rem',
+    },
+    [theme.fn.largerThan('md')]: {
+      padding: '2rem 1rem 2rem 1rem',
     },
   },
   footerLogoContent: {
