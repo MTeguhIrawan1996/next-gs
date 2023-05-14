@@ -32,7 +32,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
           </Text>
           <Flex className={classes.buttonBox}>
             <Link
-              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_PDF.pdf`}
+              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_GSMS.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className={classes.buttonStyle}
