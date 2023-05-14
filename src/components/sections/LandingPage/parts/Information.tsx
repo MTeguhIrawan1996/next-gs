@@ -50,7 +50,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               </Button>
             </Link>
             <Link
-              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_PDF.pdf`}
+              href={`${process.env.NEXT_PUBLIC_URL}/Panduan_GSMS.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className={classes.buttonStyle}

@@ -52,7 +52,6 @@ const landingPageStyle = createStyles((theme) => ({
       height: '460px',
     },
     [theme.fn.largerThan('xl')]: {
-      maxWidth: '1400px',
       height: '620px',
     },
   },
