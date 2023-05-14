@@ -24,7 +24,7 @@ const Banner: React.FC<IBannerProps> = ({ scrollIntoView }) => {
           style={{
             height: '100%',
             width: '100%',
-            objectFit: 'contain',
+            objectFit: 'fill',
             backgroundPosition: 'center',
           }}
         />

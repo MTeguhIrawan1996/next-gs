@@ -84,14 +84,15 @@ const layoutStyle = createStyles((theme) => ({
   footerConatiner: {
     maxWidth: '100%',
     position: 'relative',
+    borderRadius: '2.5rem 2.5rem 0rem 0rem',
+    overflow: 'hidden',
+    background:
+      'radial-gradient(100% 100% at 50% 0%, #FFFFFF 0%, #F8F9FA 100%);',
   },
   footer: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background:
-      'radial-gradient(100% 100% at 50% 0%, #FFFFFF 0%, #F8F9FA 100%);',
-    borderRadius: '2rem 2rem 0rem 0rem',
     overflow: 'hidden',
   },
   footerWrapper: {
@@ -99,31 +100,41 @@ const layoutStyle = createStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.fn.largerThan('sm')]: {
+    [theme.fn.largerThan('md')]: {
       flexDirection: 'row',
     },
   },
-  firstContent: {
+  addressWrapper: {
     justifyContent: 'flex-start',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '1rem',
+    gap: '0.5rem',
     paddingLeft: 0,
     width: '100%',
     [theme.fn.largerThan('xs')]: {
       flexDirection: 'row',
       paddingLeft: theme.spacing.xl,
+      gap: '1rem',
     },
+  },
+  firstContent: {
+    flex: 2,
+    justifyContent: 'center',
+    padding: '2rem 1rem 2rem 1rem',
   },
   secondContent: {
     width: '100%',
-    padding: '2rem 1rem 2rem 1rem',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    gap: theme.spacing.xl,
     background: 'linear-gradient(180deg, #228BE6 -54.95%, #9775FA 100%)',
+    padding: '1rem 1rem 1rem 1rem',
     [theme.fn.largerThan('xs')]: {
       flex: 0.95,
     },
     [theme.fn.largerThan('sm')]: {
-      padding: '4rem 1rem 4rem 1rem',
+      padding: '2rem 1rem 2rem 1rem',
     },
     [theme.fn.largerThan('md')]: {
       padding: '2rem 1rem 2rem 1rem',
@@ -135,7 +146,7 @@ const layoutStyle = createStyles((theme) => ({
     alignItems: 'center',
     gap: '1rem',
     width: '100%',
-    padding: theme.spacing.xl,
+    padding: theme.spacing.md,
     [theme.fn.largerThan('xs')]: {
       flex: 1,
       padding: 0,
