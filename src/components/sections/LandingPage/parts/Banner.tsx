@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import landingPageStyle from '@/styles/LandingPage';
 
-import BannerImg from '../../../../../public/assets/banner.png';
+import BannerImg from '../../../../../public/assets/banner.webp';
 
 interface IBannerProps {
   scrollIntoView: () => void;
