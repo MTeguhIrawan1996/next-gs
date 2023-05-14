@@ -17,20 +17,14 @@ const Footer = () => {
     <Box className={classes.footerConatiner}>
       <Flex className={classes.footer}>
         <Flex className={classes.footerWrapper}>
-          <Flex
-            sx={{
-              flex: 2,
-              justifyContent: 'center',
-              padding: '2rem 1rem 2rem 1rem',
-            }}
-          >
-            <Flex className={classes.firstContent}>
+          <Flex className={classes.firstContent}>
+            <Flex className={classes.addressWrapper}>
               <Box className={classes.footerLogoContent}>
-                <Box h="80px" w="80px" sx={{ position: 'relative' }}>
+                <Box h="56px" w="110px" sx={{ position: 'relative' }}>
                   <Image
                     src={TutwuriLogo}
                     alt="Tut-wuri"
-                    quality={80}
+                    quality={100}
                     priority
                     placeholder="blur"
                     style={{
@@ -43,23 +37,24 @@ const Footer = () => {
                 </Box>
                 <Box>
                   <Text fw={400} fz={16} color="#5C5F66">
-                    Kementerian Pendidikan, Kebudayaan Riset, dan Teknologi
+                    Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi
                   </Text>
                 </Box>
               </Box>
               <Box className={classes.footerAddressContent}>
-                <Box w={{ base: '100%', xs: '80%' }}>
+                <Box w={{ base: '100%', xs: '90%' }}>
                   <Text fw={300} fz={16} color="#5C5F66">
-                    Sekertariat Direktorat Jenderal Kebudayaan Kementerian
-                    Pendidikan, Kebudayaan, Riset dan Teknologi Komplek
-                    Kemdikbudristek{' '}
-                    <Text>Jl. Jenderal Sudirman Senayan Jakarta 10270</Text>
+                    Direktorat Pengembangan dan Pemanfaatan Kebudayaan,
+                    Direktorat Jenderal Kebudayaan, Kementerian Pendidikan,
+                    Kebudayaan, Riset, dan Teknologi. Gd. E Lt. 9, Komplek
+                    Kemdikbudristek, Jl. Jenderal Sudirman, Senayan, Jakarta,
+                    10270.
                   </Text>
                 </Box>
               </Box>
             </Flex>
           </Flex>
-          <Flex className={classes.secondContent} gap="xl" direction="column">
+          <Flex className={classes.secondContent}>
             <Stack spacing="sm">
               <Text fw={400} fz={14} color="gray.0">
                 Ikuti sosial media kami untuk berita terbaru
@@ -99,9 +94,8 @@ const Footer = () => {
             component="span"
             align="center"
           >
-            © Hak Cipta Direktorat Kesenian, Direktorat Jenderal Kebudayaan,
-            Kementerian Pendidikan, Kebudayaan, Riset Dan Teknologi Republik
-            Indonesia.
+            © Hak Cipta Direktorat Jenderal Kebudayaan, Kementerian Pendidikan,
+            Kebudayaan, Riset, dan Teknologi.
           </Text>
         </Stack>
       </Flex>
