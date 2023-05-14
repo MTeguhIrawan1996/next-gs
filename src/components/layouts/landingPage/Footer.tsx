@@ -1,4 +1,5 @@
 import { Box, Flex, Group, Stack, Text } from '@mantine/core';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import layoutStyle from '@/styles/Layout';
@@ -7,7 +8,7 @@ import IconEmail from '../../../../public/IconEmail.svg';
 import IconTel from '../../../../public/IconTel.svg';
 import SosialIcon1 from '../../../../public/sosialmedia1.svg';
 import SosialIcon2 from '../../../../public/sosialmedia2.svg';
-import TutwuriLogo from '../../../../public/tutwuri.svg';
+import TutwuriLogo from '../../../../public/tutwuriimg.png';
 
 const Footer = () => {
   const { classes } = layoutStyle();
@@ -25,14 +26,20 @@ const Footer = () => {
           >
             <Flex className={classes.firstContent}>
               <Box className={classes.footerLogoContent}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <TutwuriLogo style={{ height: '56px', width: '56px' }} />
+                <Box h="80px" w="80px" sx={{ position: 'relative' }}>
+                  <Image
+                    src={TutwuriLogo}
+                    alt="Tut-wuri"
+                    quality={80}
+                    priority
+                    placeholder="blur"
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      objectFit: 'contain',
+                      backgroundPosition: 'center',
+                    }}
+                  />
                 </Box>
                 <Box>
                   <Text fw={400} fz={16} color="#5C5F66">
