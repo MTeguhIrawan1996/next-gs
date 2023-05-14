@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { RealViewportProvider } from 'next-real-viewport';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 import '../styles/globals.css';
 
@@ -38,24 +39,19 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <link rel="apple-touch-icon" sizes="57x57" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/meta-icon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/meta-icon.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/meta-icon.png"
-        />
-        <link rel="icon" type="image/png" sizes="32x32" href="/meta-icon.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/meta-icon.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/meta-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
         <meta property="og:title" content={title} />
@@ -83,6 +79,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           }}
         >
           <Component {...pageProps} />
+          <GoogleAnalytics trackPageViews />
         </MantineProvider>
       </RealViewportProvider>
     </>
