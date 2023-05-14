@@ -5,7 +5,6 @@ import * as React from 'react';
 
 import landingPageStyle from '@/styles/LandingPage';
 
-import ModalJuknis from '../elements/ModalJuknis';
 import Img1 from '../../../../../public/assets/imformationImg1.jpeg';
 import Img2 from '../../../../../public/assets/imformationImg2.jpeg';
 import Img3 from '../../../../../public/assets/imformationImg3.jpeg';
@@ -16,12 +15,6 @@ interface IInformationProps {
 
 const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   const { classes, cx } = landingPageStyle();
-
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
-
-  const onOpenModal = async () => {
-    setIsOpen((prev) => !prev);
-  };
 
   return (
     <Stack className={classes.bottomContainer} ref={targetRef} align="center">
@@ -38,23 +31,47 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
             membuat perbedaan hari ini!
           </Text>
           <Flex className={classes.buttonBox}>
-            <Button
-              radius="lg"
-              variant="light"
-              size="md"
-              color="brand.6"
-              fw={400}
-              fz={16}
-              onClick={() => onOpenModal()}
+            <Link
+              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_PDF.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
               className={classes.buttonStyle}
             >
-              Unduh Juknis
-            </Button>
+              <Button
+                radius="lg"
+                variant="light"
+                size="md"
+                color="brand.6"
+                fw={400}
+                fz={16}
+                w="100%"
+              >
+                Unduh Juknis
+              </Button>
+            </Link>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_PDF.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.buttonStyle}
+            >
+              <Button
+                radius="lg"
+                variant="light"
+                size="md"
+                color="brand.6"
+                fw={400}
+                fz={16}
+                w="100%"
+              >
+                Unduh Panduan Pendaftaran
+              </Button>
+            </Link>
             <Link
               href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ width: '100%' }}
+              className={classes.buttonStyle}
             >
               <Button
                 radius="lg"
@@ -62,13 +79,11 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
                 fw={400}
                 fz={16}
                 color="brand.6"
-                className={classes.buttonStyle}
+                w="100%"
               >
                 Daftar sekarang
               </Button>
             </Link>
-
-            <ModalJuknis onCloseModal={onOpenModal} isOpen={isOpen} />
           </Flex>
         </Flex>
         <Flex className={classes.secondaryContentWrapper}>

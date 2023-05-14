@@ -12,13 +12,13 @@ const landingPageStyle = createStyles((theme) => ({
     padding: '5px 10px 5px 10px',
     position: 'relative',
     [theme.fn.largerThan('xs')]: {
-      padding: '60px 20px 90px 20px',
+      padding: '10px 20px 90px 20px',
     },
     [theme.fn.largerThan('sm')]: {
-      padding: '90px 70px 160px 70px',
+      padding: '30px 70px 160px 70px',
     },
     [theme.fn.largerThan('md')]: {
-      padding: '100px 20px 180px 20px',
+      padding: '50px 50px 180px 50px',
     },
     [theme.fn.largerThan('lg')]: {
       padding: '110px 50px 200px 50px',
@@ -28,37 +28,32 @@ const landingPageStyle = createStyles((theme) => ({
     },
   },
   bannerContainer: {
-    padding: '40px 40px 0px 40px',
+    padding: '20px 5px 0px 5px',
     position: 'relative',
   },
   bannerBox: {
-    width: '312px',
-    height: '114px',
+    width: '100%',
+    height: '184px',
     position: 'relative',
     borderRadius: theme.radius.lg,
     overflow: 'hidden',
     zIndex: 1,
     cursor: 'pointer',
-
     [theme.fn.largerThan('xs')]: {
-      width: '100%',
-      height: '160px',
-    },
-    [theme.fn.largerThan('sm')]: {
-      width: '100%',
       height: '240px',
     },
+    [theme.fn.largerThan('sm')]: {
+      height: '260px',
+    },
     [theme.fn.largerThan('md')]: {
-      width: '100%',
-      height: '328px',
+      height: '340px',
     },
     [theme.fn.largerThan('lg')]: {
-      maxWidth: '1288px',
-      height: '440px',
+      height: '460px',
     },
     [theme.fn.largerThan('xl')]: {
-      maxWidth: '1288px',
-      height: '467px',
+      maxWidth: '1400px',
+      height: '620px',
     },
   },
   infoWrapper: {
@@ -67,7 +62,7 @@ const landingPageStyle = createStyles((theme) => ({
     gap: '56px',
     flexDirection: 'column',
     width: '100%',
-    [theme.fn.largerThan('md')]: {
+    [theme.fn.largerThan('lg')]: {
       flexDirection: 'row',
     },
     [theme.fn.largerThan('xl')]: {
@@ -99,14 +94,10 @@ const landingPageStyle = createStyles((theme) => ({
       padding: '0 30px 40px 60px',
     },
     [theme.fn.largerThan('md')]: {
-      padding: '0 0 40px 0',
-      flex: 1,
+      padding: '0 30px 40px 60px',
+      width: '70%',
     },
     [theme.fn.largerThan('lg')]: {
-      padding: '0 0 40px 0',
-      flex: 1,
-    },
-    [theme.fn.largerThan('xl')]: {
       padding: '0 0 40px 0',
       flex: 1,
     },
@@ -199,10 +190,15 @@ const landingPageStyle = createStyles((theme) => ({
     flexDirection: 'column',
     zIndex: 1,
     width: '100%',
-    [theme.fn.largerThan('xs')]: {
+    [theme.fn.largerThan('sm')]: {
       flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+    },
+    [theme.fn.largerThan('md')]: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     },
   },
   buttonStyle: {

@@ -9,6 +9,7 @@ import {
   Transition,
 } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -17,7 +18,7 @@ import InternalLink from '@/components/elements/InternalLink';
 
 import layoutStyle from '@/styles/Layout';
 
-import GsmsIcon from '../../../../public/gsms.svg';
+import GsmsLogo from '../../../../public/logo-gsms.png';
 
 const Links = [
   {
@@ -64,8 +65,19 @@ const Navbar = () => {
 
   return (
     <Header height={80} className={classes.header}>
-      <Box>
-        <GsmsIcon />
+      <Box h="55px" w="90px" sx={{ position: 'relative' }}>
+        <Image
+          src={GsmsLogo}
+          alt="Logo-gsms"
+          quality={100}
+          priority
+          style={{
+            height: '100%',
+            width: '100%',
+            objectFit: 'contain',
+            backgroundPosition: 'center',
+          }}
+        />
       </Box>
       <Flex gap="80px" justify="flex-end" align="center">
         <Group spacing={40} className={classes.links}>
