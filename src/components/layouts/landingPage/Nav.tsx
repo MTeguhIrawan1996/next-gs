@@ -1,4 +1,5 @@
 import {
+  Box,
   Burger,
   Button,
   Flex,
@@ -63,7 +64,9 @@ const Navbar = () => {
 
   return (
     <Header height={80} className={classes.header}>
-      <GsmsIcon />
+      <Box>
+        <GsmsIcon />
+      </Box>
       <Flex gap="80px" justify="flex-end" align="center">
         <Group spacing={40} className={classes.links}>
           {items}
