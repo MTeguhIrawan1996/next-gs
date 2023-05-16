@@ -5,9 +5,8 @@ deploy_vercel:
   variables:
     VERCEL_TOKEN: pKHtt6UJjyHKAeUGCwMwtcTK
   stage: deploy
-  except:
-    - main
-    - dev
+  only:
+    - preview
   script:
     - npm install --global vercel
     - vercel link --token=$VERCEL_TOKEN --project=gsms-landing-page --yes
