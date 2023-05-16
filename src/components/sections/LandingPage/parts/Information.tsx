@@ -32,7 +32,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
           </Text>
           <Flex className={classes.buttonBox}>
             <Link
-              href={`${process.env.NEXT_PUBLIC_URL}/Juknis_GSMS.pdf`}
+              href={`${process.env.NEXT_PUBLIC_URL}/doc/Juknis_GSMS.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className={classes.buttonStyle}
@@ -50,7 +50,7 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
               </Button>
             </Link>
             <Link
-              href={`${process.env.NEXT_PUBLIC_URL}/Panduan_GSMS.pdf`}
+              href={`${process.env.NEXT_PUBLIC_URL}/doc/Panduan_GSMS.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className={classes.buttonStyle}
