@@ -9,6 +9,19 @@ export const theme: MantineProviderProps['theme'] = {
     lg: '75em',
     xl: '88em',
   },
+  components: {
+    Container: {
+      defaultProps: {
+        sizes: {
+          xs: 540,
+          sm: 720,
+          md: 960,
+          lg: 1140,
+          xl: 1440,
+        },
+      },
+    },
+  },
   fontSizes: {
     xs: '16px',
     sm: '18px',
@@ -46,4 +59,35 @@ export const theme: MantineProviderProps['theme'] = {
     ],
   },
   primaryColor: 'brand',
+
+  globalStyles: (theme) => ({
+    '.rootYPaddings': {
+      paddingBottom: '2rem',
+      paddingTop: '2rem',
+    },
+    '.innerYPaddings': {
+      paddingBottom: '0.5rem',
+      paddingTop: '0.5rem',
+    },
+    '.paddings': {
+      padding: theme.spacing.lg,
+    },
+    '.textBox': {
+      width: '100%',
+      [theme.fn.largerThan('sm')]: {
+        width: '70%',
+      },
+    },
+    '.primaryTitle': {
+      fontWeight: 700,
+      fontSize: '32px',
+      [theme.fn.largerThan('sm')]: {
+        fontWeight: 700,
+        fontSize: '56px',
+      },
+    },
+    '.primarySpan': {
+      color: theme.colors.brand[6],
+    },
+  }),
 };
