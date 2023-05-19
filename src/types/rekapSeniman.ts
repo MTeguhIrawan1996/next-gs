@@ -44,6 +44,7 @@ export interface RecapsSenimanData {
     name: string;
     email: string;
   };
+  submittedAt: Date;
   createdAt: Date;
 }
 
