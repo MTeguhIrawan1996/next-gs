@@ -56,6 +56,7 @@ export const READ_SUBMISSION = gql`
             name
             email
           }
+          submittedAt
           createdAt
         }
       }
