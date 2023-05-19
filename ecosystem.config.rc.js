@@ -5,7 +5,7 @@ module.exports = {
       namespace: 'gsms',
       script: 'node_modules/.bin/next',
       args: 'start -p 7915',
-      cwd: '/home/kemdikbud/domains/gsms.kemdikbud.optimap.id/src',
+      cwd: '/home/kemdikbud/domains/rc.gsms.kemdikbud.optimap.id/src',
       instances: '2',
       autorestart: true,
       watch: false,
