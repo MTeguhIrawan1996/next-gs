@@ -1,50 +1,74 @@
+import { ApolloError, useQuery } from '@apollo/client';
 import { Box, Button, Group, Text } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 
-import dataExample from '@/constans/dataExample';
+import { GET_RECAPS_SUBMISSIONS } from '@/graphql/query/rekapSeniman';
+
+import {
+  GetRecapsSenimanRes,
+  RecapsSenimanVariable,
+} from '@/types/rekapSeniman';
 
 interface ITableProps {
-  onActionModal: () => void;
+  onOpenModal: (id: string) => void;
 }
 
-const Table: React.FC<ITableProps> = ({ onActionModal }) => {
+const Table: React.FC<ITableProps> = ({ onOpenModal }) => {
+  const { data, loading } = useQuery<
+    GetRecapsSenimanRes,
+    RecapsSenimanVariable
+  >(GET_RECAPS_SUBMISSIONS, {
+    variables: {
+      findAllInput: {
+        page: null,
+        limit: null,
+        search: null,
+        orderBy: 'dinasName',
+        orderDir: 'desc',
+        activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
+      },
+    },
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const record = data?.landingPageSubmissionFormRecaps.data;
+
   return (
-    <Box w="100%" sx={{ zIndex: 1 }}>
+    <Box w="100%" sx={{ zIndex: 1, backgroundColor: '#FFFFFF' }}>
       <DataTable
         shadow="lg"
         fontSize={12}
-        highlightOnHover
         horizontalSpacing="xl"
         verticalSpacing="md"
         verticalAlignment="center"
         borderColor="#4C6EF5"
-        minHeight={150}
+        minHeight={250}
+        fetching={loading}
         columns={[
           {
             title: (
-              <Group>
-                <Text fw={500} fz={12}>
-                  NAMA DINAS
-                </Text>
-              </Group>
+              <Text fw={500} fz={12}>
+                NAMA DINAS
+              </Text>
             ),
-            accessor: 'name',
+            accessor: 'dinas.name',
           },
           {
             title: (
-              <Group>
-                <Text fw={500} fz={12}>
-                  JUMLAH SENIMAN YANG MENGAJUKAN
-                </Text>
-              </Group>
+              <Text fw={500} fz={12}>
+                JUMLAH SENIMAN YANG MENGAJUKAN
+              </Text>
             ),
-            accessor: 'streetAddress',
+            accessor: 'artistCount',
           },
           {
             accessor: 'actions',
             title: '',
             textAlignment: 'right',
-            render: () => (
+            render: (val) => (
               <Group spacing={4} position="right" noWrap>
                 <Button
                   size="xs"
@@ -52,7 +76,7 @@ const Table: React.FC<ITableProps> = ({ onActionModal }) => {
                   fz={10}
                   fw={400}
                   compact
-                  onClick={onActionModal}
+                  onClick={() => onOpenModal(val.dinas.id)}
                 >
                   Lihat Daftar Seniman
                 </Button>
@@ -60,7 +84,8 @@ const Table: React.FC<ITableProps> = ({ onActionModal }) => {
             ),
           },
         ]}
-        records={dataExample}
+        records={record}
+        idAccessor="dinas.id"
       />
     </Box>
   );

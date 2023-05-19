@@ -1,3 +1,4 @@
+import { LazyQueryExecFunction } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import {
   Box,
@@ -11,18 +12,84 @@ import {
 import { DataTable } from 'mantine-datatable';
 import * as React from 'react';
 
-import dataExample from '@/constans/dataExample';
+import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
 
 interface IModalTableProps {
+  data?: GetRecapSenimanRes;
+  loading: boolean;
   isOpen: boolean;
-  onActionModal: () => void;
+  onCloseModal: () => void;
+  getRecapSeniman: LazyQueryExecFunction<
+    GetRecapSenimanRes,
+    RecapSenimanVariable
+  >;
 }
 
-const ModalTable: React.FC<IModalTableProps> = ({ isOpen, onActionModal }) => {
+const ModalTable: React.FC<IModalTableProps> = ({
+  isOpen,
+  onCloseModal,
+  data,
+  loading,
+  getRecapSeniman,
+}) => {
   const [activePage, setPage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState<number>(0);
+  const [startData, setStartData] = React.useState<number>(0);
+  const [endData, setEndData] = React.useState<number>(0);
+  const value = data?.landingPageDinas;
+  const record = value?.activityForms.data;
+  const meta = value?.activityForms.meta;
+
+  React.useEffect(() => {
+    if (data && meta && meta.currentPage && meta.totalAllData) {
+      const perPage = 10;
+      const startDatas = (meta.currentPage - 1) * perPage + 1;
+      const endDatas = Math.min(meta.currentPage * perPage, meta.totalAllData);
+      setStartData(startDatas);
+      setEndData(endDatas);
+    }
+  }, [data, meta]);
+
+  React.useEffect(() => {
+    if (data && meta && meta.currentPage) {
+      setPage(meta.currentPage);
+    }
+  }, [data, meta]);
+
+  React.useEffect(() => {
+    if (data && meta && meta.totalPage) {
+      setTotalPage(meta.totalPage);
+    }
+  }, [data, meta]);
+
+  React.useEffect(() => {
+    if (data) {
+      const refetch = async () => {
+        await getRecapSeniman({
+          variables: {
+            id: data.landingPageDinas.id,
+            findAllDinasActivityFormsInput: {
+              page: activePage,
+              limit: 10,
+              search: null,
+              orderBy: 'createdAt',
+              orderDir: 'desc',
+              activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
+            },
+          },
+        });
+      };
+      refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePage]);
+
+  const onsetPage = async (key: number) => {
+    setPage(key);
+  };
 
   return (
-    <Modal.Root opened={isOpen} onClose={onActionModal} size="80%" radius="lg">
+    <Modal.Root opened={isOpen} onClose={onCloseModal} size="80%" radius="lg">
       <Modal.Overlay />
       <Modal.Content px="sm">
         <Modal.Header>
@@ -44,14 +111,19 @@ const ModalTable: React.FC<IModalTableProps> = ({ isOpen, onActionModal }) => {
               compact
               fz={12}
               fw={400}
-              onClick={onActionModal}
+              onClick={onCloseModal}
             >
               Kembali
             </Button>
             <Flex justify="center" align="center" w="100%">
-              <Modal.Title fw={700} fz={26}>
-                Nama Dinas
-              </Modal.Title>
+              <Text
+                color="dark.4"
+                fw={700}
+                fz={24}
+                sx={{ textAlign: 'center' }}
+              >
+                {value?.name}
+              </Text>
             </Flex>
           </Flex>
         </Modal.Header>
@@ -67,6 +139,7 @@ const ModalTable: React.FC<IModalTableProps> = ({ isOpen, onActionModal }) => {
                 verticalAlignment="center"
                 borderColor="#4C6EF5"
                 minHeight={150}
+                fetching={loading}
                 columns={[
                   {
                     title: (
@@ -76,7 +149,7 @@ const ModalTable: React.FC<IModalTableProps> = ({ isOpen, onActionModal }) => {
                         </Text>
                       </Group>
                     ),
-                    accessor: 'name',
+                    accessor: 'commonIdentity.name',
                   },
                   {
                     title: (
@@ -86,29 +159,30 @@ const ModalTable: React.FC<IModalTableProps> = ({ isOpen, onActionModal }) => {
                         </Text>
                       </Group>
                     ),
-                    accessor: 'streetAddress',
+                    accessor: 'commonIdentity.email',
                   },
                 ]}
-                records={dataExample}
+                records={record}
               />
             </Box>
             <Flex
               w="100%"
-              justify="space-between"
-              align="center"
-              sx={{ position: 'relative' }}
+              direction="column"
+              justify="center"
+              align="flex-start"
               py="md"
+              gap="md"
             >
-              <Box sx={{ position: 'absolute', left: 0 }}>
+              <Box>
                 <Text fw={400} fz={12} color="#969BA4">
-                  {activePage}-{10} dari 20
+                  {startData}-{endData} dari {meta?.totalAllData}
                 </Text>
               </Box>
               <Box w="100%">
                 <Pagination.Root
-                  total={10}
+                  total={totalPage}
                   value={activePage}
-                  onChange={setPage}
+                  onChange={(val) => onsetPage(val)}
                   size="xs"
                   styles={{
                     control: {

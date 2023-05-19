@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Title } from '@mantine/core';
+import { Box, Container, Flex, Text, Title } from '@mantine/core';
 
 const Header = () => {
   return (
@@ -12,8 +12,11 @@ const Header = () => {
               className="primaryTitle"
               align="center"
             >
-              Rekapitulasi Pendaftaran
-              <span className="primarySpan"> Seniman</span> Terkini
+              Rekapitulasi Pendaftaran{' '}
+              <Text span className="primarySpan" inherit>
+                Seniman
+              </Text>{' '}
+              Terkini
             </Title>
           </Box>
         </Flex>
