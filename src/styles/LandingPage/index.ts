@@ -168,7 +168,7 @@ const landingPageStyle = createStyles((theme) => ({
   },
   primaryText: {
     fontWeight: 700,
-    fontSize: '32px',
+    fontSize: '30px',
     [theme.fn.largerThan('sm')]: {
       fontWeight: 700,
       fontSize: '56px',

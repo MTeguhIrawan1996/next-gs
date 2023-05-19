@@ -80,7 +80,7 @@ export const theme: MantineProviderProps['theme'] = {
     },
     '.primaryTitle': {
       fontWeight: 700,
-      fontSize: '32px',
+      fontSize: '30px',
       [theme.fn.largerThan('sm')]: {
         fontWeight: 700,
         fontSize: '56px',
