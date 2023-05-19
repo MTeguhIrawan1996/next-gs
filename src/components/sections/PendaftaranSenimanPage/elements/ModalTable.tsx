@@ -9,10 +9,16 @@ import {
   Pagination,
   Text,
 } from '@mantine/core';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { DataTable } from 'mantine-datatable';
 import * as React from 'react';
+import 'dayjs/locale/id';
 
 import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
+
+dayjs.locale('id');
+dayjs.extend(localizedFormat);
 
 interface IModalTableProps {
   data?: GetRecapSenimanRes;
@@ -160,6 +166,18 @@ const ModalTable: React.FC<IModalTableProps> = ({
                       </Group>
                     ),
                     accessor: 'commonIdentity.email',
+                  },
+                  {
+                    title: (
+                      <Group>
+                        <Text fw={500} fz={12}>
+                          TANGGAL PENGAJUAN
+                        </Text>
+                      </Group>
+                    ),
+                    accessor: 'submittedAt',
+                    render: ({ submittedAt }) =>
+                      `${dayjs(submittedAt).locale('id').format('LLLL')} WIB`,
                   },
                 ]}
                 records={record}
