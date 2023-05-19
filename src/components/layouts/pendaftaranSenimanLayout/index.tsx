@@ -10,7 +10,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const LandingPageLayout = ({ children }: LayoutProps) => {
+const PendaftaranSenimanLayout = ({ children }: LayoutProps) => {
   const { classes } = layoutStyle();
   return (
     <AppShell
@@ -24,4 +24,4 @@ const LandingPageLayout = ({ children }: LayoutProps) => {
   );
 };
 
-export default LandingPageLayout;
+export default PendaftaranSenimanLayout;
