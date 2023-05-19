@@ -1,5 +1,7 @@
+import { ApolloProvider } from '@apollo/client';
 import type { ColorScheme } from '@mantine/core';
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { theme } from 'mantine';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -9,6 +11,7 @@ import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 import '../styles/globals.css';
 
+import { client } from '@/graphql/apollo-client';
 import useScrollRestoration from '@/utils/hooks/detect-route/useScrollRestoration';
 import useTheme from '@/utils/hooks/useTheme';
 
@@ -68,20 +71,22 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
-      <RealViewportProvider>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            ...theme,
-            colorScheme: state.value as DeepPartial<ColorScheme>,
-          }}
-        >
-          <Component {...pageProps} />
-          <GoogleAnalytics trackPageViews />
-        </MantineProvider>
-      </RealViewportProvider>
+      <ApolloProvider client={client}>
+        <RealViewportProvider>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              ...theme,
+              colorScheme: state.value as DeepPartial<ColorScheme>,
+            }}
+          >
+            <Notifications position="top-right" notificationMaxHeight={400} />
+            <Component {...pageProps} />
+            <GoogleAnalytics trackPageViews />
+          </MantineProvider>
+        </RealViewportProvider>
+      </ApolloProvider>
     </>
   );
 }
