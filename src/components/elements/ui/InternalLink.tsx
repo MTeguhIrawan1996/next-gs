@@ -29,4 +29,4 @@ const InternalLink = ({ href, text, activeLink }: ILinkNavProps) => {
   );
 };
 
-export default InternalLink;
+export default React.memo(InternalLink);

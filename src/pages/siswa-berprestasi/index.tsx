@@ -1,4 +1,4 @@
-import { EmptyState } from '@/components';
+import { EmptyState } from '@/components/elements';
 import LandingPageLayout from '@/components/layouts/landingPage';
 
 import { NextPageWithLayout } from '../_app';

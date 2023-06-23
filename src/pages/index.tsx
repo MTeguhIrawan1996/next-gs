@@ -4,11 +4,7 @@ import LandingPageLayout from '@/components/layouts/landingPage';
 import { NextPageWithLayout } from './_app';
 
 const Home: NextPageWithLayout = () => {
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  return <LandingPage />;
 };
 
 export default Home;

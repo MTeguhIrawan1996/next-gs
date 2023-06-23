@@ -14,13 +14,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
-import InternalLink from '@/components/elements/InternalLink';
+import { InternalLink } from '@/components/elements';
 
 import layoutStyle from '@/styles/Layout';
 
 import GsmsLogo from '../../../../public/logo-gsms.png';
 
-const Links = [
+type LinksProps = {
+  title: string;
+  link: string;
+};
+
+const Links: LinksProps[] = [
   {
     title: 'Beranda',
     link: '/',
@@ -54,14 +59,22 @@ const Navbar = () => {
     return link;
   }, [router.pathname]);
 
-  const items = Links.map((link, i) => (
-    <InternalLink
-      href={link.link}
-      text={link.title}
-      key={i}
-      activeLink={activeLink}
-    />
-  ));
+  const linkCallback = React.useCallback(
+    (value: LinksProps, i: number) => {
+      const { link, title } = value;
+      return (
+        <InternalLink
+          href={link}
+          text={title}
+          key={i}
+          activeLink={activeLink}
+        />
+      );
+    },
+    [activeLink]
+  );
+
+  const items = Links.map(linkCallback);
 
   return (
     <Header height={80} className={classes.header}>

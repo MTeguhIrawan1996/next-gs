@@ -160,6 +160,17 @@ const layoutStyle = createStyles((theme) => ({
       paddingLeft: theme.spacing.lg,
     },
   },
+  breadcrumbStyle: {
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: theme.colors.dark[1],
+    fontSize: 12,
+    fontWeight: 400,
+    '&:hover': {
+      color: theme.colors.violet[6],
+      fontWeight: 600,
+    },
+  },
 }));
 
 export default layoutStyle;

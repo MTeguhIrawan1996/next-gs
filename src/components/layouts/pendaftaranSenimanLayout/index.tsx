@@ -1,6 +1,6 @@
 import { AppShell } from '@mantine/core';
 
-import { Footer } from '@/components';
+import { Footer } from '@/components/elements';
 
 import layoutStyle from '@/styles/Layout';
 
