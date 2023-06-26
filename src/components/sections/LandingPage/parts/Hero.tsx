@@ -5,7 +5,7 @@ import landingPageStyle from '@/styles/LandingPage';
 const Hero = () => {
   const { classes } = landingPageStyle();
   return (
-    <Stack className={classes.container}>
+    <Stack className={classes.container} w="100%">
       <Flex direction="column" gap="24px" justify="center" align="center">
         <Box className={classes.textBox}>
           <Title
