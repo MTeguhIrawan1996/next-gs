@@ -1,5 +1,6 @@
 import EmptyState from './Display/EmptyState';
 import Footer from './Display/Footer';
+import TitleContent from './Display/TitleContent';
 import Breadcrumb from './Global/Breadcrumb';
 import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
 import InnerWrapper from './Global/InnerWrapper';
@@ -27,6 +28,7 @@ export {
   RootWrapper,
   SearchBar,
   SelectInput,
+  TitleContent,
   VectorOne,
   VectorThree,
   VectorTwo,

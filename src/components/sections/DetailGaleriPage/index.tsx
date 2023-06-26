@@ -2,19 +2,11 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
 
-import {
-  RootWrapper,
-  TitleContent,
-  VectorOne,
-  VectorThree,
-  VectorTwo,
-} from '@/components/elements';
+import { RootWrapper } from '@/components/elements';
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
-import { GalleryBook } from './parts';
-
-const GalleryPage = () => {
+const DetailGalleryPage = () => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
     (state) => [state.setBreadcrumbs],
@@ -22,19 +14,19 @@ const GalleryPage = () => {
   );
 
   React.useEffect(() => {
-    setBreadcrumbs([{ label: 'Galeri', path: '/galeri' }]);
+    setBreadcrumbs([
+      { label: 'Galeri', path: '/galeri' },
+      { label: 'Detail Galeri', path: router.asPath },
+    ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
     <RootWrapper>
-      <VectorOne />
-      <TitleContent label="Galeri" />
-      <VectorTwo />
-      <GalleryBook />
-      <VectorThree />
+      {/* TODO DETAIL GALLERY */}
+      <div className="">detail page</div>
     </RootWrapper>
   );
 };
 
-export default GalleryPage;
+export default DetailGalleryPage;

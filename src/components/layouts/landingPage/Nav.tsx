@@ -54,8 +54,10 @@ const Navbar = () => {
   const smallScreen = useMediaQuery('(min-width: 62em)');
 
   const activeLink = React.useMemo(() => {
-    const path = router.pathname;
-    const link = Links.find((menu) => menu.link === path);
+    const pathArray = router.pathname.split('/');
+    const cleanedPath = `/${pathArray[1]}`;
+
+    const link = Links.find((menu) => menu.link === cleanedPath);
     return link;
   }, [router.pathname]);
 
