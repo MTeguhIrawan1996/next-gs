@@ -21,7 +21,7 @@ const LandingPageLayout = ({ children }: LayoutProps) => {
     <AppShell
       header={<Navbar />}
       footer={<Footer />}
-      py="xl"
+      padding="xs"
       className={classes.rootContainer}
     >
       <Box px={16} py={8} sx={{ zIndex: 1 }} pos="absolute">

@@ -12,9 +12,10 @@ const RootWrapper: React.FC<IRootWrapperProps> = ({ children }) => {
       direction="column"
       justify="center"
       align="flex-start"
-      gap="xl"
+      gap="lg"
       className="rootYPaddings"
       pos="relative"
+      // bg="red"
     >
       {children}
     </Flex>

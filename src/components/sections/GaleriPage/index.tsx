@@ -12,6 +12,8 @@ import TitleContent from '@/components/elements/Display/TitileContent';
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
+import { GalleryBook } from './parts';
+
 const GalleriPage = () => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
@@ -29,7 +31,7 @@ const GalleriPage = () => {
       <VectorOne />
       <TitleContent label="Galeri" />
       <VectorTwo />
-      <TitleContent label="Galeri" />
+      <GalleryBook />
       <VectorThree />
       <TitleContent label="Galeri" />
       <TitleContent label="Galeri" />

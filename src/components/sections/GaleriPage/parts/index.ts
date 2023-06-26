@@ -1,3 +1,3 @@
-import Header from './Header';
+import GalleryBook from './GalleryBook';
 
-export { Header };
+export { GalleryBook };
