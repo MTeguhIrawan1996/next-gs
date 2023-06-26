@@ -1,5 +1,6 @@
 import EmptyState from './Display/EmptyState';
 import Footer from './Display/Footer';
+import KeyValuePairs from './Display/KeyValuePair';
 import TitleContent from './Display/TitleContent';
 import Breadcrumb from './Global/Breadcrumb';
 import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
@@ -24,6 +25,7 @@ export {
   GSMSBoxWrapper,
   InnerWrapper,
   InternalLink,
+  KeyValuePairs,
   MultipleSelect,
   RootWrapper,
   SearchBar,

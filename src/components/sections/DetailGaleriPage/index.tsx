@@ -2,9 +2,11 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
 
-import { RootWrapper } from '@/components/elements';
+import { RootWrapper, VectorOne, VectorTwo } from '@/components/elements';
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
+
+import { SchoolInformation } from './parts';
 
 const DetailGalleryPage = () => {
   const router = useRouter();
@@ -23,8 +25,9 @@ const DetailGalleryPage = () => {
 
   return (
     <RootWrapper>
-      {/* TODO DETAIL GALLERY */}
-      <div className="">detail page</div>
+      <SchoolInformation />
+      <VectorOne />
+      <VectorTwo />
     </RootWrapper>
   );
 };
