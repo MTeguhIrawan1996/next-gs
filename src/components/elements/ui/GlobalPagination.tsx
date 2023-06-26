@@ -21,12 +21,17 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
 
   const calculateDataRange = React.useCallback(() => {
     if (currentPage && totalAllData) {
-      const startDatas = (currentPage - 1) * totalData + 1;
-      const endDatas = Math.min(currentPage * totalData, totalAllData);
+      const pageLength =
+        currentPage === totalPage && totalPage !== 1
+          ? (totalAllData - totalData) / (totalPage - 1)
+          : (totalPage * totalData) / totalPage;
+
+      const startDatas = (currentPage - 1) * pageLength + 1;
+      const endDatas = Math.min(currentPage * pageLength, totalAllData);
       setStartData(startDatas);
       setEndData(endDatas);
     }
-  }, [currentPage, totalAllData, totalData]);
+  }, [currentPage, totalAllData, totalData, totalPage]);
 
   React.useEffect(() => {
     calculateDataRange();

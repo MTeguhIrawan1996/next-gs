@@ -1,19 +1,13 @@
 import { LazyQueryExecFunction } from '@apollo/client';
 import { Icon } from '@iconify/react';
-import {
-  Box,
-  Button,
-  Flex,
-  Group,
-  Modal,
-  Pagination,
-  Text,
-} from '@mantine/core';
+import { Box, Button, Flex, Group, Modal, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { DataTable } from 'mantine-datatable';
 import * as React from 'react';
 import 'dayjs/locale/id';
+
+import { GlobalPagination } from '@/components/elements';
 
 import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
 
@@ -39,34 +33,9 @@ const ModalTable: React.FC<IModalTableProps> = ({
   getRecapSeniman,
 }) => {
   const [activePage, setPage] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState<number>(0);
-  const [startData, setStartData] = React.useState<number>(0);
-  const [endData, setEndData] = React.useState<number>(0);
   const value = data?.landingPageDinas;
   const record = value?.activityForms.data;
   const meta = value?.activityForms.meta;
-
-  React.useEffect(() => {
-    if (data && meta && meta.currentPage && meta.totalAllData) {
-      const perPage = 10;
-      const startDatas = (meta.currentPage - 1) * perPage + 1;
-      const endDatas = Math.min(meta.currentPage * perPage, meta.totalAllData);
-      setStartData(startDatas);
-      setEndData(endDatas);
-    }
-  }, [data, meta]);
-
-  React.useEffect(() => {
-    if (data && meta && meta.currentPage) {
-      setPage(meta.currentPage);
-    }
-  }, [data, meta]);
-
-  React.useEffect(() => {
-    if (data && meta && meta.totalPage) {
-      setTotalPage(meta.totalPage);
-    }
-  }, [data, meta]);
 
   React.useEffect(() => {
     if (data) {
@@ -90,7 +59,7 @@ const ModalTable: React.FC<IModalTableProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage]);
 
-  const onsetPage = async (key: number) => {
+  const onSetPage = (key: number) => {
     setPage(key);
   };
 
@@ -183,42 +152,15 @@ const ModalTable: React.FC<IModalTableProps> = ({
                 records={record}
               />
             </Box>
-            <Flex
-              w="100%"
-              direction="column"
-              justify="center"
-              align="flex-start"
-              py="md"
-              gap="md"
-            >
-              <Box>
-                <Text fw={400} fz={12} color="#969BA4">
-                  {startData}-{endData} dari {meta?.totalAllData}
-                </Text>
-              </Box>
-              <Box w="100%">
-                <Pagination.Root
-                  total={totalPage}
-                  value={activePage}
-                  onChange={(val) => onsetPage(val)}
-                  size="xs"
-                  styles={{
-                    control: {
-                      fontSize: '12px',
-                      fontWeight: 400,
-                    },
-                  }}
-                >
-                  <Group spacing={5} position="center" fw={400} fz={12}>
-                    <Pagination.First />
-                    <Pagination.Previous />
-                    <Pagination.Items />
-                    <Pagination.Next />
-                    <Pagination.Last />
-                  </Group>
-                </Pagination.Root>
-              </Box>
-            </Flex>
+            <Box w="100%">
+              <GlobalPagination
+                currentPage={meta?.currentPage ?? 0}
+                setPage={onSetPage}
+                totalAllData={meta?.totalAllData ?? 0}
+                totalData={meta?.totalData ?? 0}
+                totalPage={meta?.totalPage ?? 0}
+              />
+            </Box>
           </Flex>
         </Modal.Body>
       </Modal.Content>

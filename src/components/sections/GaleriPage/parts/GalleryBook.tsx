@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Stack, Text } from '@mantine/core';
+import { Card, Flex, Stack, Text } from '@mantine/core';
 import Image from 'next/image';
 import * as React from 'react';
 
@@ -16,7 +16,6 @@ import ImgExample from '../../../../../public/assets/example.png';
 
 const GalleryBook = () => {
   const [page, setPage] = React.useState<number>(1);
-  const [counter, setCounter] = React.useState<number>(1);
 
   return (
     <InnerWrapper>
@@ -81,19 +80,12 @@ const GalleryBook = () => {
               </Stack>
             </Card>
           </Flex>
-          <Button
-            onClick={() => {
-              setCounter((prev) => prev + 1);
-            }}
-          >
-            COunter + {counter}
-          </Button>
           <GlobalPagination
             setPage={setPage}
             currentPage={page}
-            totalAllData={120}
-            totalData={10}
-            totalPage={10}
+            totalAllData={11}
+            totalData={2}
+            totalPage={2}
           />
         </Stack>
       </GSMSBoxWrapper>
