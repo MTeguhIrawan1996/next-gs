@@ -33,9 +33,6 @@ const GalleriPage = () => {
       <VectorTwo />
       <GalleryBook />
       <VectorThree />
-      <TitleContent label="Galeri" />
-      <TitleContent label="Galeri" />
-      <TitleContent label="Galeri" />
     </RootWrapper>
   );
 };

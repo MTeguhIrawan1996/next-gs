@@ -1,13 +1,6 @@
 import { Select, SelectProps } from '@mantine/core';
 import * as React from 'react';
 
-// interface ISelectInputProps
-//   extends React.ForwardRefExoticComponent<
-//     SelectProps & React.RefAttributes<HTMLInputElement>
-//   > {
-//   readonly?: boolean;
-// }
-
 const SelectInput: React.FC<
   SelectProps & React.RefAttributes<HTMLInputElement>
 > = (props) => {
@@ -25,4 +18,4 @@ const SelectInput: React.FC<
   );
 };
 
-export default SelectInput;
+export default React.memo(SelectInput);

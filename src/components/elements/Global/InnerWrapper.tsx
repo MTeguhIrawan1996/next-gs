@@ -8,7 +8,13 @@ interface IInnerWrapperProps {
 
 const InnerWrapper: React.FC<IInnerWrapperProps> = ({ children }) => {
   return (
-    <Box w="100%" px="md" className="innerYPaddings" pos="relative">
+    <Box
+      w="100%"
+      px="md"
+      className="innerYPaddings"
+      pos="relative"
+      sx={{ zIndex: 1 }}
+    >
       <Container size="xl" className="paddings">
         {children}
       </Container>
