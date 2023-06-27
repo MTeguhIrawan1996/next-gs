@@ -206,14 +206,14 @@ const landingPageStyle = createStyles((theme) => ({
       width: 'auto',
     },
   },
-
-  // Detail Siswa Berprestasi Page
   rowToColumn: {
     flexDirection: 'column',
     [theme.fn.largerThan('sm')]: {
       flexDirection: 'row',
     },
   },
+
+  // Detail Siswa Berprestasi Page
   detailSiswaDinamisFlexPrimary: {
     borderRadius: 8,
     overflow: 'hidden',

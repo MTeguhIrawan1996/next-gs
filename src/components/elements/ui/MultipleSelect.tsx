@@ -1,6 +1,8 @@
 import { Flex, SelectProps } from '@mantine/core';
 import * as React from 'react';
 
+import landingPageStyle from '@/styles/LandingPage';
+
 import SelectInput from './SelectInput';
 
 interface IMultipleSelectProps {
@@ -10,6 +12,7 @@ interface IMultipleSelectProps {
 const MultipleSelect: React.FC<IMultipleSelectProps> = ({
   MultipleSelectProps,
 }) => {
+  const { classes } = landingPageStyle();
   const renderSelectItem = React.useCallback(
     (value: SelectProps, index: number) => {
       return <SelectInput {...value} sx={{ flex: 1 }} key={index} />;
@@ -21,7 +24,7 @@ const MultipleSelect: React.FC<IMultipleSelectProps> = ({
   const selectItems = MultipleSelectProps.map(renderSelectItem);
 
   return (
-    <Flex w="100%" gap="md">
+    <Flex w="100%" gap="md" className={classes.rowToColumn}>
       {selectItems}
     </Flex>
   );
