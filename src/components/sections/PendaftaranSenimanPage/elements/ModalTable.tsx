@@ -1,18 +1,14 @@
 import { LazyQueryExecFunction } from '@apollo/client';
 import { Icon } from '@iconify/react';
-import { Box, Button, Flex, Group, Modal, Text } from '@mantine/core';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { DataTable } from 'mantine-datatable';
+import { Box, Button, Flex, Modal, Text } from '@mantine/core';
 import * as React from 'react';
 import 'dayjs/locale/id';
 
-import { GlobalPagination } from '@/components/elements';
+import { GlobalDefaultTable, GlobalPagination } from '@/components/elements';
+
+import { dateFromat } from '@/utils/helper/dateFormat';
 
 import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
-
-dayjs.locale('id');
-dayjs.extend(localizedFormat);
 
 interface IModalTableProps {
   data?: GetRecapSenimanRes;
@@ -63,6 +59,34 @@ const ModalTable: React.FC<IModalTableProps> = ({
     setPage(key);
   };
 
+  const renderDataTable = React.useMemo(() => {
+    return (
+      <GlobalDefaultTable
+        tableProps={{
+          columns: [
+            {
+              title: 'Nama Seniman',
+              accessor: 'commonIdentity.name',
+              render: ({ commonIdentity }) => commonIdentity.name,
+            },
+            {
+              title: 'Alamat Email',
+              accessor: 'commonIdentity.email',
+              render: ({ commonIdentity }) => commonIdentity.email,
+            },
+            {
+              title: 'Tanggal Pengajuan',
+              accessor: 'submittedAt',
+              render: ({ submittedAt }) => dateFromat(submittedAt, 'LLLL WIB'),
+            },
+          ],
+          records: record,
+          fetching: loading,
+        }}
+      />
+    );
+  }, [record, loading]);
+
   return (
     <Modal.Root opened={isOpen} onClose={onCloseModal} size="80%" radius="lg">
       <Modal.Overlay />
@@ -104,54 +128,7 @@ const ModalTable: React.FC<IModalTableProps> = ({
         </Modal.Header>
         <Modal.Body>
           <Flex direction="column" justify="center" align="center" gap="xl">
-            <Box w="100%">
-              <DataTable
-                shadow="lg"
-                fontSize={12}
-                highlightOnHover
-                horizontalSpacing="sm"
-                verticalSpacing="sm"
-                verticalAlignment="center"
-                borderColor="#4C6EF5"
-                minHeight={150}
-                fetching={loading}
-                columns={[
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          NAMA SENIMAN
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'commonIdentity.name',
-                  },
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          ALAMAT EMAIL
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'commonIdentity.email',
-                  },
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          TANGGAL PENGAJUAN
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'submittedAt',
-                    render: ({ submittedAt }) =>
-                      `${dayjs(submittedAt).locale('id').format('LLLL')} WIB`,
-                  },
-                ]}
-                records={record}
-              />
-            </Box>
+            {renderDataTable}
             <Box w="100%">
               <GlobalPagination
                 currentPage={meta?.currentPage ?? 0}

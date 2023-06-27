@@ -15,10 +15,10 @@ interface IGlobalDefaultTableProps<T> {
   emptyTableStateProps?: EmptyTableStateProps;
 }
 
-const GlobalDefaultTable: React.FC<IGlobalDefaultTableProps<any>> = ({
+export default function GlobalDefaultTable<T>({
   tableProps,
   emptyTableStateProps,
-}) => {
+}: IGlobalDefaultTableProps<T>) {
   const {
     fetching,
     minHeight,
@@ -61,6 +61,4 @@ const GlobalDefaultTable: React.FC<IGlobalDefaultTableProps<any>> = ({
       ) : null}
     </Box>
   );
-};
-
-export default React.memo(GlobalDefaultTable);
+}
