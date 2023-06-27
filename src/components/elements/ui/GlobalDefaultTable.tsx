@@ -1,5 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { Box } from '@mantine/core';
+import { Box, createStyles } from '@mantine/core';
 import { DataTable, DataTableProps } from 'mantine-datatable';
 import * as React from 'react';
 
@@ -15,6 +15,13 @@ interface IGlobalDefaultTableProps<T> {
   emptyTableStateProps?: EmptyTableStateProps;
 }
 
+const useStyles = createStyles((theme) => ({
+  table: {
+    border: `1px solid #FFFF`,
+    borderRadius: theme.radius.lg,
+  },
+}));
+
 export default function GlobalDefaultTable<T>({
   tableProps,
   emptyTableStateProps,
@@ -29,6 +36,8 @@ export default function GlobalDefaultTable<T>({
     emptyState,
     ...rest
   } = tableProps;
+  const { classes } = useStyles();
+
   return (
     <Box w="100%" sx={{ zIndex: 1, backgroundColor: '#FFFFFF' }}>
       <DataTable
@@ -37,6 +46,7 @@ export default function GlobalDefaultTable<T>({
             textTransform: 'uppercase',
           },
         }}
+        className={classes.table}
         fontSize={12}
         horizontalSpacing="xl"
         verticalSpacing="sm"

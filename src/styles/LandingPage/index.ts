@@ -28,7 +28,7 @@ const landingPageStyle = createStyles((theme) => ({
     },
   },
   bannerContainer: {
-    padding: '20px 5px 0px 5px',
+    padding: '20px 5px 20px 5px',
     position: 'relative',
   },
   bannerBox: {

@@ -6,6 +6,7 @@ import TitleContent from './Display/TitleContent';
 import Breadcrumb from './Global/Breadcrumb';
 import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
 import InnerWrapper from './Global/InnerWrapper';
+import LandingPageSectionWrapper from './Global/LandingPageSectionWrapper';
 import RootWrapper from './Global/RootWrapper';
 import CardImage from './ui/CardImage';
 import GlobalDefaultTable from './ui/GlobalDefaultTable';
@@ -31,6 +32,7 @@ export {
   InnerWrapper,
   InternalLink,
   KeyValuePairs,
+  LandingPageSectionWrapper,
   MultipleSelect,
   NextImageFill,
   RootWrapper,

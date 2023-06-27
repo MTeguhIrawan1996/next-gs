@@ -12,17 +12,22 @@ type ILinkNavProps = {
   href: string;
   text: string;
   activeLink?: IActiveProps;
+  brandLink?: boolean;
 };
 
-const InternalLink = ({ href, text, activeLink }: ILinkNavProps) => {
+const InternalLink = ({ href, text, activeLink, brandLink }: ILinkNavProps) => {
   const { classes, cx } = layoutStyle();
 
   return (
     <Link
       href={href}
-      className={cx(classes.link, {
-        [classes.linkActive]: activeLink?.link === href,
-      })}
+      className={cx(
+        classes.link,
+        {
+          [classes.linkActive]: activeLink?.link === href,
+        },
+        { [classes.propsInternalLink]: brandLink }
+      )}
     >
       {text}
     </Link>

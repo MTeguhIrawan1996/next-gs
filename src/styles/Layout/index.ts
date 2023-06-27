@@ -75,6 +75,9 @@ const layoutStyle = createStyles((theme) => ({
       padding: theme.spacing.md,
     },
   },
+  propsInternalLink: {
+    color: theme.colors.violet[6],
+  },
   linkActive: {
     '&, &:hover': {
       color: theme.colors.violet[6],

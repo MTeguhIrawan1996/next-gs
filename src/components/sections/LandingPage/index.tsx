@@ -12,7 +12,7 @@ import {
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
-import { Banner, Hero, Information } from './parts';
+import { Banner, Berita, Galeri, Hero, SiswaBerprestasi } from './parts';
 
 const LandingPage = () => {
   const router = useRouter();
@@ -20,6 +20,7 @@ const LandingPage = () => {
     (state) => [state.setBreadcrumbs],
     shallow
   );
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
     offset: 60,
   });
@@ -35,7 +36,9 @@ const LandingPage = () => {
       <Banner scrollIntoView={() => scrollIntoView({ alignment: 'center' })} />
       <Hero />
       <VectorTwo />
-      <Information targetRef={targetRef} />
+      <Galeri />
+      <Berita />
+      <SiswaBerprestasi />
       <VectorThree />
     </RootWrapper>
   );

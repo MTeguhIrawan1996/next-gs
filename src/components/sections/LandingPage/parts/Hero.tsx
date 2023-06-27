@@ -1,11 +1,13 @@
-import { Box, Flex, Stack, Text, Title } from '@mantine/core';
+import { Box, Flex, Text, Title } from '@mantine/core';
+
+import { InnerWrapper } from '@/components/elements';
 
 import landingPageStyle from '@/styles/LandingPage';
 
 const Hero = () => {
   const { classes } = landingPageStyle();
   return (
-    <Stack className={classes.container} w="100%">
+    <InnerWrapper>
       <Flex direction="column" gap="24px" justify="center" align="center">
         <Box className={classes.textBox}>
           <Title
@@ -29,7 +31,7 @@ const Hero = () => {
           </Text>
         </Box>
       </Flex>
-    </Stack>
+    </InnerWrapper>
   );
 };
 
