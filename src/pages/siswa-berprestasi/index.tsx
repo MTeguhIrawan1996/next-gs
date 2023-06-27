@@ -1,14 +1,10 @@
-import { EmptyState } from '@/components/elements';
+import { SiswaBerprestasiPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
 
 import { NextPageWithLayout } from '../_app';
 
 const SiswaBerprestasi: NextPageWithLayout = () => {
-  return (
-    <>
-      <EmptyState />
-    </>
-  );
+  return <SiswaBerprestasiPage />;
 };
 
 export default SiswaBerprestasi;
