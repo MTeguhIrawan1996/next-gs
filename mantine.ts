@@ -2,6 +2,7 @@ import { MantineProviderProps } from '@mantine/core';
 
 export const theme: MantineProviderProps['theme'] = {
   fontFamily: 'Inter, sans-serif',
+  spacing: { xs: '12px', sm: '16px', md: '24px', lg: '32px', xl: '40px' },
   breakpoints: {
     xs: '36em',
     sm: '48em',
@@ -23,10 +24,11 @@ export const theme: MantineProviderProps['theme'] = {
     },
   },
   fontSizes: {
-    xs: '16px',
-    sm: '18px',
-    md: '20px',
-    lg: '23px',
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '18px',
+    xl: '20px',
   },
   headings: {
     // properties for all headings\
@@ -70,7 +72,7 @@ export const theme: MantineProviderProps['theme'] = {
       paddingTop: '0.5rem',
     },
     '.paddings': {
-      padding: theme.spacing.lg,
+      padding: theme.spacing.md,
     },
     '.textBox': {
       width: '100%',

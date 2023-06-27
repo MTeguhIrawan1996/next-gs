@@ -1,14 +1,10 @@
-import { EmptyState } from '@/components';
+import { GalleryPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
 
 import { NextPageWithLayout } from '../_app';
 
 const Galeri: NextPageWithLayout = () => {
-  return (
-    <>
-      <EmptyState />
-    </>
-  );
+  return <GalleryPage />;
 };
 
 export default Galeri;

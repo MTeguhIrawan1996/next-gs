@@ -13,7 +13,7 @@ const Banner: React.FC<IBannerProps> = ({ scrollIntoView }) => {
   const { classes } = landingPageStyle();
 
   return (
-    <Stack className={classes.bannerContainer} align="center">
+    <Stack className={classes.bannerContainer} align="center" w="100%">
       <Box className={classes.bannerBox} onClick={() => scrollIntoView()}>
         <Image
           src={BannerImg}

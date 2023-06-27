@@ -1,8 +1,11 @@
-import { AppShell } from '@mantine/core';
+import { AppShell, Box } from '@mantine/core';
+import * as React from 'react';
+import { shallow } from 'zustand/shallow';
 
-import { Footer } from '@/components';
+import { Breadcrumb, Footer } from '@/components/elements';
 
 import layoutStyle from '@/styles/Layout';
+import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
 import Navbar from './Nav';
 
@@ -12,6 +15,8 @@ type LayoutProps = {
 
 const LandingPageLayout = ({ children }: LayoutProps) => {
   const { classes } = layoutStyle();
+  const [breadcrumbs] = useBreadcrumbs((state) => [state.breadcrumbs], shallow);
+
   return (
     <AppShell
       header={<Navbar />}
@@ -19,6 +24,9 @@ const LandingPageLayout = ({ children }: LayoutProps) => {
       padding="xs"
       className={classes.rootContainer}
     >
+      <Box px={16} py={8} sx={{ zIndex: 1 }} pos="absolute">
+        <Breadcrumb breadcrumbs={breadcrumbs} />
+      </Box>
       {children}
     </AppShell>
   );

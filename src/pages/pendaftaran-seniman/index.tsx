@@ -4,11 +4,7 @@ import PendaftaranSenimanLayout from '@/components/layouts/pendaftaranSenimanLay
 import { NextPageWithLayout } from '../_app';
 
 const PendaftaranSeniman: NextPageWithLayout = () => {
-  return (
-    <>
-      <PendaftaranSenimanPage />
-    </>
-  );
+  return <PendaftaranSenimanPage />;
 };
 
 export default PendaftaranSeniman;

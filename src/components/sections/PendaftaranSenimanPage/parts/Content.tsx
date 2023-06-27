@@ -43,7 +43,7 @@ const Content = () => {
   };
 
   return (
-    <Box w="100%" px="xl" className="innerYPaddings">
+    <Box w="100%" px="md" className="innerYPaddings">
       <Container size="xl" className="paddings" mb={120}>
         <Flex align="center" justify="center">
           <Table onOpenModal={onOpenModal} />

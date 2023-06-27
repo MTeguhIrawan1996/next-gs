@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 import emptyState from '@/styles/EmptyState';
 
-import EmptyImg from '../../../public/assets/emptystate.png';
-import Vector1 from '../../../public/vector1.svg';
+import EmptyImg from '../../../../public/assets/emptystate.png';
+import Vector1 from '../../../../public/vector1.svg';
 
 const EmptyState = () => {
   const { classes } = emptyState();
