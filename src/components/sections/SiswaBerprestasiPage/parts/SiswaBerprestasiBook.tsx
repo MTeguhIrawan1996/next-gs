@@ -1,4 +1,5 @@
 import { Stack } from '@mantine/core';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import {
@@ -93,6 +94,7 @@ const companies = [
 ];
 
 const SiswaBerprestasiBook = () => {
+  const router = useRouter();
   const [page, setPage] = React.useState<number>(1);
 
   return (
@@ -104,11 +106,13 @@ const SiswaBerprestasiBook = () => {
             tableProps={{
               columns: [
                 { accessor: 'name', title: 'Nama Siswa' },
-                { accessor: 'streetAddress' },
-                { accessor: 'city' },
-                { accessor: 'state' },
+                { accessor: 'streetAddress', title: 'Tahun Mengikuti GSMS' },
+                { accessor: 'city', title: 'Prestasi' },
               ],
               records: companies,
+              onRowClick: ({ id }) => {
+                router.push(`/siswa-berprestasi/${id}`);
+              },
             }}
           />
           <GlobalPagination

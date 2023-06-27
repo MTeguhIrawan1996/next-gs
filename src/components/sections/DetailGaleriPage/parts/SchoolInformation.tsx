@@ -26,7 +26,6 @@ const SchoolInformation: React.FC<ISchoolInformationProps> = () => {
             </Text>
             <Box w="95%" mx="auto">
               <KeyValuePairs
-                valueSpan={2}
                 data={[
                   {
                     key: 'Seniman',
@@ -51,8 +50,13 @@ const SchoolInformation: React.FC<ISchoolInformationProps> = () => {
             </Box>
           </Stack>
         </GSMSBoxWrapper>
-        <Paper bg="gray.1" radius="lg">
-          <Box w="60%" h="420px" mx="auto" pos="relative">
+        <Paper bg="gray.1" radius="lg" sx={{ overflow: 'hidden' }}>
+          <Box
+            w={{ base: '100%', sm: '60%' }}
+            h="420px"
+            mx="auto"
+            pos="relative"
+          >
             <Image
               src={ImgExample}
               quality={100}

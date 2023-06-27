@@ -12,6 +12,7 @@ import GlobalDefaultTable from './ui/GlobalDefaultTable';
 import GlobalPagination from './ui/GlobalPagination';
 import InternalLink from './ui/InternalLink';
 import MultipleSelect from './ui/MultipleSelect';
+import NextImageFill from './ui/NextImageFill';
 import SearchBar from './ui/SearchBar';
 import SelectInput from './ui/SelectInput';
 import VectorOne from './Vector/VectorOne';
@@ -31,6 +32,7 @@ export {
   InternalLink,
   KeyValuePairs,
   MultipleSelect,
+  NextImageFill,
   RootWrapper,
   SearchBar,
   SelectInput,

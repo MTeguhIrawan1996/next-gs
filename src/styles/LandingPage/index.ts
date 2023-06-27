@@ -206,6 +206,51 @@ const landingPageStyle = createStyles((theme) => ({
       width: 'auto',
     },
   },
+
+  // Detail Siswa Berprestasi Page
+  rowToColumn: {
+    flexDirection: 'column',
+    [theme.fn.largerThan('sm')]: {
+      flexDirection: 'row',
+    },
+  },
+  detailSiswaDinamisFlexPrimary: {
+    borderRadius: 8,
+    overflow: 'hidden',
+    height: 240,
+    position: 'relative',
+    width: 240,
+    [theme.fn.largerThan('lg')]: {
+      flex: 2.5,
+    },
+  },
+
+  // KEY VALUE PAIR
+
+  keyDefaultSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 2,
+    },
+  },
+  valueDefaultSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 10,
+    },
+  },
+  keySectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 3,
+    },
+  },
+  valueSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 9,
+    },
+  },
 }));
 
 export default landingPageStyle;

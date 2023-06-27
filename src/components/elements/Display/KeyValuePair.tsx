@@ -1,6 +1,6 @@
 import {
-  ColSpan,
-  Grid,
+  Box,
+  Flex,
   MantineNumberSize,
   Stack,
   Text,
@@ -8,10 +8,10 @@ import {
 } from '@mantine/core';
 import React from 'react';
 
+import landingPageStyle from '@/styles/LandingPage';
+
 interface Props {
   fetching?: boolean;
-  valueSpan?: ColSpan | undefined;
-  horizontalSpacing?: MantineNumberSize;
   verticalSpacing?: MantineNumberSize;
   justify?: 'each-left' | 'tight' | 'apart' | 'each-left' | 'each-right';
   data: {
@@ -20,8 +20,11 @@ interface Props {
   }[];
   keyTextProps?: TextProps;
   valueTextProps?: TextProps;
+  classNameKey?: string;
+  classNameValue?: string;
 }
 const KeyValuePairs: React.FC<Props> = (props) => {
+  const { classes } = landingPageStyle();
   return (
     <Stack spacing={props.verticalSpacing ?? 6}>
       {props.data.map((v, index) => {
@@ -39,35 +42,24 @@ const KeyValuePairs: React.FC<Props> = (props) => {
           );
         }
         return (
-          <Grid gutter={props.horizontalSpacing} key={index}>
-            <Grid.Col span={props.valueSpan ?? 4}>
-              <Text
-                // className={typo.bodSm}
-                fz={12}
-                fw={300}
-                c="dark.4"
-                {...props.keyTextProps}
-                align={
-                  props.justify === 'each-right' || props.justify === 'apart'
-                    ? 'right'
-                    : 'left'
-                }
-              >
+          <Flex key={index}>
+            <Box
+              className={props.classNameKey ?? classes.keyDefaultSectionPrimary}
+            >
+              <Text fz={12} fw={300} c="dark.4">
                 {v.key}
               </Text>
-            </Grid.Col>
-            <Grid.Col span="auto">
-              <Text
-                // className={typo.bodSm}
-                fz={12}
-                c="dark.6"
-                {...props.valueTextProps}
-                align={props.justify === 'each-right' ? 'right' : 'left'}
-              >
+            </Box>
+            <Box
+              className={
+                props.classNameValue ?? classes.valueDefaultSectionPrimary
+              }
+            >
+              <Text fz={12} c="dark.6">
                 {v.value}
               </Text>
-            </Grid.Col>
-          </Grid>
+            </Box>
+          </Flex>
         );
       })}
     </Stack>
