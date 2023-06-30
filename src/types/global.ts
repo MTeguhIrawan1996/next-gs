@@ -6,3 +6,8 @@ export interface IMeta {
   totalData: number | null;
   totalAllData: number | null;
 }
+
+export interface MResponse<T> {
+  meta: IMeta;
+  data: T[];
+}
