@@ -8,6 +8,7 @@ import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
 import InnerWrapper from './Global/InnerWrapper';
 import LandingPageSectionWrapper from './Global/LandingPageSectionWrapper';
 import RootWrapper from './Global/RootWrapper';
+import KeyValueSkeleton from './Skeleton/KeyValueSkeleton';
 import CardImage from './ui/CardImage';
 import GlobalDefaultTable from './ui/GlobalDefaultTable';
 import GlobalPagination from './ui/GlobalPagination';
@@ -32,6 +33,7 @@ export {
   InnerWrapper,
   InternalLink,
   KeyValuePairs,
+  KeyValueSkeleton,
   LandingPageSectionWrapper,
   MultipleSelect,
   NextImageFill,

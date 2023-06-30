@@ -1,5 +1,14 @@
 export type DinasLevel = 'province' | 'regency';
 
+export interface IPhotos {
+  id: string;
+  path: string;
+  filename: string;
+  url: string;
+  originalFilename: string;
+  mime: string;
+}
+
 export interface IMeta {
   currentPage: number | null;
   totalPage: number | null;

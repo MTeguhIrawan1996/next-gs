@@ -23,6 +23,9 @@ const moduleExports = {
 
     return config;
   },
+  images: {
+    domains: [`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}`],
+  },
   i18n: {
     locales: ['id'],
     defaultLocale: 'id',

@@ -16,7 +16,7 @@ interface Props {
   justify?: 'each-left' | 'tight' | 'apart' | 'each-left' | 'each-right';
   data: {
     key: string;
-    value?: string;
+    value?: string | number;
   }[];
   keyTextProps?: TextProps;
   valueTextProps?: TextProps;
