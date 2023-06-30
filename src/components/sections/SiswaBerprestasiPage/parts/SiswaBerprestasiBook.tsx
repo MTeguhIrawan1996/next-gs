@@ -30,7 +30,7 @@ const SiswaBerprestasiBook = () => {
     variables: {
       page: page,
       limit: 5,
-      orderBy: null,
+      orderBy: 'activityYear',
       orderDir: 'desc',
       search: searchQuery,
     },
