@@ -9,6 +9,14 @@ export interface IPhotos {
   mime: string;
 }
 
+export interface IFilterGlobalRequest {
+  page: number | null;
+  limit: number | null;
+  search: string | null;
+  orderBy: string | null;
+  orderDir: string | null;
+}
+
 export interface IMeta {
   currentPage: number | null;
   totalPage: number | null;

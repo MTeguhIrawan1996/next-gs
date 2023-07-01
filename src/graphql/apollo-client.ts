@@ -6,8 +6,12 @@ const httpLink = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_GRAPHQL_API_URL}`,
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
+    const blackList = ['ReadAllProvincies', 'ReadAllRegencies'];
+    if (blackList.includes(operation.operationName)) {
+      return;
+    }
     graphQLErrors.forEach(() =>
       notifications.show({
         color: 'red',
