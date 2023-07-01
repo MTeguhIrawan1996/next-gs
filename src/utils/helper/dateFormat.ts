@@ -11,6 +11,7 @@ export const dateFromat = (
   format?:
     | 'DD'
     | 'LL'
+    | 'dddd, LL'
     | 'LLLL WIB'
     | 'hh:mm WIB'
     | 'DD, LL'

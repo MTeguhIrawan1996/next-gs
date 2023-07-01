@@ -16,7 +16,6 @@ const NextImageFill: React.FC<INextImageFillProps> = ({ src, alt }) => {
       alt={alt}
       fill
       style={{
-        objectFit: 'cover',
         backgroundPosition: 'center',
       }}
       placeholder="blur"

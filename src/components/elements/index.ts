@@ -8,6 +8,7 @@ import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
 import InnerWrapper from './Global/InnerWrapper';
 import LandingPageSectionWrapper from './Global/LandingPageSectionWrapper';
 import RootWrapper from './Global/RootWrapper';
+import CardImageSkeleton from './Skeleton/CardImageSkeleton';
 import KeyValueSkeleton from './Skeleton/KeyValueSkeleton';
 import CardImage from './ui/CardImage';
 import GlobalDefaultTable from './ui/GlobalDefaultTable';
@@ -24,6 +25,7 @@ import VectorTwo from './Vector/VectorTwo';
 export {
   Breadcrumb,
   CardImage,
+  CardImageSkeleton,
   EmptyState,
   EmptyTableState,
   Footer,
