@@ -122,7 +122,7 @@ const BeritaBook = () => {
   }, []);
 
   const renderArticles = React.useCallback((value: Articles, index: number) => {
-    const { title, publishedAt, featureImage } = value;
+    const { title, publishedAt, featureImage, slug } = value;
     return (
       <CardImage
         enableDate
@@ -130,6 +130,7 @@ const BeritaBook = () => {
         label={title}
         labelDate={publishedAt}
         imageProps={featureImage}
+        href={`/berita/${slug}`}
       />
     );
   }, []);

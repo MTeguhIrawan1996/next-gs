@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import { IPhotos } from '@/types/global';
+import { IFile } from '@/types/global';
 
 export const READ_ONE_ACHIEVING_STUNDENT = gql`
   query ReadOneLandingPageHightAchievingStudent($id: String!) {
@@ -32,7 +32,7 @@ export const READ_ONE_ACHIEVING_STUNDENT = gql`
   }
 `;
 
-export interface AchievingStundet {
+export interface AchievingStudent {
   id: string;
   nisn: string;
   name: string;
@@ -40,14 +40,14 @@ export interface AchievingStundet {
   gsmsSchool: string;
   school: string;
   achievement: string;
-  photo: IPhotos;
-  achievementPhotos: IPhotos[];
+  photo: IFile;
+  achievementPhotos: IFile[];
 }
 
-export interface AchievingStundetResponse {
-  landingPageHighAchievingStudent: AchievingStundet;
+export interface AchievingStudentResponse {
+  landingPageHighAchievingStudent: AchievingStudent;
 }
 
-export interface AchievingStundetRequest {
+export interface AchievingStudentRequest {
   id: string;
 }

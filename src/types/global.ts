@@ -1,6 +1,6 @@
 export type DinasLevel = 'province' | 'regency';
 
-export interface IPhotos {
+export interface IFile {
   id: string;
   path: string;
   filename: string;

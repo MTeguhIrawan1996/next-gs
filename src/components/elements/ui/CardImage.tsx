@@ -7,13 +7,14 @@ import { dateFromat } from '@/utils/helper/dateFormat';
 
 import NextImageFill from './NextImageFill';
 
-import { IPhotos } from '@/types/global';
+import { IFile } from '@/types/global';
 
 interface ICardImageProps {
   enableDate?: boolean;
   labelDate?: string;
   label?: string;
-  imageProps?: IPhotos;
+  imageProps?: IFile;
+  href?: string;
 }
 
 const CardImage: React.FC<ICardImageProps> = ({
@@ -21,11 +22,12 @@ const CardImage: React.FC<ICardImageProps> = ({
   label,
   labelDate,
   imageProps,
+  href,
 }) => {
   return (
     <Card shadow="xs" padding={0} radius="lg" withBorder w={320}>
       <Card.Section>
-        <Link href="/galeri/1">
+        <Link href={href ?? ''}>
           <Box h={320} w="100%" pos="relative">
             {imageProps ? (
               <NextImageFill src={imageProps.url} alt={imageProps.filename} />

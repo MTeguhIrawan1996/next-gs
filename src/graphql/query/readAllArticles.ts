@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import { IFilterGlobalRequest, IPhotos, MResponse } from '@/types/global';
+import { IFile, IFilterGlobalRequest, MResponse } from '@/types/global';
 
 export const READ_ALL_ARTICLES = gql`
   query ReadALLArticles(
@@ -52,7 +52,7 @@ export interface Articles {
   title: string;
   slug: string;
   publishedAt: string;
-  featureImage: IPhotos;
+  featureImage: IFile;
 }
 
 export interface ArticlesResponse {

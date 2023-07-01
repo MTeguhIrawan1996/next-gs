@@ -12,13 +12,13 @@ import {
 } from '@/components/elements';
 
 import {
-  AchievingStundetRequest,
-  AchievingStundetResponse,
+  AchievingStudentRequest,
+  AchievingStudentResponse,
   READ_ONE_ACHIEVING_STUNDENT,
 } from '@/graphql/query/readOneAchievingStudent';
 import landingPageStyle from '@/styles/LandingPage';
 
-import { IPhotos } from '@/types/global';
+import { IFile } from '@/types/global';
 
 const DetailSiswaBerprestasiBook = () => {
   const router = useRouter();
@@ -26,8 +26,8 @@ const DetailSiswaBerprestasiBook = () => {
   const studentId = router.query.idSiswa as string;
 
   const [getStudent, { data, loading }] = useLazyQuery<
-    AchievingStundetResponse,
-    AchievingStundetRequest
+    AchievingStudentResponse,
+    AchievingStudentRequest
   >(READ_ONE_ACHIEVING_STUNDENT, {
     onError: (err: ApolloError) => {
       return err;
@@ -51,7 +51,7 @@ const DetailSiswaBerprestasiBook = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studentId]);
 
-  const achievmentDoc = React.useCallback((value: IPhotos, i: number) => {
+  const achievmentDoc = React.useCallback((value: IFile, i: number) => {
     const { url, filename } = value;
     return (
       <Box
