@@ -75,19 +75,22 @@ const SiswaBerprestasiBook = () => {
             }}
           />
           {renderSiswaTable}
-          <GlobalPagination
-            setPage={setPage}
-            currentPage={page}
-            totalAllData={
-              data?.landingPageHighAchievingStudents.meta.totalAllData as number
-            }
-            totalData={
-              data?.landingPageHighAchievingStudents.meta.totalData as number
-            }
-            totalPage={
-              data?.landingPageHighAchievingStudents.meta.totalPage as number
-            }
-          />
+          {data?.landingPageHighAchievingStudents.data.length ? (
+            <GlobalPagination
+              setPage={setPage}
+              currentPage={page}
+              totalAllData={
+                data?.landingPageHighAchievingStudents.meta
+                  .totalAllData as number
+              }
+              totalData={
+                data?.landingPageHighAchievingStudents.meta.totalData as number
+              }
+              totalPage={
+                data?.landingPageHighAchievingStudents.meta.totalPage as number
+              }
+            />
+          ) : null}
         </Stack>
       </GSMSBoxWrapper>
     </InnerWrapper>

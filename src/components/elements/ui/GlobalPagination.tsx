@@ -20,6 +20,10 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
   const [endData, setEndData] = React.useState<number>(0);
 
   const calculateDataRange = React.useCallback(() => {
+    if (totalData === 0 || totalAllData === 0) {
+      setStartData(0);
+      setEndData(0);
+    }
     if (currentPage && totalAllData) {
       const pageLength =
         currentPage === totalPage && totalPage !== 1
@@ -46,7 +50,7 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
       </Grid.Col>
       <Grid.Col span={6}>
         <Pagination.Root
-          total={totalPage}
+          total={totalPage === 0 ? 1 : totalPage}
           value={currentPage}
           onChange={setPage}
           size="xs"

@@ -55,6 +55,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-map-gl": "7.0.25",
+    "react-player": "^2.12.0",
     "react-query": "^3.39.3",
     "unpic": "^3.0.1",
     "xstate": "^4.37.0",

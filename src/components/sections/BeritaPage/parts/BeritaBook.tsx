@@ -6,6 +6,7 @@ import * as React from 'react';
 import {
   CardImage,
   CardImageSkeleton,
+  EmptyTableState,
   GlobalPagination,
   GSMSBoxWrapper,
   InnerWrapper,
@@ -139,19 +140,23 @@ const BeritaBook = () => {
           <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
             {articlesLoading ? <CardImageSkeleton /> : articlesItem}
           </Flex>
-          <GlobalPagination
-            setPage={setPage}
-            currentPage={page}
-            totalAllData={
-              articlesData?.landingPageArticles.meta.totalAllData as number
-            }
-            totalData={
-              articlesData?.landingPageArticles.meta.totalData as number
-            }
-            totalPage={
-              articlesData?.landingPageArticles.meta.totalPage as number
-            }
-          />
+          {articlesItem?.length ? (
+            <GlobalPagination
+              setPage={setPage}
+              currentPage={page}
+              totalAllData={
+                articlesData?.landingPageArticles.meta.totalAllData as number
+              }
+              totalData={
+                articlesData?.landingPageArticles.meta.totalData as number
+              }
+              totalPage={
+                articlesData?.landingPageArticles.meta.totalPage as number
+              }
+            />
+          ) : (
+            <EmptyTableState />
+          )}
         </Stack>
       </GSMSBoxWrapper>
     </InnerWrapper>
