@@ -4,6 +4,7 @@ import DetailSiswaBerprestasiPage from './sections/DetailSiswaBerprestasiPage';
 import GalleryPage from './sections/GaleriPage';
 import LandingPage from './sections/LandingPage';
 import PendaftaranSenimanPage from './sections/PendaftaranSenimanPage';
+import PetaKegiatanPage from './sections/PetaKegiatanPage';
 import SiswaBerprestasiPage from './sections/SiswaBerprestasiPage/Index';
 
 export {
@@ -13,5 +14,6 @@ export {
   GalleryPage,
   LandingPage,
   PendaftaranSenimanPage,
+  PetaKegiatanPage,
   SiswaBerprestasiPage,
 };
