@@ -9,14 +9,16 @@ import {
   Text,
   TypographyStylesProvider,
 } from '@mantine/core';
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { GSMSBoxWrapper, InnerWrapper } from '@/components/elements';
+import {
+  GSMSBoxWrapper,
+  InnerWrapper,
+  NextImageFill,
+} from '@/components/elements';
 
 import { ArticleResponse } from '@/graphql/query/readOneArticle';
 import { dateFromat } from '@/utils/helper/dateFormat';
-import { rgbDataURL } from '@/utils/helper/imagePlaceholder';
 
 interface IProps {
   data: ArticleResponse;
@@ -55,20 +57,9 @@ const DetailBeritaBook: React.FC<IProps> = ({ data }) => {
             sx={{ borderRadius: '8px', overflow: 'hidden' }}
             pos="relative"
           >
-            <Image
+            <NextImageFill
               src={featureImage ? featureImage.url : '/'}
-              quality={100}
               alt={featureImage ? featureImage.filename : 'not found'}
-              fill
-              style={{
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-              }}
-              placeholder="blur"
-              blurDataURL={rgbDataURL(234, 233, 238)}
-              sizes="(max-width: 768px) 100vw,
-        (max-width: 1200px) 50vw,
-        33vw"
             />
           </Box>
           <TypographyStylesProvider>
