@@ -4,14 +4,16 @@ import { shallow } from 'zustand/shallow';
 
 import { RootWrapper, VectorOne, VectorTwo } from '@/components/elements';
 
-import { GalleryOneResponse } from '@/graphql/query/readOneGalleryLandingPage';
+import { ArticleResponse } from '@/graphql/query/readOneArticle';
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
-import { SchoolInformation } from './parts';
+import { DetailBeritaBook } from './parts';
 
-const DetailGalleryPage: React.FC<{ data: GalleryOneResponse }> = ({
-  data,
-}) => {
+interface IProps {
+  data: ArticleResponse;
+}
+
+const DetailBeritaPage: React.FC<IProps> = ({ data }) => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
     (state) => [state.setBreadcrumbs],
@@ -20,19 +22,18 @@ const DetailGalleryPage: React.FC<{ data: GalleryOneResponse }> = ({
 
   React.useEffect(() => {
     setBreadcrumbs([
-      { label: 'Galeri', path: '/galeri' },
-      { label: 'Detail Galeri', path: router.asPath },
+      { label: 'Berita', path: '/berita' },
+      { label: 'Detail Berita', path: router.asPath },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
-
   return (
     <RootWrapper>
-      <SchoolInformation data={data} />
       <VectorOne />
+      <DetailBeritaBook data={data} />
       <VectorTwo />
     </RootWrapper>
   );
 };
 
-export default DetailGalleryPage;
+export default DetailBeritaPage;

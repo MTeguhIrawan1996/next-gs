@@ -1,8 +1,10 @@
-import { Group, Stack, Title } from '@mantine/core';
+import { Box, Button, Center, Stack, Title } from '@mantine/core';
+import Link from 'next/link';
 import * as React from 'react';
 
+import landingPageStyle from '@/styles/LandingPage';
+
 import InnerWrapper from './InnerWrapper';
-import InternalLink from '../ui/InternalLink';
 
 interface IAppProps {
   children: React.ReactNode;
@@ -15,16 +17,29 @@ const LandingPageSectionWrapper: React.FC<IAppProps> = ({
   title,
   href,
 }) => {
+  const { classes } = landingPageStyle();
+
   return (
     <InnerWrapper>
-      <Stack spacing="lg">
-        <Group spacing="xs">
-          <Title order={3} fz={{ base: 16, xs: 24 }} fw={700} color="dark.6">
+      <Stack spacing="lg" align="center">
+        <Box className={classes.textBox}>
+          <Title
+            order={1}
+            color="dark.6"
+            className={classes.primaryText}
+            align="center"
+          >
             {title}
           </Title>
-          <InternalLink text="Lihat Semua" href={href} brandLink />
-        </Group>
+        </Box>
         {children}
+        <Center className={classes.textBox}>
+          <Link href={href}>
+            <Button variant="light" color="brand.6" fz={14} fw={400}>
+              Lihat semua
+            </Button>
+          </Link>
+        </Center>
       </Stack>
     </InnerWrapper>
   );

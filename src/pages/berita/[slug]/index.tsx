@@ -1,38 +1,37 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import * as React from 'react';
 
-import { DetailGalleryPage } from '@/components';
+import { DetailBeritaPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
 
 import { client } from '@/graphql/apollo-client';
 import {
-  GalleryOneRequest,
-  GalleryOneResponse,
-  READ_ONE_GALLERY_LANDINGPAGE,
-} from '@/graphql/query/readOneGalleryLandingPage';
+  ArticleRequest,
+  ArticleResponse,
+  READ_ONE_ARTICLE,
+} from '@/graphql/query/readOneArticle';
 
-const DetailGallery = ({
+const DetailBerita = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  return <DetailGalleryPage data={data} />;
+  return <DetailBeritaPage data={data} />;
 };
 
-export default DetailGallery;
+export default DetailBerita;
 
-DetailGallery.getLayout = function getLayout(page: React.ReactElement) {
+DetailBerita.getLayout = function getLayout(page: React.ReactElement) {
   return <LandingPageLayout>{page}</LandingPageLayout>;
 };
 
 export const getServerSideProps: GetServerSideProps<{
-  data: GalleryOneResponse;
+  data: ArticleResponse;
 }> = async (context) => {
-  const id = context.params?.id;
+  const slug = context.params?.slug;
 
   try {
-    const { data } = await client.query<GalleryOneResponse, GalleryOneRequest>({
-      query: READ_ONE_GALLERY_LANDINGPAGE,
+    const { data } = await client.query<ArticleResponse, ArticleRequest>({
+      query: READ_ONE_ARTICLE,
       variables: {
-        id: id as string,
+        slug: slug as string,
       },
       fetchPolicy: 'no-cache',
     });

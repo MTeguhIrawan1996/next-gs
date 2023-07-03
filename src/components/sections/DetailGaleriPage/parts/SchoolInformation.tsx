@@ -1,49 +1,57 @@
 import { Box, Paper, Stack, Text } from '@mantine/core';
-import Image from 'next/image';
 import * as React from 'react';
 
 import {
+  GDriveThumbnail,
   GSMSBoxWrapper,
   InnerWrapper,
   KeyValuePairs,
+  NextImageFill,
+  YoutubeThumbnail,
 } from '@/components/elements';
 
-import { rgbDataURL } from '@/utils/helper/imagePlaceholder';
+import { GalleryOneResponse } from '@/graphql/query/readOneGalleryLandingPage';
+import { googleDriveUrlRegex, youtubeUrlRegex } from '@/utils/helper/regex';
 
-import ImgExample from '../../../../../public/assets/example.png';
+interface ISchoolInformationProps {
+  data: GalleryOneResponse;
+}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface ISchoolInformationProps {}
+const SchoolInformation: React.FC<ISchoolInformationProps> = ({ data }) => {
+  const { activityPlan, material } =
+    data.landingPageActivityReportAttachment.activityReport;
+  const { photo, videoLink } = data.landingPageActivityReportAttachment;
 
-const SchoolInformation: React.FC<ISchoolInformationProps> = () => {
   return (
     <InnerWrapper>
       <Stack spacing="md">
         <GSMSBoxWrapper enableBack>
           <Stack w="100%" spacing="md">
             <Text fw={600} fz={24}>
-              Nama Sekolah
+              {activityPlan.artistReport.form.recommendation.school.name}
             </Text>
             <Box w="95%" mx="auto">
               <KeyValuePairs
                 data={[
                   {
                     key: 'Seniman',
-                    value: 'Raihan',
+                    value:
+                      activityPlan.artistReport.form.commonIdentity?.name ??
+                      '-',
                   },
                   {
                     key: 'Asisten',
-                    value: 'Budi',
+                    value:
+                      activityPlan.artistReport.form.recommendation.assistant
+                        ?.name ?? '-',
                   },
                   {
                     key: ' Dinas',
-                    value:
-                      'Dinas Pendidikan, Kebudayaan, Pemuda dan Olah Raga Kabupaten Bima',
+                    value: activityPlan.artistReport.form.dinas?.name ?? '-',
                   },
                   {
                     key: 'Materi',
-                    value:
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`",
+                    value: material,
                   },
                 ]}
               />
@@ -57,23 +65,13 @@ const SchoolInformation: React.FC<ISchoolInformationProps> = () => {
             mx="auto"
             pos="relative"
           >
-            <Image
-              src={ImgExample}
-              quality={100}
-              alt="example"
-              fill
-              style={{
-                objectFit: 'cover',
-                backgroundPosition: 'center',
-                fontSize: '12px',
-                textAlign: 'center',
-              }}
-              placeholder="blur"
-              blurDataURL={rgbDataURL(234, 233, 238)}
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-            />
+            {photo ? (
+              <NextImageFill src={photo.url} alt={photo.filename} />
+            ) : videoLink && youtubeUrlRegex.test(videoLink) ? (
+              <YoutubeThumbnail link={videoLink} />
+            ) : videoLink && googleDriveUrlRegex.test(videoLink) ? (
+              <GDriveThumbnail link={videoLink} />
+            ) : null}
           </Box>
         </Paper>
       </Stack>

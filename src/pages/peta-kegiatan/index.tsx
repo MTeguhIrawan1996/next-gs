@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
 
-import { EmptyState } from '@/components/elements';
+import { PetaKegiatanPage } from '@/components';
 import LandingPageLayout from '@/components/layouts/landingPage';
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
@@ -20,15 +20,11 @@ const PetaKegiatan: NextPageWithLayout = () => {
     setBreadcrumbs([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
-  return (
-    <>
-      <EmptyState />
-    </>
-  );
+  return <PetaKegiatanPage />;
 };
 
 export default PetaKegiatan;
 
 PetaKegiatan.getLayout = function getLayout(page: React.ReactElement) {
-  return <LandingPageLayout>{page}</LandingPageLayout>;
+  return <LandingPageLayout page="map">{page}</LandingPageLayout>;
 };

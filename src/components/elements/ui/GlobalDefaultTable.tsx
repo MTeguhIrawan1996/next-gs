@@ -39,7 +39,7 @@ export default function GlobalDefaultTable<T>({
   const { classes } = useStyles();
 
   return (
-    <Box w="100%" sx={{ zIndex: 1, backgroundColor: '#FFFFFF' }}>
+    <Box w="100%" sx={{ zIndex: 1 }}>
       <DataTable
         styles={{
           header: {

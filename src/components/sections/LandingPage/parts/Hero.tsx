@@ -1,4 +1,5 @@
-import { Box, Flex, Text, Title } from '@mantine/core';
+import { Box, Button, Center, Flex, Text, Title } from '@mantine/core';
+import Link from 'next/link';
 
 import { InnerWrapper } from '@/components/elements';
 
@@ -30,6 +31,23 @@ const Hero = () => {
             kesenian pada kegiatan ekstrakurikuler di Sekolah.
           </Text>
         </Box>
+        <Center className={classes.textBox}>
+          <Link
+            href={`${process.env.NEXT_PUBLIC_URL}/doc/Juknis_GSMS.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              radius="lg"
+              variant="light"
+              color="brand.6"
+              fz={14}
+              fw={400}
+            >
+              Unduh Juknis
+            </Button>
+          </Link>
+        </Center>
       </Flex>
     </InnerWrapper>
   );
