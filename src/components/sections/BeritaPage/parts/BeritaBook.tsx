@@ -80,7 +80,6 @@ const BeritaBook = () => {
       value: value.id,
     };
   }, []);
-
   const renderArticles = React.useCallback((value: Articles, index: number) => {
     const { title, publishedAt, featureImage, slug } = value;
     return (

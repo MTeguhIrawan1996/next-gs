@@ -1,4 +1,4 @@
-import { useScrollIntoView } from '@mantine/hooks';
+import { Box, Divider } from '@mantine/core';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
@@ -20,10 +20,6 @@ const LandingPage = () => {
     (state) => [state.setBreadcrumbs],
     shallow
   );
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
-    offset: 60,
-  });
 
   React.useEffect(() => {
     setBreadcrumbs([{ label: '', path: '/' }]);
@@ -33,11 +29,20 @@ const LandingPage = () => {
   return (
     <RootWrapper>
       <VectorOne />
-      <Banner scrollIntoView={() => scrollIntoView({ alignment: 'center' })} />
+      <Banner />
       <Hero />
+      <Box px="xl" w="100%" mx="auto">
+        <Divider my="xs" size="sm" opacity={1} color="blue.1" />
+      </Box>
       <VectorTwo />
       <Galeri />
+      <Box px="xl" w="100%" mx="auto">
+        <Divider my="xs" size="sm" opacity={1} color="blue.1" />
+      </Box>
       <Berita />
+      <Box px="xl" w="100%" mx="auto">
+        <Divider my="xs" size="sm" opacity={1} color="blue.1" />
+      </Box>
       <SiswaBerprestasi />
       <VectorThree />
     </RootWrapper>
