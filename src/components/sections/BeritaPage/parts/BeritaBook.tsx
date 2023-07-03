@@ -14,73 +14,40 @@ import {
 } from '@/components/elements';
 
 import {
+  DinasesRequest,
+  DinasesResponse,
+  IDinases,
+  READ_ALL_ACTIVE_DINASES,
+} from '@/graphql/query/readAllActiveDinases';
+import {
   Articles,
   ArticlesRequest,
   ArticlesResponse,
   READ_ALL_ARTICLES,
 } from '@/graphql/query/readAllArticles';
-import {
-  IProvincies,
-  ProvincesResponse,
-  READ_ALL_PROVINCIES,
-} from '@/graphql/query/readAllProvincies';
-import {
-  IRegencies,
-  READ_ALL_REGENCIES,
-  RegenciesRequest,
-  RegenciesResponse,
-} from '@/graphql/query/readAllRegencies';
-
-import { IFilterGlobalRequest } from '@/types/global';
 
 const BeritaBook = () => {
   const [page, setPage] = React.useState<number>(1);
   const [searchTerm, setSerachTerm] = React.useState<string>('');
   const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
-  const [provincieFilterId, setProvincieFilterId] = React.useState<
-    string | null
-  >(null);
-  const [provinciesSearchTerm, setProvinciesSearchTerm] =
-    React.useState<string>('');
-  const [provinciesQuery] = useDebouncedValue<string>(
-    provinciesSearchTerm,
-    400
-  );
-  const [regencieFilterId, setRegencieFilterId] = React.useState<string | null>(
+  const [dinasesFilterId, setDinasesFilterId] = React.useState<string | null>(
     null
   );
-  const [regenciesSearchTerm, setRegenciesSearchTerm] =
-    React.useState<string>('');
-  const [regenciesQuery] = useDebouncedValue<string>(regenciesSearchTerm, 400);
+  const [dinasesSearchTerm, setDinasesSearchTerm] = React.useState<string>('');
+  const [dinasesQuery] = useDebouncedValue<string>(dinasesSearchTerm, 400);
 
-  const { data: provinciesData, loading: provinciesLoading } = useQuery<
-    ProvincesResponse,
-    IFilterGlobalRequest
-  >(READ_ALL_PROVINCIES, {
+  const { data: dinasesData, loading: dinasesLoading } = useQuery<
+    DinasesResponse,
+    DinasesRequest
+  >(READ_ALL_ACTIVE_DINASES, {
     variables: {
+      activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
       limit: 10,
       page: null,
       orderBy: 'name',
       orderDir: 'asc',
-      search: provinciesQuery === '' ? null : provinciesQuery,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
-  });
-
-  const { data: regenciesData, loading: regenciesLoading } = useQuery<
-    RegenciesResponse,
-    RegenciesRequest
-  >(READ_ALL_REGENCIES, {
-    variables: {
-      limit: 10,
-      page: null,
-      orderBy: 'name',
-      orderDir: 'asc',
-      search: regenciesQuery === '' ? null : regenciesQuery,
-      provinceId: provincieFilterId,
+      search: dinasesQuery === '' ? null : dinasesQuery,
+      level: null,
     },
     onError: (err: ApolloError) => {
       return err;
@@ -99,7 +66,7 @@ const BeritaBook = () => {
       orderDir: 'desc',
       search: searchQuery,
       createdById: null,
-      dinasId: null,
+      dinasId: dinasesFilterId,
     },
     onError: (err: ApolloError) => {
       return err;
@@ -107,14 +74,7 @@ const BeritaBook = () => {
     fetchPolicy: 'cache-first',
   });
 
-  const renderProvincies = React.useCallback((value: IProvincies) => {
-    return {
-      label: value.name,
-      value: value.id,
-    };
-  }, []);
-
-  const renderRegencies = React.useCallback((value: IRegencies) => {
+  const renderDinases = React.useCallback((value: IDinases) => {
     return {
       label: value.name,
       value: value.id,
@@ -135,53 +95,30 @@ const BeritaBook = () => {
     );
   }, []);
 
-  const provenciesItem = provinciesData?.provinces.data.map(renderProvincies);
-  const regenciesItem = regenciesData?.regencies.data.map(renderRegencies);
+  const dinasesItem = dinasesData?.activity.dinases.data.map(renderDinases);
   const articlesItem =
     articlesData?.landingPageArticles.data.map(renderArticles);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
       {
-        value: provincieFilterId,
-        onChange: (value: string | null) => setProvincieFilterId(value),
-        data: provenciesItem ?? [],
-        label: 'Provinsi',
-        placeholder: provinciesLoading
-          ? 'Memuat...'
-          : 'Ketik dan pilih Provinsi',
+        value: dinasesFilterId,
+        onChange: (value: string | null) => {
+          setPage(1);
+          setDinasesFilterId(value);
+        },
+        data: dinasesItem ?? [],
+        label: 'Dinas',
+        placeholder: dinasesLoading ? 'Memuat...' : 'Ketik dan pilih Dinas',
         searchable: true,
         clearable: true,
         nothingFound: null,
-        onSearchChange: setProvinciesSearchTerm,
-        searchValue: provinciesSearchTerm,
-      },
-      {
-        value: regencieFilterId,
-        onChange: (value: string | null) => setRegencieFilterId(value),
-        data: regenciesItem ?? [],
-        label: 'Kabupaten/Kota',
-        placeholder: regenciesLoading
-          ? 'Memuat...'
-          : 'Ketik dan pilih Kabupaten/Kota',
-        searchable: true,
-        clearable: true,
-        nothingFound: null,
-        onSearchChange: setRegenciesSearchTerm,
-        searchValue: regenciesSearchTerm,
+        onSearchChange: setDinasesSearchTerm,
+        searchValue: dinasesSearchTerm,
       },
     ];
     return item;
-  }, [
-    provincieFilterId,
-    provenciesItem,
-    provinciesLoading,
-    provinciesSearchTerm,
-    regencieFilterId,
-    regenciesItem,
-    regenciesLoading,
-    regenciesSearchTerm,
-  ]);
+  }, [dinasesFilterId, dinasesItem, dinasesLoading, dinasesSearchTerm]);
 
   return (
     <InnerWrapper>
@@ -197,7 +134,7 @@ const BeritaBook = () => {
               setSearchQuery(searchTerm === '' ? null : searchTerm);
             }}
           />
-          <Box w={{ base: '100%', md: '60%' }}>
+          <Box w={{ base: '100%', md: '30%' }}>
             <MultipleSelect MultipleSelectProps={filter} />
           </Box>
           <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
