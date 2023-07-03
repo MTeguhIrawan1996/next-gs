@@ -132,7 +132,7 @@ const GalleryBook = () => {
         label={label}
         imageProps={photo as IFile}
         videoLink={videoLink as string}
-        href={`/berita/${id}`}
+        href={`/galeri/${id}`}
       />
     );
   }, []);

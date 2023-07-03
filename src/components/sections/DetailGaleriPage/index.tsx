@@ -4,11 +4,14 @@ import { shallow } from 'zustand/shallow';
 
 import { RootWrapper, VectorOne, VectorTwo } from '@/components/elements';
 
+import { GalleryOneResponse } from '@/graphql/query/readOneGalleryLandingPage';
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
 import { SchoolInformation } from './parts';
 
-const DetailGalleryPage = () => {
+const DetailGalleryPage: React.FC<{ data: GalleryOneResponse }> = ({
+  data,
+}) => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
     (state) => [state.setBreadcrumbs],
@@ -25,7 +28,7 @@ const DetailGalleryPage = () => {
 
   return (
     <RootWrapper>
-      <SchoolInformation />
+      <SchoolInformation data={data} />
       <VectorOne />
       <VectorTwo />
     </RootWrapper>
