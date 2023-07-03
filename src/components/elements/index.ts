@@ -12,6 +12,7 @@ import RootWrapper from './Global/RootWrapper';
 import YoutubeThumbnail from './Global/YoutubeThumbnail';
 import CardImageSkeleton from './Skeleton/CardImageSkeleton';
 import KeyValueSkeleton from './Skeleton/KeyValueSkeleton';
+import PaginationSkeleton from './Skeleton/PaginationSkeleton';
 import CardImage from './ui/CardImage';
 import GlobalDefaultTable from './ui/GlobalDefaultTable';
 import GlobalPagination from './ui/GlobalPagination';
@@ -42,6 +43,7 @@ export {
   LandingPageSectionWrapper,
   MultipleSelect,
   NextImageFill,
+  PaginationSkeleton,
   RootWrapper,
   SearchBar,
   SelectInput,

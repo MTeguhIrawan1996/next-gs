@@ -33,6 +33,8 @@ import {
   SchoolsResponse,
 } from '@/graphql/query/readAllSchools';
 
+import { IFile } from '@/types/global';
+
 const GalleryBook = () => {
   const [page, setPage] = React.useState<number>(1);
   const [searchTerm, setSerachTerm] = React.useState<string>('');
@@ -120,14 +122,16 @@ const GalleryBook = () => {
     };
   }, []);
   const renderGallery = React.useCallback((value: IGallery, index: number) => {
-    const { activityReport, id } = value;
+    const { activityReport, id, photo, videoLink } = value;
     const label =
       activityReport.activityPlan.artistReport.form.recommendation.school.name;
+
     return (
       <CardImage
         key={index}
         label={label}
-        // imageProps={featureImage}
+        imageProps={photo as IFile}
+        videoLink={videoLink as string}
         href={`/berita/${id}`}
       />
     );
@@ -209,9 +213,12 @@ const GalleryBook = () => {
           <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
             {galleryLoading ? <CardImageSkeleton /> : galleryItem}
           </Flex>
-          {galleryItem?.length ? (
+          {!galleryItem?.length && !galleryLoading ? (
+            <EmptyTableState />
+          ) : (
             <GlobalPagination
               setPage={setPage}
+              isFetching={galleryLoading}
               currentPage={
                 galleryData?.landingPageActivityReportAttachments.meta
                   .currentPage as number
@@ -229,8 +236,6 @@ const GalleryBook = () => {
                   .totalPage as number
               }
             />
-          ) : (
-            <EmptyTableState />
           )}
         </Stack>
       </GSMSBoxWrapper>

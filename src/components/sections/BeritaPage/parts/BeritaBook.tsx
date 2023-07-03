@@ -142,6 +142,7 @@ const BeritaBook = () => {
           </Flex>
           {articlesItem?.length ? (
             <GlobalPagination
+              isFetching={articlesLoading}
               setPage={setPage}
               currentPage={page}
               totalAllData={

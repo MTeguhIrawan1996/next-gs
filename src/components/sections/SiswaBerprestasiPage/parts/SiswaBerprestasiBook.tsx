@@ -77,6 +77,7 @@ const SiswaBerprestasiBook = () => {
           {renderSiswaTable}
           {data?.landingPageHighAchievingStudents.data.length ? (
             <GlobalPagination
+              isFetching={loading}
               setPage={setPage}
               currentPage={page}
               totalAllData={

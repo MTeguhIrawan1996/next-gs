@@ -1,12 +1,15 @@
 import { Grid, Group, Pagination, Text } from '@mantine/core';
 import * as React from 'react';
 
+import PaginationSkeleton from '../Skeleton/PaginationSkeleton';
+
 interface IPaginationProps {
   currentPage: number;
   totalPage: number;
   totalAllData: number;
   totalData: number;
   setPage: (page: number) => void;
+  isFetching?: boolean;
 }
 
 const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
@@ -15,6 +18,7 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
   totalData,
   totalPage,
   setPage,
+  isFetching,
 }) => {
   const [startData, setStartData] = React.useState<number>(0);
   const [endData, setEndData] = React.useState<number>(0);
@@ -40,6 +44,10 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
   React.useEffect(() => {
     calculateDataRange();
   }, [calculateDataRange]);
+
+  if (isFetching) {
+    return <PaginationSkeleton />;
+  }
 
   return (
     <Grid py="sm" px="xs">

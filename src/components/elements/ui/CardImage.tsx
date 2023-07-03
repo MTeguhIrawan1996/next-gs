@@ -1,11 +1,14 @@
 import { Icon } from '@iconify/react';
-import { Box, Card, Group, Stack, Text } from '@mantine/core';
+import { Box, Card, Group, Overlay, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
 import * as React from 'react';
 
 import { dateFromat } from '@/utils/helper/dateFormat';
+import { googleDriveUrlRegex, youtubeUrlRegex } from '@/utils/helper/regex';
 
 import NextImageFill from './NextImageFill';
+import GDriveThumbnail from '../Global/GDriveThumbnail';
+import YoutubeThumbnail from '../Global/YoutubeThumbnail';
 
 import { IFile } from '@/types/global';
 
@@ -15,6 +18,7 @@ interface ICardImageProps {
   label?: string;
   imageProps?: IFile;
   href?: string;
+  videoLink?: string;
 }
 
 const CardImage: React.FC<ICardImageProps> = ({
@@ -23,6 +27,7 @@ const CardImage: React.FC<ICardImageProps> = ({
   labelDate,
   imageProps,
   href,
+  videoLink,
 }) => {
   return (
     <Card shadow="xs" padding={0} radius="lg" withBorder w={320}>
@@ -31,7 +36,12 @@ const CardImage: React.FC<ICardImageProps> = ({
           <Box h={320} w="100%" pos="relative">
             {imageProps ? (
               <NextImageFill src={imageProps.url} alt={imageProps.filename} />
+            ) : videoLink && youtubeUrlRegex.test(videoLink) ? (
+              <YoutubeThumbnail link={videoLink} />
+            ) : videoLink && googleDriveUrlRegex.test(videoLink) ? (
+              <GDriveThumbnail link={videoLink} />
             ) : null}
+            <Overlay opacity={0} sx={{ zIndex: 10 }} />
           </Box>
         </Link>
       </Card.Section>
