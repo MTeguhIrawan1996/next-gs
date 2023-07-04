@@ -28,7 +28,7 @@ const landingPageStyle = createStyles((theme) => ({
     },
   },
   bannerContainer: {
-    padding: '20px 5px 0px 5px',
+    padding: '20px 5px 20px 5px',
     position: 'relative',
   },
   bannerBox: {
@@ -204,6 +204,51 @@ const landingPageStyle = createStyles((theme) => ({
     width: '100%',
     [theme.fn.largerThan('md')]: {
       width: 'auto',
+    },
+  },
+  rowToColumn: {
+    flexDirection: 'column',
+    [theme.fn.largerThan('sm')]: {
+      flexDirection: 'row',
+    },
+  },
+
+  // Detail Siswa Berprestasi Page
+  detailSiswaDinamisFlexPrimary: {
+    borderRadius: 8,
+    overflow: 'hidden',
+    height: 240,
+    position: 'relative',
+    width: 240,
+    [theme.fn.largerThan('lg')]: {
+      flex: 2.5,
+    },
+  },
+
+  // KEY VALUE PAIR
+
+  keyDefaultSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 2,
+    },
+  },
+  valueDefaultSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 10,
+    },
+  },
+  keySectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 3,
+    },
+  },
+  valueSectionPrimary: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 9,
     },
   },
 }));

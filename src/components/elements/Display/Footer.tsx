@@ -4,11 +4,11 @@ import Link from 'next/link';
 
 import layoutStyle from '@/styles/Layout';
 
-import IconEmail from '../../../public/IconEmail.svg';
-import IconTel from '../../../public/IconTel.svg';
-import SosialIcon1 from '../../../public/sosialmedia1.svg';
-import SosialIcon2 from '../../../public/sosialmedia2.svg';
-import TutwuriLogo from '../../../public/tutwuriimg.png';
+import IconEmail from '../../../../public/IconEmail.svg';
+import IconTel from '../../../../public/IconTel.svg';
+import SosialIcon1 from '../../../../public/sosialmedia1.svg';
+import SosialIcon2 from '../../../../public/sosialmedia2.svg';
+import TutwuriLogo from '../../../../public/tutwuriimg.png';
 
 const Footer = () => {
   const { classes } = layoutStyle();

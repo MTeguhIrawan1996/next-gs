@@ -17,7 +17,12 @@ const Information: React.FC<IInformationProps> = ({ targetRef }) => {
   const { classes, cx } = landingPageStyle();
 
   return (
-    <Stack className={classes.bottomContainer} ref={targetRef} align="center">
+    <Stack
+      className={classes.bottomContainer}
+      ref={targetRef}
+      align="center"
+      w="100%"
+    >
       <Flex className={classes.infoWrapper}>
         <Flex className={classes.primaryContentWrapper}>
           <Box>

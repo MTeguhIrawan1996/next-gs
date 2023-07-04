@@ -75,6 +75,9 @@ const layoutStyle = createStyles((theme) => ({
       padding: theme.spacing.md,
     },
   },
+  propsInternalLink: {
+    color: theme.colors.violet[6],
+  },
   linkActive: {
     '&, &:hover': {
       color: theme.colors.violet[6],
@@ -158,6 +161,17 @@ const layoutStyle = createStyles((theme) => ({
       borderLeft: '2px solid #C1C2C5',
       flex: 2,
       paddingLeft: theme.spacing.lg,
+    },
+  },
+  breadcrumbStyle: {
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: theme.colors.dark[1],
+    fontSize: 12,
+    fontWeight: 400,
+    '&:hover': {
+      color: theme.colors.violet[6],
+      fontWeight: 600,
     },
   },
 }));

@@ -1,19 +1,19 @@
-import EmptyState from './elements/EmptyState';
-import Footer from './elements/Footer';
-import InternalLink from './elements/InternalLink';
-import VectorOne from './elements/Vector/VectorOne';
-import VectorThree from './elements/Vector/VectorThree';
-import VectorTwo from './elements/Vector/VectorTwo';
+import DetailBeritaPage from './sections/DetailBeritaPage';
+import DetailGalleryPage from './sections/DetailGaleriPage';
+import DetailSiswaBerprestasiPage from './sections/DetailSiswaBerprestasiPage';
+import GalleryPage from './sections/GaleriPage';
 import LandingPage from './sections/LandingPage';
 import PendaftaranSenimanPage from './sections/PendaftaranSenimanPage';
+import PetaKegiatanPage from './sections/PetaKegiatanPage';
+import SiswaBerprestasiPage from './sections/SiswaBerprestasiPage/Index';
 
 export {
-  EmptyState,
-  Footer,
-  InternalLink,
+  DetailBeritaPage,
+  DetailGalleryPage,
+  DetailSiswaBerprestasiPage,
+  GalleryPage,
   LandingPage,
   PendaftaranSenimanPage,
-  VectorOne,
-  VectorThree,
-  VectorTwo,
+  PetaKegiatanPage,
+  SiswaBerprestasiPage,
 };

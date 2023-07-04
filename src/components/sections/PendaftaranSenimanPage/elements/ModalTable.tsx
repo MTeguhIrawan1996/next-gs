@@ -1,24 +1,14 @@
 import { LazyQueryExecFunction } from '@apollo/client';
 import { Icon } from '@iconify/react';
-import {
-  Box,
-  Button,
-  Flex,
-  Group,
-  Modal,
-  Pagination,
-  Text,
-} from '@mantine/core';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { DataTable } from 'mantine-datatable';
+import { Box, Button, Flex, Modal, Text } from '@mantine/core';
 import * as React from 'react';
 import 'dayjs/locale/id';
 
-import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
+import { GlobalDefaultTable, GlobalPagination } from '@/components/elements';
 
-dayjs.locale('id');
-dayjs.extend(localizedFormat);
+import { dateFromat } from '@/utils/helper/dateFormat';
+
+import { GetRecapSenimanRes, RecapSenimanVariable } from '@/types/rekapSeniman';
 
 interface IModalTableProps {
   data?: GetRecapSenimanRes;
@@ -39,34 +29,9 @@ const ModalTable: React.FC<IModalTableProps> = ({
   getRecapSeniman,
 }) => {
   const [activePage, setPage] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState<number>(0);
-  const [startData, setStartData] = React.useState<number>(0);
-  const [endData, setEndData] = React.useState<number>(0);
   const value = data?.landingPageDinas;
   const record = value?.activityForms.data;
   const meta = value?.activityForms.meta;
-
-  React.useEffect(() => {
-    if (data && meta && meta.currentPage && meta.totalAllData) {
-      const perPage = 10;
-      const startDatas = (meta.currentPage - 1) * perPage + 1;
-      const endDatas = Math.min(meta.currentPage * perPage, meta.totalAllData);
-      setStartData(startDatas);
-      setEndData(endDatas);
-    }
-  }, [data, meta]);
-
-  React.useEffect(() => {
-    if (data && meta && meta.currentPage) {
-      setPage(meta.currentPage);
-    }
-  }, [data, meta]);
-
-  React.useEffect(() => {
-    if (data && meta && meta.totalPage) {
-      setTotalPage(meta.totalPage);
-    }
-  }, [data, meta]);
 
   React.useEffect(() => {
     if (data) {
@@ -90,9 +55,37 @@ const ModalTable: React.FC<IModalTableProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage]);
 
-  const onsetPage = async (key: number) => {
+  const onSetPage = (key: number) => {
     setPage(key);
   };
+
+  const renderDataTable = React.useMemo(() => {
+    return (
+      <GlobalDefaultTable
+        tableProps={{
+          columns: [
+            {
+              title: 'Nama Seniman',
+              accessor: 'commonIdentity.name',
+              render: ({ commonIdentity }) => commonIdentity.name,
+            },
+            {
+              title: 'Alamat Email',
+              accessor: 'commonIdentity.email',
+              render: ({ commonIdentity }) => commonIdentity.email,
+            },
+            {
+              title: 'Tanggal Pengajuan',
+              accessor: 'submittedAt',
+              render: ({ submittedAt }) => dateFromat(submittedAt, 'LLLL WIB'),
+            },
+          ],
+          records: record,
+          fetching: loading,
+        }}
+      />
+    );
+  }, [record, loading]);
 
   return (
     <Modal.Root opened={isOpen} onClose={onCloseModal} size="80%" radius="lg">
@@ -135,90 +128,16 @@ const ModalTable: React.FC<IModalTableProps> = ({
         </Modal.Header>
         <Modal.Body>
           <Flex direction="column" justify="center" align="center" gap="xl">
+            {renderDataTable}
             <Box w="100%">
-              <DataTable
-                shadow="lg"
-                fontSize={12}
-                highlightOnHover
-                horizontalSpacing="sm"
-                verticalSpacing="sm"
-                verticalAlignment="center"
-                borderColor="#4C6EF5"
-                minHeight={150}
-                fetching={loading}
-                columns={[
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          NAMA SENIMAN
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'commonIdentity.name',
-                  },
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          ALAMAT EMAIL
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'commonIdentity.email',
-                  },
-                  {
-                    title: (
-                      <Group>
-                        <Text fw={500} fz={12}>
-                          TANGGAL PENGAJUAN
-                        </Text>
-                      </Group>
-                    ),
-                    accessor: 'submittedAt',
-                    render: ({ submittedAt }) =>
-                      `${dayjs(submittedAt).locale('id').format('LLLL')} WIB`,
-                  },
-                ]}
-                records={record}
+              <GlobalPagination
+                currentPage={meta?.currentPage ?? 0}
+                setPage={onSetPage}
+                totalAllData={meta?.totalAllData ?? 0}
+                totalData={meta?.totalData ?? 0}
+                totalPage={meta?.totalPage ?? 0}
               />
             </Box>
-            <Flex
-              w="100%"
-              direction="column"
-              justify="center"
-              align="flex-start"
-              py="md"
-              gap="md"
-            >
-              <Box>
-                <Text fw={400} fz={12} color="#969BA4">
-                  {startData}-{endData} dari {meta?.totalAllData}
-                </Text>
-              </Box>
-              <Box w="100%">
-                <Pagination.Root
-                  total={totalPage}
-                  value={activePage}
-                  onChange={(val) => onsetPage(val)}
-                  size="xs"
-                  styles={{
-                    control: {
-                      fontSize: '12px',
-                      fontWeight: 400,
-                    },
-                  }}
-                >
-                  <Group spacing={5} position="center" fw={400} fz={12}>
-                    <Pagination.First />
-                    <Pagination.Previous />
-                    <Pagination.Items />
-                    <Pagination.Next />
-                    <Pagination.Last />
-                  </Group>
-                </Pagination.Root>
-              </Box>
-            </Flex>
           </Flex>
         </Modal.Body>
       </Modal.Content>

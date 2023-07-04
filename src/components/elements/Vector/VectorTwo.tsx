@@ -9,6 +9,7 @@ const VectorTwo = () => {
         position: 'absolute',
         right: -10,
         transform: 'translateY(20%)',
+        zIndex: 0,
       }}
     >
       <Vector2 />

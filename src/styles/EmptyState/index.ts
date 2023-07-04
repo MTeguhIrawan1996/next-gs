@@ -10,6 +10,14 @@ const globalStyle = createStyles((theme) => ({
       width: '420px',
     },
   },
+  heading4: {
+    fontWeight: 700,
+    fontSize: 18,
+    color: theme.colors.dark[6],
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: 16,
+    },
+  },
 }));
 
 export default globalStyle;

@@ -1,11 +1,14 @@
-import { Box, Flex, Stack, Text, Title } from '@mantine/core';
+import { Box, Button, Center, Flex, Text, Title } from '@mantine/core';
+import Link from 'next/link';
+
+import { InnerWrapper } from '@/components/elements';
 
 import landingPageStyle from '@/styles/LandingPage';
 
 const Hero = () => {
   const { classes } = landingPageStyle();
   return (
-    <Stack className={classes.container}>
+    <InnerWrapper>
       <Flex direction="column" gap="24px" justify="center" align="center">
         <Box className={classes.textBox}>
           <Title
@@ -28,8 +31,25 @@ const Hero = () => {
             kesenian pada kegiatan ekstrakurikuler di Sekolah.
           </Text>
         </Box>
+        <Center className={classes.textBox}>
+          <Link
+            href={`${process.env.NEXT_PUBLIC_URL}/doc/Juknis_GSMS.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              radius="lg"
+              variant="light"
+              color="brand.6"
+              fz={14}
+              fw={400}
+            >
+              Unduh Juknis
+            </Button>
+          </Link>
+        </Center>
       </Flex>
-    </Stack>
+    </InnerWrapper>
   );
 };
 
