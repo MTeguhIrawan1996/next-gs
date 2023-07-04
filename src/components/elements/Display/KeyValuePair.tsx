@@ -55,7 +55,7 @@ const KeyValuePairs: React.FC<Props> = (props) => {
                 props.classNameValue ?? classes.valueDefaultSectionPrimary
               }
             >
-              <Text fz={12} c="dark.6">
+              <Text fz={12} c="dark.6" fw={400}>
                 {v.value}
               </Text>
             </Box>
@@ -66,4 +66,4 @@ const KeyValuePairs: React.FC<Props> = (props) => {
   );
 };
 
-export default KeyValuePairs;
+export default React.memo(KeyValuePairs);
