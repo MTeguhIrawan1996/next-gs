@@ -1,4 +1,5 @@
 import EmptyState from './Display/EmptyState';
+import EmptyStatePage from './Display/EmptyStatePage';
 import EmptyTableState from './Display/EmptyTableState';
 import Footer from './Display/Footer';
 import KeyValuePairs from './Display/KeyValuePair';
@@ -21,6 +22,7 @@ import MultipleSelect from './ui/MultipleSelect';
 import NextImageFill from './ui/NextImageFill';
 import SearchBar from './ui/SearchBar';
 import SelectInput from './ui/SelectInput';
+import SimpleMap from './ui/SimpleMap';
 import VectorOne from './Vector/VectorOne';
 import VectorThree from './Vector/VectorThree';
 import VectorTwo from './Vector/VectorTwo';
@@ -30,6 +32,7 @@ export {
   CardImage,
   CardImageSkeleton,
   EmptyState,
+  EmptyStatePage,
   EmptyTableState,
   Footer,
   GDriveThumbnail,
@@ -47,6 +50,7 @@ export {
   RootWrapper,
   SearchBar,
   SelectInput,
+  SimpleMap,
   TitleContent,
   VectorOne,
   VectorThree,

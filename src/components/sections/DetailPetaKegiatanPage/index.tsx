@@ -9,14 +9,18 @@ import {
   VectorTwo,
 } from '@/components/elements';
 
+import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
 import { DetailPetaKegiatanBook } from './parts';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IDetailPetaKegiatanPageProps {}
+interface IDetailPetaKegiatanPageProps {
+  data: ArtistReportOneResponse;
+}
 
-const DetailPetaKegiatanPage: React.FC<IDetailPetaKegiatanPageProps> = () => {
+const DetailPetaKegiatanPage: React.FC<IDetailPetaKegiatanPageProps> = ({
+  data,
+}) => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
     (state) => [state.setBreadcrumbs],
@@ -32,7 +36,7 @@ const DetailPetaKegiatanPage: React.FC<IDetailPetaKegiatanPageProps> = () => {
   }, [router]);
   return (
     <RootWrapper>
-      <DetailPetaKegiatanBook />
+      <DetailPetaKegiatanBook data={data} />
       <VectorOne />
       <VectorTwo />
       <VectorThree />

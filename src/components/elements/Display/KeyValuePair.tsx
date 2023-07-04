@@ -66,4 +66,4 @@ const KeyValuePairs: React.FC<Props> = (props) => {
   );
 };
 
-export default KeyValuePairs;
+export default React.memo(KeyValuePairs);
