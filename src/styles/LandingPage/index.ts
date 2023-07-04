@@ -251,6 +251,18 @@ const landingPageStyle = createStyles((theme) => ({
       flex: 9,
     },
   },
+  keySectionDetailMaps: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 5,
+    },
+  },
+  valueSectionDetailMaps: {
+    flex: 6,
+    [theme.fn.largerThan('lg')]: {
+      flex: 7,
+    },
+  },
 }));
 
 export default landingPageStyle;

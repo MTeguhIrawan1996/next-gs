@@ -112,7 +112,7 @@ const DetailSiswaBerprestasiBook = () => {
                       value: simpleData?.activityYear,
                     },
                     {
-                      key: ' Sekolah Saat Mengikuti GSMS',
+                      key: 'Sekolah Saat Mengikuti GSMS',
                       value: simpleData?.gsmsSchool,
                     },
                     {
