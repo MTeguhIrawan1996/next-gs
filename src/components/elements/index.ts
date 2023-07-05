@@ -18,6 +18,7 @@ import CardImage from './ui/CardImage';
 import GlobalDefaultTable from './ui/GlobalDefaultTable';
 import GlobalPagination from './ui/GlobalPagination';
 import InternalLink from './ui/InternalLink';
+import MapPopup from './ui/MapPopup';
 import MultipleSelect from './ui/MultipleSelect';
 import NextImageFill from './ui/NextImageFill';
 import SearchBar from './ui/SearchBar';
@@ -44,6 +45,7 @@ export {
   KeyValuePairs,
   KeyValueSkeleton,
   LandingPageSectionWrapper,
+  MapPopup,
   MultipleSelect,
   NextImageFill,
   PaginationSkeleton,
