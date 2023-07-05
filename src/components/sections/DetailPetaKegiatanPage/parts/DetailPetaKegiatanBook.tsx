@@ -142,7 +142,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
           <Text fw={600} fz={24}>
             {recommendation.school.name}
           </Text>
-          <Flex gap="sm">
+          <Flex gap="sm" className={classes.rowToColumn}>
             <Box w="100%" sx={{ flex: 6 }}>
               <KeyValuePairs
                 verticalSpacing={8}
@@ -198,7 +198,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
           <Text fw={600} fz={24}>
             Detail Seniman
           </Text>
-          <Flex gap="sm">
+          <Flex gap="sm" className={classes.rowToColumn}>
             <Box w="100%" sx={{ flex: 6 }}>
               <KeyValuePairs
                 verticalSpacing={8}
