@@ -7,3 +7,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.maplibregl-popup-content {
+  background: #2c2e33 !important;
+}
+
+.maplibregl-popup-close-button {
+  color: #fff;
+  font-size: 14px;
+}

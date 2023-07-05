@@ -52,34 +52,6 @@ export const READ_ONE_LANDINGPAGE_ARTIST_REPORT = gql`
           name
         }
       }
-      # activityPlans(
-      #   findAllActivityPlanInput: {
-      #     page: null
-      #     limit: null
-      #     search: null
-      #     orderBy: null
-      #     orderDir: null
-      #   }
-      # ) {
-      #   data {
-      #     id
-      #     steps
-      #     order
-      #     report {
-      #       material
-      #       studentAbsenceRecap {
-      #         present
-      #         studentCount
-      #       }
-      #     }
-      #   }
-      #   meta {
-      #     currentPage
-      #     totalPage
-      #     totalData
-      #     totalAllData
-      #   }
-      # }
     }
   }
 `;

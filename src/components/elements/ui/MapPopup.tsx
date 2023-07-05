@@ -1,11 +1,4 @@
-import {
-  Button,
-  CloseButton,
-  Divider,
-  Group,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Button, Divider, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -13,33 +6,44 @@ import landingPageStyle from '@/styles/LandingPage';
 
 import KeyValuePair from '../Display/KeyValuePair';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IMapPopupProps {}
+import { IMapFeature } from '@/types/map';
 
-const MapPopup: React.FunctionComponent<IMapPopupProps> = () => {
+interface IMapPopupProps {
+  clickInfo: IMapFeature;
+}
+
+const MapPopup: React.FunctionComponent<IMapPopupProps> = ({ clickInfo }) => {
   const { classes } = landingPageStyle();
+
+  const data = React.useMemo(() => {
+    const shcool: {
+      name: string;
+      provinceName: string;
+      regencyName: string;
+    } = JSON.parse(clickInfo?.feature.properties.school);
+    const activity: { year: number } = JSON.parse(
+      clickInfo?.feature.properties.activity
+    );
+    const artist: { name: string } = JSON.parse(
+      clickInfo?.feature.properties.artist
+    );
+    const newObject = {
+      name: artist.name,
+      year: activity.year,
+      school: shcool,
+    };
+    return newObject;
+  }, [clickInfo]);
 
   return (
     <Stack
       bg="dark.5"
       spacing={6}
-      w="240px"
-      pos="absolute"
-      sx={{ top: ' 20%', right: '30%', borderRadius: '8px' }}
-      p="xs"
+      miw="240px"
+      sx={{ borderRadius: '8px', top: 0, left: 0 }}
     >
-      <Group position="right" pos="relative">
-        <CloseButton
-          title="Close"
-          size="xs"
-          iconSize={14}
-          pos="absolute"
-          right={0}
-          top={0}
-        />
-      </Group>
       <Text fz={12} fw={600} c="#FFF">
-        SDN Cideng Yogyakarta
+        {data.school.name}
       </Text>
       <KeyValuePair
         verticalSpacing={4}
@@ -50,11 +54,11 @@ const MapPopup: React.FunctionComponent<IMapPopupProps> = () => {
         data={[
           {
             key: 'Provinsi',
-            value: 'Jawa Barat',
+            value: data.school.provinceName,
           },
           {
             key: 'Kabupaten',
-            value: 'Cirebon',
+            value: data.school.regencyName,
           },
         ]}
       />
@@ -68,16 +72,16 @@ const MapPopup: React.FunctionComponent<IMapPopupProps> = () => {
         data={[
           {
             key: 'Seniman',
-            value: 'Budi',
+            value: data.name,
           },
           {
             key: 'Tahun Kegiatan',
-            value: '2023',
+            value: data.year,
           },
         ]}
       />
       <Link
-        href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
+        href={`/peta-kegiatan/${clickInfo.feature.properties.id}`}
         className={classes.buttonStyle}
       >
         <Button fw={400} fz={12} color="violet.6" w="100%">
