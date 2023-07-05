@@ -140,7 +140,9 @@ const BeritaBook = () => {
           <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
             {articlesLoading ? <CardImageSkeleton /> : articlesItem}
           </Flex>
-          {articlesItem?.length ? (
+          {!articlesItem?.length && !articlesLoading ? (
+            <EmptyTableState />
+          ) : (
             <GlobalPagination
               isFetching={articlesLoading}
               setPage={setPage}
@@ -155,8 +157,6 @@ const BeritaBook = () => {
                 articlesData?.landingPageArticles.meta.totalPage as number
               }
             />
-          ) : (
-            <EmptyTableState />
           )}
         </Stack>
       </GSMSBoxWrapper>

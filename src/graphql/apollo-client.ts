@@ -8,7 +8,12 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
-    const blackList = ['ReadAllProvincies', 'ReadAllRegencies'];
+    const blackList = [
+      'ReadAllProvincies',
+      'ReadAllRegencies',
+      'ReadAllActiveDinases',
+      'ReadAllSchools',
+    ];
     if (blackList.includes(operation.operationName)) {
       return;
     }

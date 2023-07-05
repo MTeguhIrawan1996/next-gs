@@ -16,6 +16,10 @@ interface IGlobalDefaultTableProps<T> {
 }
 
 const useStyles = createStyles((theme) => ({
+  header: {
+    textTransform: 'uppercase',
+    '&& th': { color: theme.colors.dark[5], fontWeight: 500, fontSize: 12 },
+  },
   table: {
     border: `1px solid #FFFF`,
     borderRadius: theme.radius.lg,
@@ -41,12 +45,7 @@ export default function GlobalDefaultTable<T>({
   return (
     <Box w="100%" sx={{ zIndex: 1 }}>
       <DataTable
-        styles={{
-          header: {
-            textTransform: 'uppercase',
-          },
-        }}
-        className={classes.table}
+        classNames={classes}
         fontSize={12}
         horizontalSpacing="xl"
         verticalSpacing="sm"
