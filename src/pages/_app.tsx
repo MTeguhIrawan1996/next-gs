@@ -8,6 +8,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { RealViewportProvider } from 'next-real-viewport';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
+import NextNProgress from 'nextjs-progressbar';
 
 import '../styles/globals.css';
 
@@ -82,6 +83,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             }}
           >
             <Notifications position="top-right" notificationMaxHeight={400} />
+            <NextNProgress
+              color="#845EF7"
+              height={3}
+              options={{ showSpinner: false }}
+            />
             <Component {...pageProps} />
             <GoogleAnalytics trackPageViews />
           </MantineProvider>
