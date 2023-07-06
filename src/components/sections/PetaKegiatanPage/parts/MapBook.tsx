@@ -1,4 +1,6 @@
+import { ApolloError, useQuery } from '@apollo/client';
 import { Box, Paper, SelectProps } from '@mantine/core';
+import axios from 'axios';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import * as React from 'react';
@@ -16,56 +18,80 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { MapPopup, MultipleSelect } from '@/components/elements';
 
 import {
+  FilterYearResponse,
+  READ_ALL_FILTER_YEAR,
+} from '@/graphql/query/readAllFilterYear';
+
+import {
   clusterCountLayer,
   clusterLayer,
   unclusteredPointLayer,
 } from './layers';
 
-import { IMapFeature } from '@/types/map';
+import { IMapFeature, IPropertiesId } from '@/types/map';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IMapBookProps {}
-
-const MapBook: React.FC<IMapBookProps> = () => {
+const MapBook = () => {
   const mapRef = React.useRef<MapRef>(null);
-  const [data, setData] = React.useState(undefined);
+  const [data, setData] = React.useState<
+    GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
+  >(undefined);
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [filterYearId, setFilterYearId] = React.useState<string | null>(null);
+
+  const { data: filterYearData, loading: filterYearLoading } =
+    useQuery<FilterYearResponse>(READ_ALL_FILTER_YEAR, {
+      onError: (err: ApolloError) => {
+        return err;
+      },
+      fetchPolicy: 'cache-first',
+    });
 
   React.useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_REST_API_URL}/landing-page/artist-reports/school-for-maps?activity-year=`
-        );
-        const data = await res.json();
-        setData(data);
-      } catch (err) {
-        return;
-      }
+    if (filterYearId || !data) {
+      const getData = async () => {
+        try {
+          const res = await axios.get(
+            `${
+              process.env.NEXT_PUBLIC_REST_API_URL
+            }/landing-page/artist-reports/school-for-maps?activity-year=${
+              filterYearId ?? ''
+            }`
+          );
+          setData(res.data);
+        } catch (err) {
+          return;
+        }
+      };
+      getData();
+    }
+  }, [data, filterYearId]);
+
+  const renderFilterYear = React.useCallback((value: number) => {
+    return {
+      label: value.toString(),
+      value: value.toString(),
     };
-    getData();
   }, []);
+
+  const filterYearItem = filterYearData?.activityYears
+    .filter((v) => v === 2023)
+    .map(renderFilterYear);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
       {
-        data: [
-          {
-            label: '2023',
-            value: '2023',
-          },
-          {
-            label: '2022',
-            value: '2022',
-          },
-        ],
+        onChange: (value: string | null) => {
+          setFilterYearId(value);
+        },
+        data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
+        placeholder: filterYearLoading ? 'Memuat...' : 'Pilih Tahun',
         clearable: true,
-        placeholder: 'Pilih Tahun Kegiatan',
       },
     ];
     return item;
-  }, []);
+  }, [filterYearItem, filterYearLoading]);
 
   const onLoad = () => {
     if (mapRef.current) {
@@ -84,8 +110,8 @@ const MapBook: React.FC<IMapBookProps> = () => {
       features,
       lngLat: { lat, lng },
     } = event;
-
     const feature = features && features[0];
+
     if (!feature) {
       return;
     }
@@ -134,7 +160,6 @@ const MapBook: React.FC<IMapBookProps> = () => {
         ref={mapRef}
         onLoad={onLoad}
         onClick={onClick}
-        // onMouseMove={onHover}
       >
         {data && (
           <Source
