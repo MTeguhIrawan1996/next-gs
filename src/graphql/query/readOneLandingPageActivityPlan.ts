@@ -28,6 +28,7 @@ export const READ_ONE_LANDINGPAGE_ACTIVITY_PLAN = gql`
           id
           order
           report {
+            id
             material
             studentAbsenceRecap {
               present
@@ -50,6 +51,7 @@ export interface ActivityPlanReport {
   id: string;
   order: number;
   report: {
+    id: string;
     material: string;
     studentAbsenceRecap: {
       present: number;

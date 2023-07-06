@@ -1,4 +1,4 @@
-import { ApolloError, useQuery } from '@apollo/client';
+import { ApolloError, useLazyQuery, useQuery } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import { Box, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
@@ -18,12 +18,19 @@ import {
 } from '@/components/elements';
 
 import {
+  DetailActivityPlanRequest,
+  DetailActivityPlanResponse,
+  READ_ONE_ACTIVITY_PLAN,
+} from '@/graphql/query/readOneActivityPlan';
+import {
   ActivityPlanReportRequest,
   ActivityPlanReportResponse,
   READ_ONE_LANDINGPAGE_ACTIVITY_PLAN,
 } from '@/graphql/query/readOneLandingPageActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
+
+import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
 
 interface IDetailPetaKegiatanBookProps {
   data: ArtistReportOneResponse;
@@ -37,6 +44,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
+  const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
   const id = router.query.id as string;
 
   const { data: activityPlanData, loading } = useQuery<
@@ -58,11 +66,25 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     fetchPolicy: 'cache-first',
   });
 
+  const [getDetailActivityPlan, { data: detailActivityPlanData }] =
+    useLazyQuery<DetailActivityPlanResponse, DetailActivityPlanRequest>(
+      READ_ONE_ACTIVITY_PLAN,
+      {
+        onError: (err: ApolloError) => {
+          return err;
+        },
+        fetchPolicy: 'cache-first',
+      }
+    );
+
   const renderActivityReportTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
           fetching: loading,
+          onRowClick: ({ id }) => {
+            handleOpenModal(id);
+          },
           columns: [
             {
               accessor: 'order',
@@ -134,6 +156,19 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activityPlanData?.landingPageArtistReport.activityPlans.data, loading]);
+
+  const handleOpenModal = async (id: string) => {
+    setIsModalDetail((prev) => !prev);
+    await getDetailActivityPlan({
+      variables: {
+        id: id,
+      },
+    });
+  };
+
+  const onCloseModal = () => {
+    setIsModalDetail((prev) => !prev);
+  };
 
   return (
     <InnerWrapper>
@@ -271,6 +306,11 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
           />
         </Stack>
       </GSMSBoxWrapper>
+      <ModalDetailPelaporanKegiatan
+        isOpen={isModalDetail}
+        onCloseModal={onCloseModal}
+        data={detailActivityPlanData}
+      />
     </InnerWrapper>
   );
 };

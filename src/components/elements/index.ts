@@ -9,6 +9,7 @@ import GDriveThumbnail from './Global/GDriveThumbnail';
 import GSMSBoxWrapper from './Global/GSMSBoxWrapper';
 import InnerWrapper from './Global/InnerWrapper';
 import LandingPageSectionWrapper from './Global/LandingPageSectionWrapper';
+import ModalActionWrapper from './Global/ModalActionWrapper';
 import RootWrapper from './Global/RootWrapper';
 import YoutubeThumbnail from './Global/YoutubeThumbnail';
 import CardImageSkeleton from './Skeleton/CardImageSkeleton';
@@ -46,6 +47,7 @@ export {
   KeyValueSkeleton,
   LandingPageSectionWrapper,
   MapPopup,
+  ModalActionWrapper,
   MultipleSelect,
   NextImageFill,
   PaginationSkeleton,
