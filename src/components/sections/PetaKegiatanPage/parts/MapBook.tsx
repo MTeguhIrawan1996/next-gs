@@ -48,18 +48,24 @@ const MapBook = () => {
     });
 
   React.useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_REST_API_URL}/landing-page/artist-reports/school-for-maps?activity-year=`
-        );
-        setData(res.data);
-      } catch (err) {
-        return;
-      }
-    };
-    getData();
-  }, []);
+    if (filterYearId || !data) {
+      const getData = async () => {
+        try {
+          const res = await axios.get(
+            `${
+              process.env.NEXT_PUBLIC_REST_API_URL
+            }/landing-page/artist-reports/school-for-maps?activity-year=${
+              filterYearId ?? ''
+            }`
+          );
+          setData(res.data);
+        } catch (err) {
+          return;
+        }
+      };
+      getData();
+    }
+  }, [data, filterYearId]);
 
   const renderFilterYear = React.useCallback((value: number) => {
     return {
@@ -68,7 +74,9 @@ const MapBook = () => {
     };
   }, []);
 
-  const filterYearItem = filterYearData?.activityYears.map(renderFilterYear);
+  const filterYearItem = filterYearData?.activityYears
+    .filter((v) => v === 2023)
+    .map(renderFilterYear);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
