@@ -1,13 +1,14 @@
 export interface IMapInfo {
-  // geometry: {
-  //   coordinates: number[];
-  // };
   properties: {
     id: string;
     school: string;
     activity: string;
     artist: string;
   };
+}
+
+export interface IPropertiesId {
+  id: string;
 }
 
 export interface IMapFeature {

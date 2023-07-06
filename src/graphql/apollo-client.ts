@@ -13,6 +13,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
       'ReadAllRegencies',
       'ReadAllActiveDinases',
       'ReadAllSchools',
+      'ReadAllFilterYear',
     ];
     if (blackList.includes(operation.operationName)) {
       return;
