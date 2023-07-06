@@ -36,7 +36,6 @@ const MapBook = () => {
     GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
   >(undefined);
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const [filterYearId, setFilterYearId] = React.useState<string | null>(null);
 
   const { data: filterYearData, loading: filterYearLoading } =
@@ -65,7 +64,8 @@ const MapBook = () => {
       };
       getData();
     }
-  }, [data, filterYearId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterYearId]);
 
   const renderFilterYear = React.useCallback((value: number) => {
     return {
@@ -92,6 +92,36 @@ const MapBook = () => {
     ];
     return item;
   }, [filterYearItem, filterYearLoading]);
+
+  const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
+    return {
+      version: 8,
+      sources: {
+        'raster-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          ],
+          tileSize: 256,
+        },
+      },
+      glyphs: 'http://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
+      layers: [
+        {
+          id: 'raster-tiles',
+          type: 'raster',
+          source: 'raster-tiles',
+          minzoom: 0,
+          maxzoom: 22,
+          layout: {
+            visibility: 'visible',
+          },
+        },
+      ],
+    };
+  }, []);
 
   const onLoad = () => {
     if (mapRef.current) {
@@ -152,7 +182,7 @@ const MapBook = () => {
         maxZoom={16}
         minZoom={1}
         cursor="pointer"
-        mapStyle="https://basemap.bukapeta.id/styles/klokantech-basic/style.json"
+        mapStyle={MapStyleMemo}
         interactiveLayerIds={[
           clusterLayer.id as string,
           unclusteredPointLayer.id as string,
