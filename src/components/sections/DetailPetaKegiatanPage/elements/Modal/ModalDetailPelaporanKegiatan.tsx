@@ -40,7 +40,7 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
     <ModalActionWrapper isOpen={isOpen} onCloseModal={onCloseModal}>
       <Stack w="100%" spacing="md" px="xs">
         <Text fw={700} fz={22}>
-          {`Pertemuan ${data?.landingPageActivityPlan.order}`}
+          {`Pertemuan ${data?.landingPageActivityPlan.order ?? '-'}`}
         </Text>
         <Box w="100%">
           <KeyValuePairs
@@ -57,15 +57,15 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
               },
               {
                 key: 'Materi',
-                value: data?.landingPageActivityPlan.report.material,
+                value: data?.landingPageActivityPlan.report.material ?? '-',
               },
               {
                 key: 'Tujuan Pembelajaran',
-                value: data?.landingPageActivityPlan.goals,
+                value: data?.landingPageActivityPlan.goals ?? '-',
               },
               {
                 key: 'Absensi',
-                value: studentNameItem?.join(', '),
+                value: studentNameItem?.join(', ') ?? '-',
               },
             ]}
           />
