@@ -67,6 +67,36 @@ const MapBook = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterYearId]);
 
+  const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
+    return {
+      version: 8,
+      sources: {
+        'raster-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          ],
+          tileSize: 256,
+        },
+      },
+      glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
+      layers: [
+        {
+          id: 'raster-tiles',
+          type: 'raster',
+          source: 'raster-tiles',
+          minzoom: 1,
+          maxzoom: 22,
+          layout: {
+            visibility: 'visible',
+          },
+        },
+      ],
+    };
+  }, []);
+
   const renderFilterYear = React.useCallback((value: number) => {
     return {
       label: value.toString(),
@@ -92,36 +122,6 @@ const MapBook = () => {
     ];
     return item;
   }, [filterYearItem, filterYearLoading]);
-
-  const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
-    return {
-      version: 8,
-      sources: {
-        'raster-tiles': {
-          type: 'raster',
-          tiles: [
-            'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          ],
-          tileSize: 256,
-        },
-      },
-      glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
-      layers: [
-        {
-          id: 'raster-tiles',
-          type: 'raster',
-          source: 'raster-tiles',
-          minzoom: 0,
-          maxzoom: 22,
-          layout: {
-            visibility: 'visible',
-          },
-        },
-      ],
-    };
-  }, []);
 
   const onLoad = () => {
     if (mapRef.current) {
