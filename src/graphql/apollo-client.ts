@@ -7,27 +7,41 @@ const httpLink = new HttpLink({
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
-  if (graphQLErrors) {
-    const blackList = [
-      'ReadAllProvincies',
-      'ReadAllRegencies',
-      'ReadAllActiveDinases',
-      'ReadAllSchools',
-      'ReadAllFilterYear',
-    ];
-    if (blackList.includes(operation.operationName)) {
-      return;
-    }
-    graphQLErrors.forEach(() =>
+  const blackList = [
+    'ReadAllProvincies',
+    'ReadAllRegencies',
+    'ReadAllActiveDinases',
+    'ReadAllSchools',
+    'ReadAllFilterYear',
+  ];
+  const errorActions = {
+    BAD_REQUEST: () => {
+      if (blackList.includes(operation.operationName)) {
+        return;
+      }
       notifications.show({
         color: 'red',
         title: 'Terjadi kesalahan',
         message: 'Mohon coba lagi',
-      })
-    );
+      });
+    },
+    // Tambahkan kode kesalahan lain dan aksi yang sesuai di sini
+  };
+
+  if (graphQLErrors) {
+    for (const err of graphQLErrors) {
+      const errorCode = err.extensions.code;
+      const errorAction = errorActions[errorCode as any];
+      if (errorAction) {
+        errorAction();
+      }
+    }
   }
 
   if (networkError) {
+    if (blackList.includes(operation.operationName)) {
+      return;
+    }
     notifications.show({
       color: 'red',
       title: 'Terjadi kesalahan server',

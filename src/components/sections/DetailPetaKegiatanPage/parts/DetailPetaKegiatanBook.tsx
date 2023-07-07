@@ -287,23 +287,26 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             Pelaporan Kegiatan
           </Text>
           {renderActivityReportTable}
-          <GlobalPagination
-            isFetching={loading}
-            setPage={setPage}
-            currentPage={page}
-            totalAllData={
-              activityPlanData?.landingPageArtistReport.activityPlans.meta
-                .totalAllData ?? 0
-            }
-            totalData={
-              activityPlanData?.landingPageArtistReport.activityPlans.meta
-                .totalData ?? 0
-            }
-            totalPage={
-              activityPlanData?.landingPageArtistReport.activityPlans.meta
-                .totalPage ?? 0
-            }
-          />
+          {activityPlanData?.landingPageArtistReport.activityPlans.data
+            .length ? (
+            <GlobalPagination
+              isFetching={loading}
+              setPage={setPage}
+              currentPage={page}
+              totalAllData={
+                activityPlanData?.landingPageArtistReport.activityPlans.meta
+                  .totalAllData ?? 0
+              }
+              totalData={
+                activityPlanData?.landingPageArtistReport.activityPlans.meta
+                  .totalData ?? 0
+              }
+              totalPage={
+                activityPlanData?.landingPageArtistReport.activityPlans.meta
+                  .totalPage ?? 0
+              }
+            />
+          ) : null}
         </Stack>
       </GSMSBoxWrapper>
       <ModalDetailPelaporanKegiatan
