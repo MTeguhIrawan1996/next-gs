@@ -14,7 +14,7 @@ const ModalActionWrapper: React.FC<IModalActionWrapperProps> = ({
   children,
 }) => {
   return (
-    <Modal.Root opened={isOpen} onClose={onCloseModal} size="80%" radius="lg">
+    <Modal.Root opened={isOpen} onClose={onCloseModal} size="xl" radius="lg">
       <Modal.Overlay />
       <Modal.Content px="none">
         <Modal.Header>

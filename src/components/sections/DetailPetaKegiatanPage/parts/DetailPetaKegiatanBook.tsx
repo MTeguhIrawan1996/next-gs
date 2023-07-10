@@ -41,6 +41,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
 }) => {
   const { commonIdentity, recommendation, dinas, goalExpectation } =
     data.landingPageArtistReport.form;
+
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
@@ -175,7 +176,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       <GSMSBoxWrapper enableBack>
         <Stack w="100%" spacing="md" px="xs">
           <Text fw={600} fz={24}>
-            {recommendation.school.name}
+            {recommendation?.school.name}
           </Text>
           <Flex gap="sm" className={classes.rowToColumn}>
             <Box w="100%" sx={{ flex: 6 }}>
@@ -186,23 +187,23 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Jenjang',
-                    value: recommendation.school.stage.abbr,
+                    value: recommendation?.school.stage.abbr ?? '-',
                   },
                   {
                     key: 'Dinas',
-                    value: dinas.name,
+                    value: dinas?.name ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: recommendation.school.province.name ?? '-',
+                    value: recommendation?.school.province.name ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: recommendation.school.regency.name ?? '-',
+                    value: recommendation?.school.regency.name ?? '-',
                   },
                   {
                     key: 'Alamat',
-                    value: recommendation.school.streetAddress,
+                    value: recommendation?.school.streetAddress ?? '-',
                   },
                 ]}
               />
@@ -213,15 +214,15 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
               </Text>
               <Link
                 href={`https://www.google.com/maps/@${
-                  recommendation.school.latitude
-                },${recommendation.school.longitude},${17}z`}
+                  recommendation?.school.latitude
+                },${recommendation?.school.longitude},${17}z`}
                 target="_blank"
                 style={{ width: '100%' }}
               >
                 <Box h={240} bg="gray.5" w="100%" pos="relative">
                   <SimpleMap
-                    latitude={recommendation.school.latitude}
-                    longitude={recommendation.school.longitude}
+                    latitude={recommendation?.school.latitude}
+                    longitude={recommendation?.school.longitude}
                   />
                 </Box>
               </Link>
@@ -242,23 +243,23 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Nama Seniman',
-                    value: commonIdentity.name,
+                    value: commonIdentity?.name ?? '-',
                   },
                   {
                     key: 'Keahlian Bidang Seni',
-                    value: goalExpectation.artExpertise,
+                    value: goalExpectation?.artExpertise ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: commonIdentity.province.name,
+                    value: commonIdentity?.province.name ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: commonIdentity.regency.name,
+                    value: commonIdentity?.regency.name ?? '-',
                   },
                   {
                     key: 'Nama Asisten',
-                    value: recommendation.assistant.name,
+                    value: recommendation?.assistant.name ?? '-',
                   },
                 ]}
               />
@@ -274,8 +275,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 }}
               >
                 <NextImageFill
-                  src={commonIdentity.photo.url ?? '/'}
-                  alt={commonIdentity.photo.filename ?? 'not found'}
+                  src={commonIdentity?.photo.url ?? '/'}
+                  alt={commonIdentity?.photo.filename ?? 'not found'}
                 />
               </Box>
             </Box>
