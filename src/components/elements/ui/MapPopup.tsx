@@ -40,6 +40,7 @@ const MapPopup: React.FunctionComponent<IMapPopupProps> = ({ clickInfo }) => {
       bg="dark.5"
       spacing={6}
       miw="240px"
+      maw="240px"
       sx={{ borderRadius: '8px', top: 0, left: 0 }}
     >
       <Text fz={12} fw={600} c="#FFF">

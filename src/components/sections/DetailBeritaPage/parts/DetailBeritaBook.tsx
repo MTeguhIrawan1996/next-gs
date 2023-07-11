@@ -63,7 +63,7 @@ const DetailBeritaBook: React.FC<IProps> = ({ data }) => {
             />
           </Box>
           <TypographyStylesProvider>
-            <div dangerouslySetInnerHTML={{ __html: `${content}` }} />
+            <div dangerouslySetInnerHTML={{ __html: `${content ?? ''}` }} />
           </TypographyStylesProvider>
           <Divider my={10} opacity={0.5} />
           <Stack spacing="xs">

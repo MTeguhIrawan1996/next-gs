@@ -13,6 +13,11 @@ const SelectInput: React.FC<
       data={data}
       radius="xl"
       nothingFound="Data tidak ada"
+      styles={{
+        item: {
+          whiteSpace: 'unset',
+        },
+      }}
       {...rest}
     />
   );
