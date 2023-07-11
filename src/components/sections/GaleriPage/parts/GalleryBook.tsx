@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Flex, SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import * as React from 'react';
@@ -15,23 +14,14 @@ import {
 } from '@/components/elements';
 
 import {
-  DinasesRequest,
-  DinasesResponse,
   IDinases,
-  READ_ALL_ACTIVE_DINASES,
+  useReadAllActiveDinases,
 } from '@/graphql/query/readAllActiveDinases';
 import {
-  GalleryRequest,
-  GalleryResponse,
   IGallery,
-  READ_ALL_GALLERY_LANDINGPAGE,
+  useReadAllGalleryLandingPage,
 } from '@/graphql/query/readAllGalleryLandingPage';
-import {
-  ISchools,
-  READ_ALL_SCHOOLS,
-  SchoolsRequest,
-  SchoolsResponse,
-} from '@/graphql/query/readAllSchools';
+import { ISchools, useReadAllSchools } from '@/graphql/query/readAllSchools';
 
 import { IFile } from '@/types/global';
 
@@ -47,66 +37,38 @@ const GalleryBook = () => {
   const [schoolsFilterId, setSchoolsFilterId] = React.useState<string | null>(
     null
   );
-  ``;
   const [schoolsSearchTerm, setSchoolsSearchTerm] = React.useState<string>('');
   const [schoolsQuery] = useDebouncedValue<string>(schoolsSearchTerm, 400);
   const [typeId, setTypeId] = React.useState<string | null>(null);
 
-  const { data: galleryData, loading: galleryLoading } = useQuery<
-    GalleryResponse,
-    GalleryRequest
-  >(READ_ALL_GALLERY_LANDINGPAGE, {
-    variables: {
-      limit: 9,
-      page: page,
-      orderBy: 'checkedAt',
-      orderDir: 'desc',
-      search: searchQuery,
-      dinasId: dinasesFilterId,
-      schoolId: schoolsFilterId,
-      type: typeId,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { galleryData, galleryLoading } = useReadAllGalleryLandingPage({
+    limit: 9,
+    page: page,
+    orderBy: 'checkedAt',
+    orderDir: 'desc',
+    search: searchQuery,
+    dinasId: dinasesFilterId,
+    schoolId: schoolsFilterId,
+    type: typeId,
   });
-  const { data: dinasesData, loading: dinasesLoading } = useQuery<
-    DinasesResponse,
-    DinasesRequest
-  >(READ_ALL_ACTIVE_DINASES, {
-    variables: {
-      activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
-      limit: 10,
-      page: null,
-      orderBy: 'name',
-      orderDir: 'asc',
-      search: dinasesQuery === '' ? null : dinasesQuery,
-      level: null,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { dinasesData, dinasesLoading } = useReadAllActiveDinases({
+    activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
+    limit: 10,
+    page: null,
+    orderBy: 'name',
+    orderDir: 'asc',
+    search: dinasesQuery === '' ? null : dinasesQuery,
+    level: null,
   });
-  const { data: schoolsData, loading: schoolsLoading } = useQuery<
-    SchoolsResponse,
-    SchoolsRequest
-  >(READ_ALL_SCHOOLS, {
-    variables: {
-      limit: 10,
-      page: null,
-      orderBy: 'name',
-      orderDir: 'asc',
-      search: schoolsQuery === '' ? null : schoolsQuery,
-      provinceId: null,
-      regencyId: null,
-      stageId: null,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { schoolsData, schoolsLoading } = useReadAllSchools({
+    limit: 10,
+    page: null,
+    orderBy: 'name',
+    orderDir: 'asc',
+    search: schoolsQuery === '' ? null : schoolsQuery,
+    provinceId: null,
+    regencyId: null,
+    stageId: null,
   });
 
   const renderSchools = React.useCallback((value: ISchools) => {
