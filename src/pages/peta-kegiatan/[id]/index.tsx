@@ -3,12 +3,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import LandingPageLayout from '@/components/layouts/landingPage';
 import DetailPetaKegiatanPage from '@/components/sections/DetailPetaKegiatanPage';
 
-import { client } from '@/graphql/apollo-client';
-import {
-  ArtistReportOneRequest,
-  ArtistReportOneResponse,
-  READ_ONE_LANDINGPAGE_ARTIST_REPORT,
-} from '@/graphql/query/readOneLandingPageArtistReport';
+import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
+import { axiosInstance } from '@/utils/rest-api/axios';
 
 const DetailPetaKegiatan = ({
   data,
@@ -26,18 +22,23 @@ export const getServerSideProps: GetServerSideProps<{
   data: ArtistReportOneResponse;
 }> = async (context) => {
   const id = context.params?.id;
+  const year = context.query.year;
 
   try {
-    const { data } = await client.query<
-      ArtistReportOneResponse,
-      ArtistReportOneRequest
-    >({
-      query: READ_ONE_LANDINGPAGE_ARTIST_REPORT,
-      variables: {
-        id: id as string,
-      },
-      fetchPolicy: 'no-cache',
-    });
+    // const { data } = await client.query<
+    //   ArtistReportOneResponse,
+    //   ArtistReportOneRequest
+    // >({
+    //   query: READ_ONE_LANDINGPAGE_ARTIST_REPORT,
+    //   variables: {
+    //     id: id as string,
+    //   },
+    //   fetchPolicy: 'no-cache',
+    // });
+    const res = await axiosInstance.get(
+      `/landing-page/artist-reports/school-for-maps/${year}/${id}`
+    );
+    const data = await res.data;
 
     return {
       props: { data },

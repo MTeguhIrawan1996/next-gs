@@ -30,9 +30,9 @@ interface IDetailPetaKegiatanBookProps {
 const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   data,
 }) => {
-  const { commonIdentity, recommendation, dinas, goalExpectation } =
-    data.landingPageArtistReport.form;
-
+  // const { commonIdentity, recommendation, dinas, goalExpectation } =
+  //   data.landingPageArtistReport.form;
+  const { school, artist } = data.data;
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
@@ -155,7 +155,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       <GSMSBoxWrapper enableBack>
         <Stack w="100%" spacing="md" px="xs">
           <Text fw={600} fz={24}>
-            {recommendation?.school.name}
+            {school?.name}
           </Text>
           <Flex gap="sm" className={classes.rowToColumn}>
             <Box w="100%" sx={{ flex: 6 }}>
@@ -166,23 +166,23 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Jenjang',
-                    value: recommendation?.school.stage.abbr ?? '-',
+                    value: school?.stageAbbr ?? '-',
                   },
                   {
                     key: 'Dinas',
-                    value: dinas?.name ?? '-',
+                    value: school?.dinasName ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: recommendation?.school.province.name ?? '-',
+                    value: school?.provinceName ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: recommendation?.school.regency.name ?? '-',
+                    value: school?.regencyName ?? '-',
                   },
                   {
                     key: 'Alamat',
-                    value: recommendation?.school.streetAddress ?? '-',
+                    value: school?.streetAddress ?? '-',
                   },
                 ]}
               />
@@ -192,16 +192,16 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 Klik peta untuk lihat lebih detail
               </Text>
               <Link
-                href={`https://www.google.com/maps/@${
-                  recommendation?.school.latitude
-                },${recommendation?.school.longitude},${17}z`}
+                href={`https://www.google.com/maps/@${school?.latitude},${
+                  school?.longitude
+                },${17}z`}
                 target="_blank"
                 style={{ width: '100%' }}
               >
                 <Box h={240} bg="gray.5" w="100%" pos="relative">
                   <SimpleMap
-                    latitude={recommendation?.school.latitude}
-                    longitude={recommendation?.school.longitude}
+                    latitude={school?.latitude}
+                    longitude={school?.longitude}
                   />
                 </Box>
               </Link>
@@ -222,23 +222,23 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Nama Seniman',
-                    value: commonIdentity?.name ?? '-',
+                    value: artist?.name ?? '-',
                   },
                   {
                     key: 'Keahlian Bidang Seni',
-                    value: goalExpectation?.artExpertise ?? '-',
+                    value: artist?.artExpertise ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: commonIdentity?.province.name ?? '-',
+                    value: artist?.provinceName ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: commonIdentity?.regency.name ?? '-',
+                    value: artist?.regencyName ?? '-',
                   },
                   {
                     key: 'Nama Asisten',
-                    value: recommendation?.assistant.name ?? '-',
+                    value: artist?.assistantName ?? '-',
                   },
                 ]}
               />
@@ -254,8 +254,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 }}
               >
                 <NextImageFill
-                  src={commonIdentity?.photo.url ?? '/'}
-                  alt={commonIdentity?.photo.filename ?? 'not found'}
+                  src={artist?.photo?.url ?? '/'}
+                  alt={artist?.photo?.filename ?? 'not found'}
                 />
               </Box>
             </Box>

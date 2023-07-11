@@ -10,6 +10,7 @@ import Map, {
   ScaleControl,
   Source,
 } from 'react-map-gl';
+import { shallow } from 'zustand/shallow';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -17,6 +18,7 @@ import { MapPopup, MultipleSelect } from '@/components/elements';
 
 import { useReadAllFilterYear } from '@/graphql/query/readAllFilterYear';
 import { axiosInstance } from '@/utils/rest-api/axios';
+import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
 
 import {
   clusterCountLayer,
@@ -33,18 +35,21 @@ const MapBook = () => {
     GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
   >(undefined);
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
-  const [filterYearId, setFilterYearId] = React.useState<string | null>(null);
+  const [activityYearId, setActivityYear] = useActivityYearStore(
+    (state) => [state.activityYearId, state.setActivityYear],
+    shallow
+  );
 
   const { filterYearData, filterYearLoading } = useReadAllFilterYear();
 
   React.useEffect(() => {
-    if (filterYearId || !data) {
+    if (activityYearId || !data) {
       setLoading(true);
       const getData = async () => {
         try {
           const res = await axiosInstance.get(
-            `/landing-page/artist-reports/school-for-maps?activity-year=${
-              filterYearId ?? ''
+            `/landing-page/artist-reports/school-for-maps/${
+              activityYearId ?? ''
             }`
           );
           setLoading(false);
@@ -56,7 +61,7 @@ const MapBook = () => {
       getData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterYearId]);
+  }, [activityYearId]);
 
   const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
     return {
@@ -103,9 +108,10 @@ const MapBook = () => {
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
       {
+        defaultValue: activityYearId,
         onChange: (value: string | null) => {
           setClickInfo(null);
-          setFilterYearId(value ?? `${filterYearItem?.[0].value}`);
+          setActivityYear(!value ? `${filterYearItem?.[0].value}` : value);
         },
         data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
@@ -114,7 +120,7 @@ const MapBook = () => {
       },
     ];
     return item;
-  }, [filterYearItem, filterYearLoading]);
+  }, [activityYearId, filterYearItem, filterYearLoading, setActivityYear]);
 
   const onLoad = () => {
     if (mapRef.current) {
