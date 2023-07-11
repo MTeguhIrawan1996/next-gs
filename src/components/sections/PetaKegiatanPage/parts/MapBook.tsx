@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Box, Paper, SelectProps } from '@mantine/core';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
@@ -16,10 +15,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { MapPopup, MultipleSelect } from '@/components/elements';
 
-import {
-  FilterYearResponse,
-  READ_ALL_FILTER_YEAR,
-} from '@/graphql/query/readAllFilterYear';
+import { useReadAllFilterYear } from '@/graphql/query/readAllFilterYear';
 import { axiosInstance } from '@/utils/rest-api/axios';
 
 import {
@@ -38,13 +34,7 @@ const MapBook = () => {
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
   const [filterYearId, setFilterYearId] = React.useState<string | null>(null);
 
-  const { data: filterYearData, loading: filterYearLoading } =
-    useQuery<FilterYearResponse>(READ_ALL_FILTER_YEAR, {
-      onError: (err: ApolloError) => {
-        return err;
-      },
-      fetchPolicy: 'cache-first',
-    });
+  const { filterYearData, filterYearLoading } = useReadAllFilterYear();
 
   React.useEffect(() => {
     if (filterYearId || !data) {

@@ -1,4 +1,3 @@
-import { ApolloError, useLazyQuery, useQuery } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import { Box, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
@@ -17,16 +16,8 @@ import {
   SimpleMap,
 } from '@/components/elements';
 
-import {
-  DetailActivityPlanRequest,
-  DetailActivityPlanResponse,
-  READ_ONE_ACTIVITY_PLAN,
-} from '@/graphql/query/readOneActivityPlan';
-import {
-  ActivityPlanReportRequest,
-  ActivityPlanReportResponse,
-  READ_ONE_LANDINGPAGE_ACTIVITY_PLAN,
-} from '@/graphql/query/readOneLandingPageActivityPlan';
+import { useReadOneActivityPlan } from '@/graphql/query/readOneActivityPlan';
+import { useReadOneLandingPageActivityPlan } from '@/graphql/query/readOneLandingPageActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
 
@@ -48,11 +39,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
   const id = router.query.id as string;
 
-  const { data: activityPlanData, loading } = useQuery<
-    ActivityPlanReportResponse,
-    ActivityPlanReportRequest
-  >(READ_ONE_LANDINGPAGE_ACTIVITY_PLAN, {
-    variables: {
+  const { activityPlanData, activityPlanloading } =
+    useReadOneLandingPageActivityPlan({
       id: id,
       page: page,
       limit: 10,
@@ -60,29 +48,16 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       orderDir: 'asc',
       search: null,
       isHaveReport: true,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
-  });
+    });
 
-  const [getDetailActivityPlan, { data: detailActivityPlanData }] =
-    useLazyQuery<DetailActivityPlanResponse, DetailActivityPlanRequest>(
-      READ_ONE_ACTIVITY_PLAN,
-      {
-        onError: (err: ApolloError) => {
-          return err;
-        },
-        fetchPolicy: 'cache-first',
-      }
-    );
+  const { getDetailActivityPlan, detailActivityPlanData } =
+    useReadOneActivityPlan();
 
   const renderActivityReportTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
-          fetching: loading,
+          fetching: activityPlanloading,
           onRowClick: ({ id }) => {
             handleOpenModal(id);
           },
@@ -156,7 +131,10 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activityPlanData?.landingPageArtistReport.activityPlans.data, loading]);
+  }, [
+    activityPlanData?.landingPageArtistReport.activityPlans.data,
+    activityPlanloading,
+  ]);
 
   const handleOpenModal = async (id: string) => {
     setIsModalDetail((prev) => !prev);
@@ -291,7 +269,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
           {activityPlanData?.landingPageArtistReport.activityPlans.data
             .length ? (
             <GlobalPagination
-              isFetching={loading}
+              isFetching={activityPlanloading}
               setPage={setPage}
               currentPage={page}
               totalAllData={

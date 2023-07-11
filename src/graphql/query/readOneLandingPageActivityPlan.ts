@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFilterGlobalRequest, MResponse } from '@/types/global';
 
@@ -71,3 +71,23 @@ export interface ActivityPlanReportRequest extends IFilterGlobalRequest {
   id: string;
   isHaveReport: boolean;
 }
+
+export const useReadOneLandingPageActivityPlan = (
+  req: ActivityPlanReportRequest
+) => {
+  const { data: activityPlanData, loading: activityPlanloading } = useQuery<
+    ActivityPlanReportResponse,
+    ActivityPlanReportRequest
+  >(READ_ONE_LANDINGPAGE_ACTIVITY_PLAN, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    activityPlanData,
+    activityPlanloading,
+  };
+};

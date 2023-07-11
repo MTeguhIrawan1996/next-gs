@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useLazyQuery } from '@apollo/client';
 
 export const READ_ONE_ACTIVITY_PLAN = gql`
   query ReadOneDetailActivityPlan($id: String!) {
@@ -49,3 +49,21 @@ export interface DetailActivityPlanResponse {
 export interface DetailActivityPlanRequest {
   id: string;
 }
+
+export const useReadOneActivityPlan = () => {
+  const [getDetailActivityPlan, { data: detailActivityPlanData }] =
+    useLazyQuery<DetailActivityPlanResponse, DetailActivityPlanRequest>(
+      READ_ONE_ACTIVITY_PLAN,
+      {
+        onError: (err: ApolloError) => {
+          return err;
+        },
+        fetchPolicy: 'cache-first',
+      }
+    );
+
+  return {
+    getDetailActivityPlan,
+    detailActivityPlanData,
+  };
+};

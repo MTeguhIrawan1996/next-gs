@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useLazyQuery } from '@apollo/client';
 
 import { IFile } from '@/types/global';
 
@@ -51,3 +51,24 @@ export interface AchievingStudentResponse {
 export interface AchievingStudentRequest {
   id: string;
 }
+
+export const useReadOneAchievingStudent = () => {
+  const [
+    getStudent,
+    { data: AchievingStudentData, loading: AchievingStudentLoading },
+  ] = useLazyQuery<AchievingStudentResponse, AchievingStudentRequest>(
+    READ_ONE_ACHIEVING_STUNDENT,
+    {
+      onError: (err: ApolloError) => {
+        return err;
+      },
+      fetchPolicy: 'cache-first',
+    }
+  );
+
+  return {
+    getStudent,
+    AchievingStudentData,
+    AchievingStudentLoading,
+  };
+};
