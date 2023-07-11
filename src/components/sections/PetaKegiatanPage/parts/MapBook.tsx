@@ -1,4 +1,4 @@
-import { Box, Paper, SelectProps } from '@mantine/core';
+import { Box, Loader, Paper, SelectProps } from '@mantine/core';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import * as React from 'react';
@@ -28,6 +28,7 @@ import { IMapFeature, IPropertiesId } from '@/types/map';
 
 const MapBook = () => {
   const mapRef = React.useRef<MapRef>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [data, setData] = React.useState<
     GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
   >(undefined);
@@ -38,6 +39,7 @@ const MapBook = () => {
 
   React.useEffect(() => {
     if (filterYearId || !data) {
+      setLoading(true);
       const getData = async () => {
         try {
           const res = await axiosInstance.get(
@@ -45,6 +47,7 @@ const MapBook = () => {
               filterYearId ?? ''
             }`
           );
+          setLoading(false);
           setData(res.data);
         } catch (err) {
           return;
@@ -217,6 +220,15 @@ const MapBook = () => {
             <MultipleSelect MultipleSelectProps={filter as SelectProps[]} />
           </Paper>
         </Box>
+        {loading ? (
+          <Loader
+            pos="absolute"
+            mx={10}
+            my={22}
+            sx={{ right: 0 }}
+            color="violet"
+          />
+        ) : null}
       </Map>
     </Box>
   );
