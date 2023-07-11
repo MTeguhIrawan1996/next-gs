@@ -37,6 +37,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
+  // console.log(router.query.year);
   const id = router.query.id as string;
 
   const { activityPlanData, activityPlanloading } =

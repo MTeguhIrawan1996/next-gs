@@ -93,14 +93,16 @@ const MapBook = () => {
   }, []);
 
   const filterYearItem = filterYearData?.activityYears
-    .filter((v) => v === 2023)
+    .slice()
+    .sort((a, b) => b - a)
     .map(renderFilterYear);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
       {
         onChange: (value: string | null) => {
-          setFilterYearId(value);
+          setClickInfo(null);
+          setFilterYearId(value ?? `${filterYearItem?.[0].value}`);
         },
         data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
