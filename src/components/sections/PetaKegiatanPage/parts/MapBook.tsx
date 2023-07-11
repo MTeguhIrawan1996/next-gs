@@ -1,6 +1,5 @@
 import { ApolloError, useQuery } from '@apollo/client';
 import { Box, Paper, SelectProps } from '@mantine/core';
-import axios from 'axios';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import * as React from 'react';
@@ -21,6 +20,7 @@ import {
   FilterYearResponse,
   READ_ALL_FILTER_YEAR,
 } from '@/graphql/query/readAllFilterYear';
+import { axiosInstance } from '@/utils/rest-api/axios';
 
 import {
   clusterCountLayer,
@@ -50,10 +50,8 @@ const MapBook = () => {
     if (filterYearId || !data) {
       const getData = async () => {
         try {
-          const res = await axios.get(
-            `${
-              process.env.NEXT_PUBLIC_REST_API_URL
-            }/landing-page/artist-reports/school-for-maps?activity-year=${
+          const res = await axiosInstance.get(
+            `/landing-page/artist-reports/school-for-maps?activity-year=${
               filterYearId ?? ''
             }`
           );

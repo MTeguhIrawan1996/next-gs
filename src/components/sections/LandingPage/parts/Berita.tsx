@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Flex } from '@mantine/core';
 import * as React from 'react';
 
@@ -8,31 +7,17 @@ import {
   LandingPageSectionWrapper,
 } from '@/components/elements';
 
-import {
-  Articles,
-  ArticlesRequest,
-  ArticlesResponse,
-  READ_ALL_ARTICLES,
-} from '@/graphql/query/readAllArticles';
+import { Articles, useReadAllArticles } from '@/graphql/query/readAllArticles';
 
 const Berita = () => {
-  const { data: articlesData, loading: articlesLoading } = useQuery<
-    ArticlesResponse,
-    ArticlesRequest
-  >(READ_ALL_ARTICLES, {
-    variables: {
-      limit: 3,
-      page: 1,
-      orderBy: 'publishedAt',
-      orderDir: 'desc',
-      search: null,
-      createdById: null,
-      dinasId: null,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { articlesData, articlesLoading } = useReadAllArticles({
+    limit: 3,
+    page: 1,
+    orderBy: 'publishedAt',
+    orderDir: 'desc',
+    search: null,
+    createdById: null,
+    dinasId: null,
   });
 
   const renderArticles = React.useCallback((value: Articles, index: number) => {

@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Flex } from '@mantine/core';
 import * as React from 'react';
 
@@ -9,33 +8,22 @@ import {
 } from '@/components/elements';
 
 import {
-  GalleryRequest,
-  GalleryResponse,
   IGallery,
-  READ_ALL_GALLERY_LANDINGPAGE,
+  useReadAllGalleryLandingPage,
 } from '@/graphql/query/readAllGalleryLandingPage';
 
 import { IFile } from '@/types/global';
 
 const Galeri = () => {
-  const { data: galleryData, loading: galleryLoading } = useQuery<
-    GalleryResponse,
-    GalleryRequest
-  >(READ_ALL_GALLERY_LANDINGPAGE, {
-    variables: {
-      limit: 3,
-      page: null,
-      orderBy: 'checkedAt',
-      orderDir: 'desc',
-      search: null,
-      dinasId: null,
-      schoolId: null,
-      type: null,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { galleryData, galleryLoading } = useReadAllGalleryLandingPage({
+    limit: 3,
+    page: null,
+    orderBy: 'checkedAt',
+    orderDir: 'desc',
+    search: null,
+    dinasId: null,
+    schoolId: null,
+    type: null,
   });
 
   const renderGallery = React.useCallback((value: IGallery, index: number) => {

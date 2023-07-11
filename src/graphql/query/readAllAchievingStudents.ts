@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { MResponse } from '@/types/global';
 
@@ -53,3 +53,21 @@ export interface AchievingStundetsRequest {
   orderBy: string | null;
   orderDir: string | null;
 }
+
+export const useReadAllAchievingStudents = (req: AchievingStundetsRequest) => {
+  const { data: AchievingData, loading: AchievingLoading } = useQuery<
+    AchievingStundetsResponse,
+    AchievingStundetsRequest
+  >(READ_ALL_ACHIEVING_STUDENTS, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    AchievingData,
+    AchievingLoading,
+  };
+};

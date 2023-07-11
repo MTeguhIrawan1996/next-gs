@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFile, IFilterGlobalRequest, MResponse } from '@/types/global';
 
@@ -63,3 +63,21 @@ export interface ArticlesRequest extends IFilterGlobalRequest {
   createdById: string | null;
   dinasId: string | null;
 }
+
+export const useReadAllArticles = (req: ArticlesRequest) => {
+  const { data: articlesData, loading: articlesLoading } = useQuery<
+    ArticlesResponse,
+    ArticlesRequest
+  >(READ_ALL_ARTICLES, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    articlesData,
+    articlesLoading,
+  };
+};
