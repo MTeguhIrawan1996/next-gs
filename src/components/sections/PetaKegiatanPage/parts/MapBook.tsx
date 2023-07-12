@@ -114,7 +114,7 @@ const MapBook = () => {
         data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
         placeholder: filterYearLoading ? 'Memuat...' : 'Pilih Tahun',
-        clearable: true,
+        clearable: false,
       },
     ];
     return item;

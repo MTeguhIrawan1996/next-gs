@@ -59,7 +59,7 @@ export const useReadOneRestActivityPlan = ({
     },
     onError: onError,
     onSuccess: onSuccess,
-    queryKey: ['activityPlan', page],
+    queryKey: ['activityPlan', id, page],
     keepPreviousData: true,
   });
 };

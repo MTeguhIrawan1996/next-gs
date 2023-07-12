@@ -3,44 +3,37 @@ import * as React from 'react';
 
 import { KeyValuePairs, ModalActionWrapper } from '@/components/elements';
 
-import { DetailActivityPlanResponse } from '@/graphql/query/readOneActivityPlan';
 import landingPageStyle from '@/styles/LandingPage';
 import { dateFromat } from '@/utils/helper/dateFormat';
+import { DetailActivityPlanReportRestResponse } from '@/utils/rest-api/ActivityPlan/useReadOneRestDetailActivityPlan';
 
 interface IModalDetailPelaporanProps {
-  data?: DetailActivityPlanResponse;
+  data?: DetailActivityPlanReportRestResponse;
+  order?: number;
   isOpen: boolean;
   onCloseModal: () => void;
-}
-
-interface IStudentsName {
-  id: string;
-  student: {
-    name: string;
-  };
 }
 
 const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
   isOpen,
   onCloseModal,
   data,
+  order,
 }) => {
   const { classes } = landingPageStyle();
 
-  const renderStudentsName = React.useCallback((value: IStudentsName) => {
-    return value.student.name;
+  const renderStudentsName = React.useCallback((value: string) => {
+    return value;
   }, []);
 
   const studentNameItem =
-    data?.landingPageActivityPlan.report.studentAbsences.data.map(
-      renderStudentsName
-    );
+    data?.data.studentPresentNames.map(renderStudentsName);
 
   return (
     <ModalActionWrapper isOpen={isOpen} onCloseModal={onCloseModal}>
       <Stack w="100%" spacing="md" px="xs">
         <Text fw={700} fz={22}>
-          {`Pertemuan ${data?.landingPageActivityPlan.order ?? '-'}`}
+          {`Pertemuan ${order ?? '-'} `}
         </Text>
         <Box w="100%">
           <KeyValuePairs
@@ -50,18 +43,15 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
             data={[
               {
                 key: 'Tanggal Kegiatan',
-                value: dateFromat(
-                  data?.landingPageActivityPlan.report.activityDate,
-                  'dddd, LL'
-                ),
+                value: dateFromat(data?.data.activityDate, 'dddd, LL'),
               },
               {
                 key: 'Materi',
-                value: data?.landingPageActivityPlan.report.material ?? '-',
+                value: data?.data.material ?? '-',
               },
               {
                 key: 'Tujuan Pembelajaran',
-                value: data?.landingPageActivityPlan.goals ?? '-',
+                value: data?.data.goals ?? '-',
               },
               {
                 key: 'Absensi',

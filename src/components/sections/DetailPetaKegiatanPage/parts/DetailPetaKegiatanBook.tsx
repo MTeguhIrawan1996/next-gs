@@ -17,10 +17,10 @@ import {
   SimpleMap,
 } from '@/components/elements';
 
-import { useReadOneActivityPlan } from '@/graphql/query/readOneActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
 import { useReadOneRestActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestActivityPlan';
+import { useReadOneRestDetailActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestDetailActivityPlan';
 
 import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
 
@@ -38,13 +38,15 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
+  const [idRow, setIdRow] = React.useState<string>('');
+  const [order, setOrder] = React.useState<number>(0);
   const activityYear = router.query.year as string;
-  const idActivityPaln = router.query.id as string;
+  const idActivityPlan = router.query.id as string;
 
   const { data: dataActivityPlan, isLoading: loadingActivityPlan } =
     useReadOneRestActivityPlan({
       variable: {
-        id: idActivityPaln,
+        id: idActivityPlan,
         limit: '10',
         page: page.toString(),
         year: activityYear.toString(),
@@ -58,16 +60,21 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       },
     });
 
-  const { getDetailActivityPlan, detailActivityPlanData } =
-    useReadOneActivityPlan();
+  const { data: dataDetailActivityPlan } = useReadOneRestDetailActivityPlan({
+    variable: {
+      idActivityPlan,
+      year: activityYear,
+      idRow,
+    },
+  });
 
   const renderActivityReportTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
           fetching: loadingActivityPlan,
-          onRowClick: ({ id }) => {
-            handleOpenModal(id);
+          onRowClick: ({ id, order }) => {
+            handleOpenModal(id, order);
           },
           columns: [
             {
@@ -141,13 +148,10 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataActivityPlan?.data, loadingActivityPlan]);
 
-  const handleOpenModal = async (id: string) => {
+  const handleOpenModal = async (id: string, order: number) => {
     setIsModalDetail((prev) => !prev);
-    await getDetailActivityPlan({
-      variables: {
-        id: id,
-      },
-    });
+    setIdRow(id);
+    setOrder(order);
   };
 
   const onCloseModal = () => {
@@ -291,7 +295,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       <ModalDetailPelaporanKegiatan
         isOpen={isModalDetail}
         onCloseModal={onCloseModal}
-        data={detailActivityPlanData}
+        data={dataDetailActivityPlan}
+        order={order}
       />
     </InnerWrapper>
   );
