@@ -1,4 +1,3 @@
-import { ApolloError, useLazyQuery, useQuery } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import { Box, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
@@ -17,18 +16,10 @@ import {
   SimpleMap,
 } from '@/components/elements';
 
-import {
-  DetailActivityPlanRequest,
-  DetailActivityPlanResponse,
-  READ_ONE_ACTIVITY_PLAN,
-} from '@/graphql/query/readOneActivityPlan';
-import {
-  ActivityPlanReportRequest,
-  ActivityPlanReportResponse,
-  READ_ONE_LANDINGPAGE_ACTIVITY_PLAN,
-} from '@/graphql/query/readOneLandingPageActivityPlan';
+import { useReadOneActivityPlan } from '@/graphql/query/readOneActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
+import { useReadOneRestActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestActivityPlan';
 
 import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
 
@@ -39,50 +30,40 @@ interface IDetailPetaKegiatanBookProps {
 const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   data,
 }) => {
-  const { commonIdentity, recommendation, dinas, goalExpectation } =
-    data.landingPageArtistReport.form;
-
+  const { school, artist } = data.data;
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
-  const id = router.query.id as string;
+  const activityYear = router.query.year as string;
+  const idActivityPaln = router.query.id as string;
 
-  const { data: activityPlanData, loading } = useQuery<
-    ActivityPlanReportResponse,
-    ActivityPlanReportRequest
-  >(READ_ONE_LANDINGPAGE_ACTIVITY_PLAN, {
-    variables: {
-      id: id,
-      page: page,
-      limit: 10,
-      orderBy: 'order',
-      orderDir: 'asc',
-      search: null,
-      isHaveReport: true,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  // const { activityPlanData, activityPlanloading } =
+  //   useReadOneLandingPageActivityPlan({
+  //     id: idActivityPaln,
+  //     page: page,
+  //     limit: 10,
+  //     orderBy: 'order',
+  //     orderDir: 'asc',
+  //     search: null,
+  //     isHaveReport: true,
+  //   });
+
+  const { dataActivityPlan, loadingActivityPlan } = useReadOneRestActivityPlan({
+    id: idActivityPaln,
+    limit: '10',
+    page: page.toString(),
+    year: activityYear.toString(),
   });
 
-  const [getDetailActivityPlan, { data: detailActivityPlanData }] =
-    useLazyQuery<DetailActivityPlanResponse, DetailActivityPlanRequest>(
-      READ_ONE_ACTIVITY_PLAN,
-      {
-        onError: (err: ApolloError) => {
-          return err;
-        },
-        fetchPolicy: 'cache-first',
-      }
-    );
+  const { getDetailActivityPlan, detailActivityPlanData } =
+    useReadOneActivityPlan();
 
   const renderActivityReportTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
-          fetching: loading,
+          fetching: loadingActivityPlan,
           onRowClick: ({ id }) => {
             handleOpenModal(id);
           },
@@ -93,22 +74,22 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
               render: ({ order }) => `Pertemuan ${order}`,
             },
             {
-              accessor: 'report.material',
+              accessor: 'material',
               title: 'Materi',
-              render: ({ report }) => report?.material,
+              render: ({ material }) => material,
             },
             {
               accessor: 'kehadiran',
               title: 'Kehadiran Siswa',
-              render: ({ report }) => (
+              render: ({ studentAbsenceRecap }) => (
                 <Group spacing={6} align="center">
                   <Button
                     compact
                     fz={12}
                     size="xs"
                     color={
-                      report?.studentAbsenceRecap.present /
-                        report?.studentAbsenceRecap.studentCount >=
+                      studentAbsenceRecap.present /
+                        studentAbsenceRecap.studentCount >=
                       0.5
                         ? 'blue'
                         : 'red'
@@ -125,7 +106,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                       },
                     })}
                   >
-                    {report?.studentAbsenceRecap.present}
+                    {studentAbsenceRecap.present}
                   </Button>
                   <Button
                     compact
@@ -145,18 +126,18 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                       },
                     })}
                   >
-                    {report?.studentAbsenceRecap.studentCount}
+                    {studentAbsenceRecap.studentCount}
                   </Button>
                 </Group>
               ),
             },
           ],
-          records: activityPlanData?.landingPageArtistReport.activityPlans.data,
+          records: dataActivityPlan?.data,
         }}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activityPlanData?.landingPageArtistReport.activityPlans.data, loading]);
+  }, [dataActivityPlan?.data, loadingActivityPlan]);
 
   const handleOpenModal = async (id: string) => {
     setIsModalDetail((prev) => !prev);
@@ -176,7 +157,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       <GSMSBoxWrapper enableBack>
         <Stack w="100%" spacing="md" px="xs">
           <Text fw={600} fz={24}>
-            {recommendation?.school.name}
+            {school?.name}
           </Text>
           <Flex gap="sm" className={classes.rowToColumn}>
             <Box w="100%" sx={{ flex: 6 }}>
@@ -187,45 +168,50 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Jenjang',
-                    value: recommendation?.school.stage.abbr ?? '-',
+                    value: school?.stageAbbr ?? '-',
                   },
                   {
                     key: 'Dinas',
-                    value: dinas?.name ?? '-',
+                    value: school?.dinasName ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: recommendation?.school.province.name ?? '-',
+                    value: school?.provinceName ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: recommendation?.school.regency.name ?? '-',
+                    value: school?.regencyName ?? '-',
                   },
                   {
                     key: 'Alamat',
-                    value: recommendation?.school.streetAddress ?? '-',
+                    value: school?.streetAddress ?? '-',
                   },
                 ]}
               />
             </Box>
             <Stack sx={{ flex: 6 }} spacing="xs" align="center">
-              <Text fw={400} fz={10}>
-                Klik peta untuk lihat lebih detail
-              </Text>
               <Link
-                href={`https://www.google.com/maps/@${
-                  recommendation?.school.latitude
-                },${recommendation?.school.longitude},${17}z`}
+                href={`https://www.google.com/maps/@${school?.latitude},${
+                  school?.longitude
+                },${17}z`}
                 target="_blank"
                 style={{ width: '100%' }}
               >
-                <Box h={240} bg="gray.5" w="100%" pos="relative">
-                  <SimpleMap
-                    latitude={recommendation?.school.latitude}
-                    longitude={recommendation?.school.longitude}
-                  />
-                </Box>
+                <Text
+                  fw={400}
+                  fz={10}
+                  sx={(theme) => ({ '&:hover': { color: theme.colors.brand } })}
+                  align="center"
+                >
+                  Klik link ini untuk lihat lebih detail
+                </Text>
               </Link>
+              <Box h={240} bg="gray.5" w="100%" pos="relative">
+                <SimpleMap
+                  latitude={school?.latitude}
+                  longitude={school?.longitude}
+                />
+              </Box>
             </Stack>
           </Flex>
           <Divider my={5} color="blue.1" opacity={1} />
@@ -243,23 +229,23 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 data={[
                   {
                     key: 'Nama Seniman',
-                    value: commonIdentity?.name ?? '-',
+                    value: artist?.name ?? '-',
                   },
                   {
                     key: 'Keahlian Bidang Seni',
-                    value: goalExpectation?.artExpertise ?? '-',
+                    value: artist?.artExpertise ?? '-',
                   },
                   {
                     key: 'Provinsi',
-                    value: commonIdentity?.province.name ?? '-',
+                    value: artist?.provinceName ?? '-',
                   },
                   {
                     key: 'Kabupaten/Kota',
-                    value: commonIdentity?.regency.name ?? '-',
+                    value: artist?.regencyName ?? '-',
                   },
                   {
                     key: 'Nama Asisten',
-                    value: recommendation?.assistant.name ?? '-',
+                    value: artist?.assistantName ?? '-',
                   },
                 ]}
               />
@@ -275,8 +261,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 }}
               >
                 <NextImageFill
-                  src={commonIdentity?.photo.url ?? '/'}
-                  alt={commonIdentity?.photo.filename ?? 'not found'}
+                  src={artist?.photo?.url ?? '/'}
+                  alt={artist?.photo?.filename ?? 'not found'}
                 />
               </Box>
             </Box>
@@ -288,24 +274,14 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             Pelaporan Kegiatan
           </Text>
           {renderActivityReportTable}
-          {activityPlanData?.landingPageArtistReport.activityPlans.data
-            .length ? (
+          {dataActivityPlan?.data.length ? (
             <GlobalPagination
-              isFetching={loading}
+              isFetching={loadingActivityPlan}
               setPage={setPage}
               currentPage={page}
-              totalAllData={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalAllData ?? 0
-              }
-              totalData={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalData ?? 0
-              }
-              totalPage={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalPage ?? 0
-              }
+              totalAllData={dataActivityPlan.meta.totalAllData ?? 0}
+              totalData={dataActivityPlan.meta.totalData ?? 0}
+              totalPage={dataActivityPlan.meta.totalPage ?? 0}
             />
           ) : null}
         </Stack>

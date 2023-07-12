@@ -1,7 +1,5 @@
 import { gql } from '@apollo/client';
 
-import { IFile } from '@/types/global';
-
 export const READ_ONE_LANDINGPAGE_ARTIST_REPORT = gql`
   query ReadOneLandingPageArtistReport($id: String!) {
     landingPageArtistReport(id: $id) {
@@ -56,50 +54,76 @@ export const READ_ONE_LANDINGPAGE_ARTIST_REPORT = gql`
   }
 `;
 
+// export interface ArtistReportOne {
+//   id: string;
+//   form: {
+//     commonIdentity: {
+//       name: string;
+//       photo: IFile;
+//       province: {
+//         name: string;
+//       };
+//       regency: {
+//         name: string;
+//       };
+//     };
+//     goalExpectation: {
+//       artExpertise: string;
+//     };
+//     recommendation: {
+//       assistant: {
+//         name: string;
+//       };
+//       school: {
+//         name: string;
+//         stage: {
+//           abbr: string;
+//         };
+//         province: {
+//           name: string;
+//         };
+//         regency: {
+//           name: string;
+//         };
+//         longitude: number;
+//         latitude: number;
+//         streetAddress: string;
+//       };
+//     };
+//     dinas: {
+//       name: string;
+//     };
+//   };
+// }
 export interface ArtistReportOne {
   id: string;
-  form: {
-    commonIdentity: {
-      name: string;
-      photo: IFile;
-      province: {
-        name: string;
-      };
-      regency: {
-        name: string;
-      };
-    };
-    goalExpectation: {
-      artExpertise: string;
-    };
-    recommendation: {
-      assistant: {
-        name: string;
-      };
-      school: {
-        name: string;
-        stage: {
-          abbr: string;
-        };
-        province: {
-          name: string;
-        };
-        regency: {
-          name: string;
-        };
-        longitude: number;
-        latitude: number;
-        streetAddress: string;
-      };
-    };
-    dinas: {
-      name: string;
+  school: {
+    npsn: number;
+    name: string;
+    stageAbbr: string;
+    longitude: number;
+    latitude: number;
+    provinceName: string;
+    regencyName: string;
+    streetAddress: string;
+    dinasName: string;
+  };
+  artist: {
+    name: string;
+    artExpertise: string;
+    provinceName: string;
+    regencyName: string;
+    assistantName: string;
+    photo: {
+      url: string;
+      originalFilename: string;
+      filename: string;
     };
   };
 }
 
 export interface ArtistReportOneResponse {
-  landingPageArtistReport: ArtistReportOne;
+  data: ArtistReportOne;
 }
 
 export interface ArtistReportOneRequest {

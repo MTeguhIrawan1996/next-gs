@@ -82,7 +82,11 @@ const MapPopup: React.FunctionComponent<IMapPopupProps> = ({ clickInfo }) => {
         ]}
       />
       <Link
-        href={`/peta-kegiatan/${clickInfo.feature.properties.id}`}
+        // href={`/peta-kegiatan/${clickInfo.feature.properties.id}`}
+        href={{
+          pathname: `/peta-kegiatan/${clickInfo.feature.properties.id}`,
+          query: { year: data.year },
+        }}
         className={classes.buttonStyle}
       >
         <Button fw={400} fz={12} color="violet.6" w="100%">

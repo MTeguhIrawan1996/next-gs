@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Stack } from '@mantine/core';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -11,11 +10,7 @@ import {
   SearchBar,
 } from '@/components/elements';
 
-import {
-  AchievingStundetsRequest,
-  AchievingStundetsResponse,
-  READ_ALL_ACHIEVING_STUDENTS,
-} from '@/graphql/query/readAllAchievingStudents';
+import { useReadAllAchievingStudents } from '@/graphql/query/readAllAchievingStudents';
 
 const SiswaBerprestasiBook = () => {
   const router = useRouter();
@@ -23,34 +18,25 @@ const SiswaBerprestasiBook = () => {
   const [searchTerm, setSerachTerm] = React.useState<string>('');
   const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
 
-  const { data, loading } = useQuery<
-    AchievingStundetsResponse,
-    AchievingStundetsRequest
-  >(READ_ALL_ACHIEVING_STUDENTS, {
-    variables: {
-      page: page,
-      limit: 5,
-      orderBy: 'activityYear',
-      orderDir: 'desc',
-      search: searchQuery,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { AchievingData, AchievingLoading } = useReadAllAchievingStudents({
+    page: page,
+    limit: 5,
+    orderBy: 'activityYear',
+    orderDir: 'desc',
+    search: searchQuery,
   });
 
   const renderSiswaTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
-          fetching: loading,
+          fetching: AchievingLoading,
           columns: [
             { accessor: 'name', title: 'Nama Siswa' },
             { accessor: 'activityYear', title: 'Tahun Mengikuti GSMS' },
             { accessor: 'achievement', title: 'Prestasi' },
           ],
-          records: data?.landingPageHighAchievingStudents.data,
+          records: AchievingData?.landingPageHighAchievingStudents.data,
           onRowClick: ({ id }) => {
             router.push(`/siswa-berprestasi/${id}`);
           },
@@ -58,7 +44,7 @@ const SiswaBerprestasiBook = () => {
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.landingPageHighAchievingStudents.data, loading]);
+  }, [AchievingData?.landingPageHighAchievingStudents.data, AchievingLoading]);
 
   return (
     <InnerWrapper>
@@ -75,20 +61,22 @@ const SiswaBerprestasiBook = () => {
             }}
           />
           {renderSiswaTable}
-          {data?.landingPageHighAchievingStudents.data.length ? (
+          {AchievingData?.landingPageHighAchievingStudents.data.length ? (
             <GlobalPagination
-              isFetching={loading}
+              isFetching={AchievingLoading}
               setPage={setPage}
               currentPage={page}
               totalAllData={
-                data?.landingPageHighAchievingStudents.meta
+                AchievingData?.landingPageHighAchievingStudents.meta
                   .totalAllData as number
               }
               totalData={
-                data?.landingPageHighAchievingStudents.meta.totalData as number
+                AchievingData?.landingPageHighAchievingStudents.meta
+                  .totalData as number
               }
               totalPage={
-                data?.landingPageHighAchievingStudents.meta.totalPage as number
+                AchievingData?.landingPageHighAchievingStudents.meta
+                  .totalPage as number
               }
             />
           ) : null}

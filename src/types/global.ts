@@ -28,3 +28,8 @@ export interface MResponse<T> {
   meta: IMeta;
   data: T[];
 }
+
+export interface ApiResponse<T> {
+  data: T[];
+  meta: IMeta;
+}

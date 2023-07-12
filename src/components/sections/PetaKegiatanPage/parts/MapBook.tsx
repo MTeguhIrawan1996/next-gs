@@ -1,6 +1,4 @@
-import { ApolloError, useQuery } from '@apollo/client';
-import { Box, Paper, SelectProps } from '@mantine/core';
-import axios from 'axios';
+import { Box, Loader, Paper, SelectProps } from '@mantine/core';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import * as React from 'react';
@@ -12,15 +10,15 @@ import Map, {
   ScaleControl,
   Source,
 } from 'react-map-gl';
+import { shallow } from 'zustand/shallow';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { MapPopup, MultipleSelect } from '@/components/elements';
 
-import {
-  FilterYearResponse,
-  READ_ALL_FILTER_YEAR,
-} from '@/graphql/query/readAllFilterYear';
+import { useReadAllFilterYear } from '@/graphql/query/readAllFilterYear';
+import { axiosInstance } from '@/utils/rest-api/axios';
+import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
 
 import {
   clusterCountLayer,
@@ -32,31 +30,29 @@ import { IMapFeature, IPropertiesId } from '@/types/map';
 
 const MapBook = () => {
   const mapRef = React.useRef<MapRef>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [data, setData] = React.useState<
     GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
   >(undefined);
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
-  const [filterYearId, setFilterYearId] = React.useState<string | null>(null);
+  const [activityYearId, setActivityYear] = useActivityYearStore(
+    (state) => [state.activityYearId, state.setActivityYear],
+    shallow
+  );
 
-  const { data: filterYearData, loading: filterYearLoading } =
-    useQuery<FilterYearResponse>(READ_ALL_FILTER_YEAR, {
-      onError: (err: ApolloError) => {
-        return err;
-      },
-      fetchPolicy: 'cache-first',
-    });
+  const { filterYearData, filterYearLoading } = useReadAllFilterYear();
 
   React.useEffect(() => {
-    if (filterYearId || !data) {
+    if (activityYearId || !data) {
+      setLoading(true);
       const getData = async () => {
         try {
-          const res = await axios.get(
-            `${
-              process.env.NEXT_PUBLIC_REST_API_URL
-            }/landing-page/artist-reports/school-for-maps?activity-year=${
-              filterYearId ?? ''
+          const res = await axiosInstance.get(
+            `/landing-page/artist-reports/school-for-maps/${
+              activityYearId ?? ''
             }`
           );
+          setLoading(false);
           setData(res.data);
         } catch (err) {
           return;
@@ -65,7 +61,7 @@ const MapBook = () => {
       getData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterYearId]);
+  }, [activityYearId]);
 
   const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
     return {
@@ -105,14 +101,17 @@ const MapBook = () => {
   }, []);
 
   const filterYearItem = filterYearData?.activityYears
-    .filter((v) => v === 2023)
+    .slice()
+    .sort((a, b) => b - a)
     .map(renderFilterYear);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
       {
+        defaultValue: activityYearId,
         onChange: (value: string | null) => {
-          setFilterYearId(value);
+          setClickInfo(null);
+          setActivityYear(!value ? `${filterYearItem?.[0].value}` : value);
         },
         data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
@@ -121,7 +120,7 @@ const MapBook = () => {
       },
     ];
     return item;
-  }, [filterYearItem, filterYearLoading]);
+  }, [activityYearId, filterYearItem, filterYearLoading, setActivityYear]);
 
   const onLoad = () => {
     if (mapRef.current) {
@@ -227,6 +226,15 @@ const MapBook = () => {
             <MultipleSelect MultipleSelectProps={filter as SelectProps[]} />
           </Paper>
         </Box>
+        {loading ? (
+          <Loader
+            pos="absolute"
+            mx={10}
+            my={22}
+            sx={{ right: 0 }}
+            color="violet"
+          />
+        ) : null}
       </Map>
     </Box>
   );

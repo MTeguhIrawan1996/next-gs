@@ -65,7 +65,9 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
               },
               {
                 key: 'Absensi',
-                value: studentNameItem?.join(', ') ?? '-',
+                value: !studentNameItem?.length
+                  ? '-'
+                  : studentNameItem?.join(', '),
               },
             ]}
           />
