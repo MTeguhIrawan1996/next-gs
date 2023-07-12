@@ -9,7 +9,7 @@ interface ActivityYearStore {
 export const useActivityYearStore = create<ActivityYearStore>()(
   persist(
     (set) => ({
-      activityYearId: null,
+      activityYearId: '2023',
       setActivityYear: (activityYearId) => set({ activityYearId }),
     }),
     {

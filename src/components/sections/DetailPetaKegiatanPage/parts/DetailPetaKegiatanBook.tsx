@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Box, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -23,6 +24,8 @@ import { useReadOneRestActivityPlan } from '@/utils/rest-api/ActivityPlan/useRea
 
 import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
 
+import { AxiosRestErrorResponse } from '@/types/global';
+
 interface IDetailPetaKegiatanBookProps {
   data: ArtistReportOneResponse;
 }
@@ -38,23 +41,22 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const activityYear = router.query.year as string;
   const idActivityPaln = router.query.id as string;
 
-  // const { activityPlanData, activityPlanloading } =
-  //   useReadOneLandingPageActivityPlan({
-  //     id: idActivityPaln,
-  //     page: page,
-  //     limit: 10,
-  //     orderBy: 'order',
-  //     orderDir: 'asc',
-  //     search: null,
-  //     isHaveReport: true,
-  //   });
-
-  const { dataActivityPlan, loadingActivityPlan } = useReadOneRestActivityPlan({
-    id: idActivityPaln,
-    limit: '10',
-    page: page.toString(),
-    year: activityYear.toString(),
-  });
+  const { data: dataActivityPlan, isLoading: loadingActivityPlan } =
+    useReadOneRestActivityPlan({
+      variable: {
+        id: idActivityPaln,
+        limit: '10',
+        page: page.toString(),
+        year: activityYear.toString(),
+      },
+      onError: (err: AxiosRestErrorResponse) => {
+        notifications.show({
+          color: 'red',
+          title: 'Terjadi kesalahan',
+          message: err.response?.data.message,
+        });
+      },
+    });
 
   const { getDetailActivityPlan, detailActivityPlanData } =
     useReadOneActivityPlan();
@@ -274,11 +276,11 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             Pelaporan Kegiatan
           </Text>
           {renderActivityReportTable}
-          {dataActivityPlan?.data.length ? (
+          {dataActivityPlan?.data?.length ? (
             <GlobalPagination
               isFetching={loadingActivityPlan}
               setPage={setPage}
-              currentPage={page}
+              currentPage={dataActivityPlan.meta.currentPage ?? page}
               totalAllData={dataActivityPlan.meta.totalAllData ?? 0}
               totalData={dataActivityPlan.meta.totalData ?? 0}
               totalPage={dataActivityPlan.meta.totalPage ?? 0}

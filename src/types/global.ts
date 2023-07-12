@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export type DinasLevel = 'province' | 'regency';
 
 export interface IFile {
@@ -33,3 +35,16 @@ export interface ApiResponse<T> {
   data: T[];
   meta: IMeta;
 }
+
+export interface ErrorValidationMessage {
+  field: string;
+  message: string;
+}
+
+export interface RestErrorResponse {
+  statusCode: number;
+  message: ErrorValidationMessage[] | string;
+  error: string;
+}
+
+export type AxiosRestErrorResponse = AxiosError<RestErrorResponse>;
