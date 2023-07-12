@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Box, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -16,12 +17,14 @@ import {
   SimpleMap,
 } from '@/components/elements';
 
-import { useReadOneActivityPlan } from '@/graphql/query/readOneActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
 import { useReadOneRestActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestActivityPlan';
+import { useReadOneRestDetailActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestDetailActivityPlan';
 
 import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
+
+import { AxiosRestErrorResponse } from '@/types/global';
 
 interface IDetailPetaKegiatanBookProps {
   data: ArtistReportOneResponse;
@@ -35,37 +38,43 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
+  const [idRow, setIdRow] = React.useState<string>('');
+  const [order, setOrder] = React.useState<number>(0);
   const activityYear = router.query.year as string;
-  const idActivityPaln = router.query.id as string;
+  const idActivityPlan = router.query.id as string;
 
-  // const { activityPlanData, activityPlanloading } =
-  //   useReadOneLandingPageActivityPlan({
-  //     id: idActivityPaln,
-  //     page: page,
-  //     limit: 10,
-  //     orderBy: 'order',
-  //     orderDir: 'asc',
-  //     search: null,
-  //     isHaveReport: true,
-  //   });
+  const { data: dataActivityPlan, isLoading: loadingActivityPlan } =
+    useReadOneRestActivityPlan({
+      variable: {
+        id: idActivityPlan,
+        limit: '10',
+        page: page.toString(),
+        year: activityYear.toString(),
+      },
+      onError: (err: AxiosRestErrorResponse) => {
+        notifications.show({
+          color: 'red',
+          title: 'Terjadi kesalahan',
+          message: err.response?.data.message,
+        });
+      },
+    });
 
-  const { dataActivityPlan, loadingActivityPlan } = useReadOneRestActivityPlan({
-    id: idActivityPaln,
-    limit: '10',
-    page: page.toString(),
-    year: activityYear.toString(),
+  const { data: dataDetailActivityPlan } = useReadOneRestDetailActivityPlan({
+    variable: {
+      idActivityPlan,
+      year: activityYear,
+      idRow,
+    },
   });
-
-  const { getDetailActivityPlan, detailActivityPlanData } =
-    useReadOneActivityPlan();
 
   const renderActivityReportTable = React.useMemo(() => {
     return (
       <GlobalDefaultTable
         tableProps={{
           fetching: loadingActivityPlan,
-          onRowClick: ({ id }) => {
-            handleOpenModal(id);
+          onRowClick: ({ id, order }) => {
+            handleOpenModal(id, order);
           },
           columns: [
             {
@@ -139,13 +148,10 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataActivityPlan?.data, loadingActivityPlan]);
 
-  const handleOpenModal = async (id: string) => {
+  const handleOpenModal = async (id: string, order: number) => {
     setIsModalDetail((prev) => !prev);
-    await getDetailActivityPlan({
-      variables: {
-        id: id,
-      },
-    });
+    setIdRow(id);
+    setOrder(order);
   };
 
   const onCloseModal = () => {
@@ -274,11 +280,11 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             Pelaporan Kegiatan
           </Text>
           {renderActivityReportTable}
-          {dataActivityPlan?.data.length ? (
+          {dataActivityPlan?.data?.length ? (
             <GlobalPagination
               isFetching={loadingActivityPlan}
               setPage={setPage}
-              currentPage={page}
+              currentPage={dataActivityPlan.meta.currentPage ?? page}
               totalAllData={dataActivityPlan.meta.totalAllData ?? 0}
               totalData={dataActivityPlan.meta.totalData ?? 0}
               totalPage={dataActivityPlan.meta.totalPage ?? 0}
@@ -289,7 +295,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
       <ModalDetailPelaporanKegiatan
         isOpen={isModalDetail}
         onCloseModal={onCloseModal}
-        data={detailActivityPlanData}
+        data={dataDetailActivityPlan}
+        order={order}
       />
     </InnerWrapper>
   );

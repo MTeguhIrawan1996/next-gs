@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { axiosInstance } from '../axios';
 
-import { ApiResponse } from '@/types/global';
+import { ApiResponse, AxiosRestErrorResponse } from '@/types/global';
 
 export interface ActivityPlanReportRest {
   id: string;
@@ -16,6 +16,7 @@ export interface ActivityPlanReportRest {
 
 export type ActivityPlanReportRestResponse =
   ApiResponse<ActivityPlanReportRest>;
+
 export interface ActivityPlanReportRestRequest {
   id: string;
   year: string;
@@ -23,37 +24,42 @@ export interface ActivityPlanReportRestRequest {
   limit: string;
 }
 
-export const useReadOneRestActivityPlan = (
-  req: ActivityPlanReportRestRequest
-) => {
-  const [dataActivityPlan, setDataActivityPlan] = React.useState<
-    ActivityPlanReportRestResponse | undefined
-  >(undefined);
-  const [loadingActivityPlan, setLoadingActivityPlan] =
-    React.useState<boolean>(false);
+export const ReadOneRestActivityPlan = async ({
+  id,
+  limit,
+  page,
+  year,
+}: ActivityPlanReportRestRequest) => {
+  try {
+    const response = await axiosInstance.get(
+      `/landing-page/artist-reports/school-for-maps/${year}/${id}/reports?page=${page}&limit=${limit}`
+    );
 
-  const fetchData = async () => {
-    setLoadingActivityPlan(true);
-    try {
-      const res = await axiosInstance.get(
-        `/landing-page/artist-reports/school-for-maps/2023/3cd743c2-df2b-4835-b62b-5b51b861f13a/reports?page=1&limit=10`
-      );
+    return response.data;
+  } catch (err: any) {
+    return Promise.reject(err);
+  }
+};
 
-      setDataActivityPlan(res.data);
-      setLoadingActivityPlan(false);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
-  };
+export const useReadOneRestActivityPlan = ({
+  variable,
+  onError,
+  onSuccess,
+}: {
+  variable: ActivityPlanReportRestRequest;
+  onSuccess?: () => void;
+  onError?: (error: AxiosRestErrorResponse) => unknown;
+}) => {
+  const { id, limit, page, year } = variable;
 
-  React.useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [req.page]);
-
-  return {
-    dataActivityPlan,
-    loadingActivityPlan,
-  };
+  return useQuery<ActivityPlanReportRestResponse, AxiosRestErrorResponse>({
+    queryFn: async () => {
+      const data = await ReadOneRestActivityPlan({ id, limit, page, year });
+      return data;
+    },
+    onError: onError,
+    onSuccess: onSuccess,
+    queryKey: ['activityPlan', id, page],
+    keepPreviousData: true,
+  });
 };

@@ -48,9 +48,7 @@ const MapBook = () => {
       const getData = async () => {
         try {
           const res = await axiosInstance.get(
-            `/landing-page/artist-reports/school-for-maps/${
-              activityYearId ?? ''
-            }`
+            `/landing-page/artist-reports/school-for-maps/${activityYearId}`
           );
           setLoading(false);
           setData(res.data);
@@ -116,7 +114,7 @@ const MapBook = () => {
         data: filterYearItem ?? [],
         label: 'Tahun Kegiatan',
         placeholder: filterYearLoading ? 'Memuat...' : 'Pilih Tahun',
-        clearable: true,
+        clearable: false,
       },
     ];
     return item;
