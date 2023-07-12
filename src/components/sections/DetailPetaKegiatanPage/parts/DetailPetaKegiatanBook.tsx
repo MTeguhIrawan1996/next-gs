@@ -17,9 +17,9 @@ import {
 } from '@/components/elements';
 
 import { useReadOneActivityPlan } from '@/graphql/query/readOneActivityPlan';
-import { useReadOneLandingPageActivityPlan } from '@/graphql/query/readOneLandingPageActivityPlan';
 import { ArtistReportOneResponse } from '@/graphql/query/readOneLandingPageArtistReport';
 import landingPageStyle from '@/styles/LandingPage';
+import { useReadOneRestActivityPlan } from '@/utils/rest-api/ActivityPlan/useReadOneRestActivityPlan';
 
 import ModalDetailPelaporanKegiatan from '../elements/Modal/ModalDetailPelaporanKegiatan';
 
@@ -30,26 +30,31 @@ interface IDetailPetaKegiatanBookProps {
 const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   data,
 }) => {
-  // const { commonIdentity, recommendation, dinas, goalExpectation } =
-  //   data.landingPageArtistReport.form;
   const { school, artist } = data.data;
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
-  // console.log(router.query.year);
-  const id = router.query.id as string;
+  const activityYear = router.query.year as string;
+  const idActivityPaln = router.query.id as string;
 
-  const { activityPlanData, activityPlanloading } =
-    useReadOneLandingPageActivityPlan({
-      id: id,
-      page: page,
-      limit: 10,
-      orderBy: 'order',
-      orderDir: 'asc',
-      search: null,
-      isHaveReport: true,
-    });
+  // const { activityPlanData, activityPlanloading } =
+  //   useReadOneLandingPageActivityPlan({
+  //     id: idActivityPaln,
+  //     page: page,
+  //     limit: 10,
+  //     orderBy: 'order',
+  //     orderDir: 'asc',
+  //     search: null,
+  //     isHaveReport: true,
+  //   });
+
+  const { dataActivityPlan, loadingActivityPlan } = useReadOneRestActivityPlan({
+    id: idActivityPaln,
+    limit: '10',
+    page: page.toString(),
+    year: activityYear.toString(),
+  });
 
   const { getDetailActivityPlan, detailActivityPlanData } =
     useReadOneActivityPlan();
@@ -58,7 +63,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     return (
       <GlobalDefaultTable
         tableProps={{
-          fetching: activityPlanloading,
+          fetching: loadingActivityPlan,
           onRowClick: ({ id }) => {
             handleOpenModal(id);
           },
@@ -69,22 +74,22 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
               render: ({ order }) => `Pertemuan ${order}`,
             },
             {
-              accessor: 'report.material',
+              accessor: 'material',
               title: 'Materi',
-              render: ({ report }) => report?.material,
+              render: ({ material }) => material,
             },
             {
               accessor: 'kehadiran',
               title: 'Kehadiran Siswa',
-              render: ({ report }) => (
+              render: ({ studentAbsenceRecap }) => (
                 <Group spacing={6} align="center">
                   <Button
                     compact
                     fz={12}
                     size="xs"
                     color={
-                      report?.studentAbsenceRecap.present /
-                        report?.studentAbsenceRecap.studentCount >=
+                      studentAbsenceRecap.present /
+                        studentAbsenceRecap.studentCount >=
                       0.5
                         ? 'blue'
                         : 'red'
@@ -101,7 +106,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                       },
                     })}
                   >
-                    {report?.studentAbsenceRecap.present}
+                    {studentAbsenceRecap.present}
                   </Button>
                   <Button
                     compact
@@ -121,21 +126,18 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                       },
                     })}
                   >
-                    {report?.studentAbsenceRecap.studentCount}
+                    {studentAbsenceRecap.studentCount}
                   </Button>
                 </Group>
               ),
             },
           ],
-          records: activityPlanData?.landingPageArtistReport.activityPlans.data,
+          records: dataActivityPlan?.data,
         }}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    activityPlanData?.landingPageArtistReport.activityPlans.data,
-    activityPlanloading,
-  ]);
+  }, [dataActivityPlan?.data, loadingActivityPlan]);
 
   const handleOpenModal = async (id: string) => {
     setIsModalDetail((prev) => !prev);
@@ -188,9 +190,6 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
               />
             </Box>
             <Stack sx={{ flex: 6 }} spacing="xs" align="center">
-              <Text fw={400} fz={10}>
-                Klik peta untuk lihat lebih detail
-              </Text>
               <Link
                 href={`https://www.google.com/maps/@${school?.latitude},${
                   school?.longitude
@@ -198,13 +197,21 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 target="_blank"
                 style={{ width: '100%' }}
               >
-                <Box h={240} bg="gray.5" w="100%" pos="relative">
-                  <SimpleMap
-                    latitude={school?.latitude}
-                    longitude={school?.longitude}
-                  />
-                </Box>
+                <Text
+                  fw={400}
+                  fz={10}
+                  sx={(theme) => ({ '&:hover': { color: theme.colors.brand } })}
+                  align="center"
+                >
+                  Klik link ini untuk lihat lebih detail
+                </Text>
               </Link>
+              <Box h={240} bg="gray.5" w="100%" pos="relative">
+                <SimpleMap
+                  latitude={school?.latitude}
+                  longitude={school?.longitude}
+                />
+              </Box>
             </Stack>
           </Flex>
           <Divider my={5} color="blue.1" opacity={1} />
@@ -267,24 +274,14 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             Pelaporan Kegiatan
           </Text>
           {renderActivityReportTable}
-          {activityPlanData?.landingPageArtistReport.activityPlans.data
-            .length ? (
+          {dataActivityPlan?.data.length ? (
             <GlobalPagination
-              isFetching={activityPlanloading}
+              isFetching={loadingActivityPlan}
               setPage={setPage}
               currentPage={page}
-              totalAllData={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalAllData ?? 0
-              }
-              totalData={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalData ?? 0
-              }
-              totalPage={
-                activityPlanData?.landingPageArtistReport.activityPlans.meta
-                  .totalPage ?? 0
-              }
+              totalAllData={dataActivityPlan.meta.totalAllData ?? 0}
+              totalData={dataActivityPlan.meta.totalData ?? 0}
+              totalPage={dataActivityPlan.meta.totalPage ?? 0}
             />
           ) : null}
         </Stack>

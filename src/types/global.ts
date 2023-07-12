@@ -30,6 +30,6 @@ export interface MResponse<T> {
 }
 
 export interface ApiResponse<T> {
-  response_code: number;
-  results: T[];
+  data: T[];
+  meta: IMeta;
 }
