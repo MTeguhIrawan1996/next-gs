@@ -27,7 +27,7 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
   }, []);
 
   const studentNameItem =
-    data?.data.studentPresentNames.map(renderStudentsName);
+    data?.data?.studentPresentNames?.map(renderStudentsName);
 
   return (
     <ModalActionWrapper isOpen={isOpen} onCloseModal={onCloseModal}>
@@ -43,15 +43,15 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
             data={[
               {
                 key: 'Tanggal Kegiatan',
-                value: dateFromat(data?.data.activityDate, 'dddd, LL'),
+                value: dateFromat(data?.data?.activityDate, 'dddd, LL'),
               },
               {
                 key: 'Materi',
-                value: data?.data.material ?? '-',
+                value: data?.data?.material ?? '-',
               },
               {
                 key: 'Tujuan Pembelajaran',
-                value: data?.data.goals ?? '-',
+                value: data?.data?.goals ?? '-',
               },
               {
                 key: 'Absensi',
