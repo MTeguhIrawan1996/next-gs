@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@mantine/core';
+import { Box, Stack, Text, TypographyStylesProvider } from '@mantine/core';
 import * as React from 'react';
 
 import { KeyValuePairs, ModalActionWrapper } from '@/components/elements';
@@ -51,7 +51,17 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
               },
               {
                 key: 'Tujuan Pembelajaran',
-                value: data?.data?.goals ?? '-',
+                value: (
+                  <TypographyStylesProvider>
+                    <Box
+                      fw={400}
+                      fz={12}
+                      dangerouslySetInnerHTML={{
+                        __html: `${data?.data?.goals ?? ''}`,
+                      }}
+                    />
+                  </TypographyStylesProvider>
+                ),
               },
               {
                 key: 'Absensi',
