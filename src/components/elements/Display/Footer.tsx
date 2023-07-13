@@ -60,8 +60,20 @@ const Footer = () => {
                 Ikuti sosial media kami untuk berita terbaru
               </Text>
               <Flex justify="flex-start" gap="xl" align="center">
-                <SosialIcon1 />
-                <SosialIcon2 />
+                <Link
+                  href="https://twitter.com/budayasaya"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SosialIcon1 />
+                </Link>
+                <Link
+                  href="https://www.instagram.com/budayasaya"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SosialIcon2 />
+                </Link>
               </Flex>
             </Stack>
             <Stack spacing="xs">

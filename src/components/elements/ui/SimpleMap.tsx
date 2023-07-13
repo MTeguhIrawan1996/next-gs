@@ -17,7 +17,7 @@ const SimpleMap: React.FC<ISimpleMapProps> = ({ latitude, longitude }) => {
       initialViewState={{
         longitude: longitude,
         latitude: latitude,
-        zoom: 18,
+        zoom: 12,
       }}
       cursor="pointer"
       minZoom={3}
