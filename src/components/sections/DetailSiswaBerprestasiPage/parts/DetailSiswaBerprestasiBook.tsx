@@ -1,4 +1,3 @@
-import { ApolloError, useLazyQuery } from '@apollo/client';
 import { Box, Flex, Stack, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -11,11 +10,7 @@ import {
   NextImageFill,
 } from '@/components/elements';
 
-import {
-  AchievingStudentRequest,
-  AchievingStudentResponse,
-  READ_ONE_ACHIEVING_STUNDENT,
-} from '@/graphql/query/readOneAchievingStudent';
+import { useReadOneAchievingStudent } from '@/graphql/query/readOneAchievingStudent';
 import landingPageStyle from '@/styles/LandingPage';
 
 import { IFile } from '@/types/global';
@@ -25,17 +20,10 @@ const DetailSiswaBerprestasiBook = () => {
   const { classes } = landingPageStyle();
   const studentId = router.query.idSiswa as string;
 
-  const [getStudent, { data, loading }] = useLazyQuery<
-    AchievingStudentResponse,
-    AchievingStudentRequest
-  >(READ_ONE_ACHIEVING_STUNDENT, {
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
-  });
+  const { getStudent, AchievingStudentData, AchievingStudentLoading } =
+    useReadOneAchievingStudent();
 
-  const simpleData = data?.landingPageHighAchievingStudent;
+  const simpleData = AchievingStudentData?.landingPageHighAchievingStudent;
 
   React.useEffect(() => {
     if (studentId) {
@@ -71,7 +59,7 @@ const DetailSiswaBerprestasiBook = () => {
 
   const renderAchievmentDoc = simpleData?.achievementPhotos.map(achievmentDoc);
 
-  if (loading) {
+  if (AchievingStudentLoading) {
     return (
       <InnerWrapper>
         <GSMSBoxWrapper enableBack>

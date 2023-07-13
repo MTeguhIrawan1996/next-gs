@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client';
 import type { ColorScheme } from '@mantine/core';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { theme } from 'mantine';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -17,6 +18,14 @@ import useScrollRestoration from '@/utils/hooks/detect-route/useScrollRestoratio
 import useTheme from '@/utils/hooks/useTheme';
 
 import type { DeepPartial } from '@/types/util';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -73,25 +82,27 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
       </Head>
       <ApolloProvider client={client}>
-        <RealViewportProvider>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              ...theme,
-              colorScheme: state.value as DeepPartial<ColorScheme>,
-            }}
-          >
-            <Notifications position="top-right" notificationMaxHeight={400} />
-            <NextNProgress
-              color="#845EF7"
-              height={3}
-              options={{ showSpinner: false }}
-            />
-            <Component {...pageProps} />
-            <GoogleAnalytics trackPageViews />
-          </MantineProvider>
-        </RealViewportProvider>
+        <QueryClientProvider client={queryClient}>
+          <RealViewportProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                ...theme,
+                colorScheme: state.value as DeepPartial<ColorScheme>,
+              }}
+            >
+              <Notifications position="top-right" notificationMaxHeight={400} />
+              <NextNProgress
+                color="#845EF7"
+                height={3}
+                options={{ showSpinner: false }}
+              />
+              <Component {...pageProps} />
+              <GoogleAnalytics trackPageViews />
+            </MantineProvider>
+          </RealViewportProvider>
+        </QueryClientProvider>
       </ApolloProvider>
     </>
   );

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFile, IFilterGlobalRequest, MResponse } from '@/types/global';
 
@@ -88,3 +88,21 @@ export interface GalleryRequest extends IFilterGlobalRequest {
   dinasId: string | null;
   type: string | null;
 }
+
+export const useReadAllGalleryLandingPage = (req: GalleryRequest) => {
+  const { data: galleryData, loading: galleryLoading } = useQuery<
+    GalleryResponse,
+    GalleryRequest
+  >(READ_ALL_GALLERY_LANDINGPAGE, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    galleryData,
+    galleryLoading,
+  };
+};

@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from '@apollo/client';
 import { Box, Flex, SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import * as React from 'react';
@@ -15,17 +14,10 @@ import {
 } from '@/components/elements';
 
 import {
-  DinasesRequest,
-  DinasesResponse,
   IDinases,
-  READ_ALL_ACTIVE_DINASES,
+  useReadAllActiveDinases,
 } from '@/graphql/query/readAllActiveDinases';
-import {
-  Articles,
-  ArticlesRequest,
-  ArticlesResponse,
-  READ_ALL_ARTICLES,
-} from '@/graphql/query/readAllArticles';
+import { Articles, useReadAllArticles } from '@/graphql/query/readAllArticles';
 
 const BeritaBook = () => {
   const [page, setPage] = React.useState<number>(1);
@@ -37,42 +29,23 @@ const BeritaBook = () => {
   const [dinasesSearchTerm, setDinasesSearchTerm] = React.useState<string>('');
   const [dinasesQuery] = useDebouncedValue<string>(dinasesSearchTerm, 400);
 
-  const { data: dinasesData, loading: dinasesLoading } = useQuery<
-    DinasesResponse,
-    DinasesRequest
-  >(READ_ALL_ACTIVE_DINASES, {
-    variables: {
-      activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
-      limit: 10,
-      page: null,
-      orderBy: 'name',
-      orderDir: 'asc',
-      search: dinasesQuery === '' ? null : dinasesQuery,
-      level: null,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { dinasesData, dinasesLoading } = useReadAllActiveDinases({
+    activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
+    limit: 10,
+    page: null,
+    orderBy: 'name',
+    orderDir: 'asc',
+    search: dinasesQuery === '' ? null : dinasesQuery,
+    level: null,
   });
-
-  const { data: articlesData, loading: articlesLoading } = useQuery<
-    ArticlesResponse,
-    ArticlesRequest
-  >(READ_ALL_ARTICLES, {
-    variables: {
-      limit: 9,
-      page: page,
-      orderBy: 'publishedAt',
-      orderDir: 'desc',
-      search: searchQuery,
-      createdById: null,
-      dinasId: dinasesFilterId,
-    },
-    onError: (err: ApolloError) => {
-      return err;
-    },
-    fetchPolicy: 'cache-first',
+  const { articlesData, articlesLoading } = useReadAllArticles({
+    limit: 9,
+    page: page,
+    orderBy: 'publishedAt',
+    orderDir: 'desc',
+    search: searchQuery,
+    createdById: null,
+    dinasId: dinasesFilterId,
   });
 
   const renderDinases = React.useCallback((value: IDinases) => {

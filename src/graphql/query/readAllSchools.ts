@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFilterGlobalRequest } from '@/types/global';
 
@@ -49,3 +49,21 @@ export interface SchoolsRequest extends IFilterGlobalRequest {
   provinceId: string | null;
   regencyId: string | null;
 }
+
+export const useReadAllSchools = (req: SchoolsRequest) => {
+  const { data: schoolsData, loading: schoolsLoading } = useQuery<
+    SchoolsResponse,
+    SchoolsRequest
+  >(READ_ALL_SCHOOLS, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    schoolsData,
+    schoolsLoading,
+  };
+};

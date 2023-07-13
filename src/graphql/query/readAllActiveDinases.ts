@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFilterGlobalRequest } from '@/types/global';
 
@@ -51,3 +51,21 @@ export interface DinasesRequest extends IFilterGlobalRequest {
   activityId: string;
   level: string | null;
 }
+
+export const useReadAllActiveDinases = (req: DinasesRequest) => {
+  const { data: dinasesData, loading: dinasesLoading } = useQuery<
+    DinasesResponse,
+    DinasesRequest
+  >(READ_ALL_ACTIVE_DINASES, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    dinasesData,
+    dinasesLoading,
+  };
+};
