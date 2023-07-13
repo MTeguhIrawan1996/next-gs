@@ -16,7 +16,7 @@ interface Props {
   justify?: 'each-left' | 'tight' | 'apart' | 'each-left' | 'each-right';
   data: {
     key: string;
-    value?: string | number;
+    value?: string | React.ReactNode | number;
   }[];
   keyTextProps?: TextProps;
   valueTextProps?: TextProps;
