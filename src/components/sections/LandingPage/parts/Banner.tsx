@@ -1,20 +1,21 @@
 import { Box, Stack } from '@mantine/core';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import landingPageStyle from '@/styles/LandingPage';
 
 import BannerImg from '../../../../../public/assets/banner.webp';
 
-interface IBannerProps {
-  scrollIntoView?: () => void;
-}
-
-const Banner: React.FC<IBannerProps> = ({ scrollIntoView }) => {
+const Banner = () => {
+  const router = useRouter();
   const { classes } = landingPageStyle();
 
   return (
     <Stack className={classes.bannerContainer} align="center" w="100%">
-      <Box className={classes.bannerBox} onClick={() => scrollIntoView?.()}>
+      <Box
+        className={classes.bannerBox}
+        onClick={() => router.push('/peta-kegiatan')}
+      >
         <Image
           src={BannerImg}
           alt="Banner"
