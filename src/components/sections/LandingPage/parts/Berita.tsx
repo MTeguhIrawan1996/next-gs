@@ -4,6 +4,7 @@ import * as React from 'react';
 import {
   CardImage,
   CardImageSkeleton,
+  EmptyTableState,
   LandingPageSectionWrapper,
 } from '@/components/elements';
 
@@ -40,7 +41,12 @@ const Berita = () => {
   return (
     <LandingPageSectionWrapper title="Berita" href="/berita">
       <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
-        {articlesLoading ? <CardImageSkeleton /> : articlesItem}
+        {!articlesItem?.length && !articlesLoading ? (
+          <EmptyTableState />
+        ) : (
+          articlesItem
+        )}
+        {articlesLoading ? <CardImageSkeleton /> : null}
       </Flex>
     </LandingPageSectionWrapper>
   );
