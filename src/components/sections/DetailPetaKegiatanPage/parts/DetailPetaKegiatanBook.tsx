@@ -267,7 +267,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
                 }}
               >
                 <NextImageFill
-                  src={artist?.photo?.url ?? '/'}
+                  src={artist?.photo?.url ?? '/assets/emptyimg.webp'}
                   alt={artist?.photo?.filename ?? 'not found'}
                 />
               </Box>
