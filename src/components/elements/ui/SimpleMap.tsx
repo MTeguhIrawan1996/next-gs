@@ -26,7 +26,7 @@ const SimpleMap: React.FC<ISimpleMapProps> = ({ latitude, longitude }) => {
       attributionControl={false}
     >
       <Marker longitude={longitude} latitude={latitude} anchor="bottom">
-        <Icon icon="tabler:map-pin" fontSize={26} color="red" />
+        <Icon icon="tabler:map-pin-filled" fontSize={26} color="#7950F2" />
       </Marker>
       <NavigationControl
         position="bottom-left"
