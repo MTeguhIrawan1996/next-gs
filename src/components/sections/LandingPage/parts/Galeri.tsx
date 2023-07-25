@@ -4,6 +4,7 @@ import * as React from 'react';
 import {
   CardImage,
   CardImageSkeleton,
+  EmptyTableState,
   LandingPageSectionWrapper,
 } from '@/components/elements';
 
@@ -48,7 +49,12 @@ const Galeri = () => {
   return (
     <LandingPageSectionWrapper title="Galeri" href="/galeri">
       <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
-        {galleryLoading ? <CardImageSkeleton /> : galleryItem}
+        {!galleryItem?.length && !galleryLoading ? (
+          <EmptyTableState />
+        ) : (
+          galleryItem
+        )}
+        {galleryLoading ? <CardImageSkeleton /> : null}
       </Flex>
     </LandingPageSectionWrapper>
   );
