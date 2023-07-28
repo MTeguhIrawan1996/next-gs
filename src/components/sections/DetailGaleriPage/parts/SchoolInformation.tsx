@@ -11,6 +11,7 @@ import {
 } from '@/components/elements';
 
 import { GalleryOneResponse } from '@/graphql/query/readOneGalleryLandingPage';
+import { dateFromat } from '@/utils/helper/dateFormat';
 import { googleDriveUrlRegex, youtubeUrlRegex } from '@/utils/helper/regex';
 
 interface ISchoolInformationProps {
@@ -18,7 +19,7 @@ interface ISchoolInformationProps {
 }
 
 const SchoolInformation: React.FC<ISchoolInformationProps> = ({ data }) => {
-  const { activityPlan, material } =
+  const { activityPlan, material, activityDate } =
     data.landingPageActivityReportAttachment.activityReport;
   const { photo, videoLink } = data.landingPageActivityReportAttachment;
 
@@ -50,8 +51,12 @@ const SchoolInformation: React.FC<ISchoolInformationProps> = ({ data }) => {
                     value: activityPlan.artistReport.form.dinas?.name ?? '-',
                   },
                   {
-                    key: 'Materi',
+                    key: 'Materi Kegiatan',
                     value: material,
+                  },
+                  {
+                    key: 'Waktu Kegiatan',
+                    value: dateFromat(activityDate, 'dddd, LL'),
                   },
                 ]}
               />

@@ -1,4 +1,5 @@
 import { Box, Loader, Paper, SelectProps } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import type { GeoJSONSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import * as React from 'react';
@@ -17,7 +18,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { MapPopup, MultipleSelect } from '@/components/elements';
 
 import { useReadAllFilterYear } from '@/graphql/query/readAllFilterYear';
-import { axiosInstance } from '@/utils/rest-api/axios';
+import { useReadAllActivityMaps } from '@/utils/rest-api/ActivityMap/useReadAllActivityMaps';
 import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
 
 import {
@@ -26,40 +27,29 @@ import {
   unclusteredPointLayer,
 } from './layers';
 
-import { IMapFeature, IPropertiesId } from '@/types/map';
+import { AxiosRestErrorResponse } from '@/types/global';
+import { IMapFeature } from '@/types/map';
 
 const MapBook = () => {
   const mapRef = React.useRef<MapRef>(null);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<
-    GeoJSON.FeatureCollection<GeoJSON.Geometry, IPropertiesId> | undefined
-  >(undefined);
   const [clickInfo, setClickInfo] = React.useState<IMapFeature | null>(null);
   const [activityYearId, setActivityYear] = useActivityYearStore(
     (state) => [state.activityYearId, state.setActivityYear],
     shallow
   );
-
   const { filterYearData, filterYearLoading } = useReadAllFilterYear();
-
-  React.useEffect(() => {
-    if (activityYearId || !data) {
-      setLoading(true);
-      const getData = async () => {
-        try {
-          const res = await axiosInstance.get(
-            `/landing-page/artist-reports/school-for-maps/${activityYearId}`
-          );
-          setLoading(false);
-          setData(res.data);
-        } catch (err) {
-          return;
-        }
-      };
-      getData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activityYearId]);
+  const { data: dataMaps, isLoading: loadingMaps } = useReadAllActivityMaps({
+    variable: {
+      activityYearId,
+    },
+    onError: (err: AxiosRestErrorResponse) => {
+      notifications.show({
+        color: 'red',
+        title: 'Terjadi kesalahan',
+        message: err.response?.data.message,
+      });
+    },
+  });
 
   const MapStyleMemo: mapboxgl.Style = React.useMemo(() => {
     return {
@@ -188,11 +178,11 @@ const MapBook = () => {
         onLoad={onLoad}
         onClick={onClick}
       >
-        {data && (
+        {dataMaps && (
           <Source
             id="my-data"
             type="geojson"
-            data={data}
+            data={dataMaps}
             cluster={true}
             clusterMaxZoom={14}
             clusterRadius={0}
@@ -224,7 +214,7 @@ const MapBook = () => {
             <MultipleSelect MultipleSelectProps={filter as SelectProps[]} />
           </Paper>
         </Box>
-        {loading ? (
+        {loadingMaps ? (
           <Loader
             pos="absolute"
             mx={10}

@@ -8,6 +8,7 @@ export const READ_ONE_GALLERY_LANDINGPAGE = gql`
       id
       activityReport {
         material
+        activityDate
         activityPlan {
           artistReport {
             form {
@@ -46,6 +47,7 @@ export interface GalleryOne {
   id: string;
   activityReport: {
     material: string;
+    activityDate: string;
     activityPlan: {
       artistReport: {
         form: {
