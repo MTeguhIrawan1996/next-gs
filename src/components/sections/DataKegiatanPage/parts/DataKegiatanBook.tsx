@@ -41,7 +41,7 @@ const DataKegiatanBook = () => {
     React.useState<string>('');
   const [regenciesQuery] = useDebouncedValue<string>(regenciesSearchTerm, 400);
   const [activityYearId, setActivityYear] = useActivityYearStore(
-    (state) => [state.activityYearId, state.setActivityYear],
+    (state) => [state.activityDataYearId, state.setActivityDataYear],
     shallow
   );
 

@@ -4,6 +4,7 @@ import {
   RootWrapper,
   TitleContent,
   VectorOne,
+  VectorThree,
   VectorTwo,
 } from '@/components/elements';
 
@@ -20,7 +21,7 @@ const DataKegiatanPage: React.FC<IDataKegiatanPageProps> = (props) => {
       <TitleContent label="Data Kegiatan" />
       <VectorTwo />
       <DataKegiatanBook />
-      {/* <VectorThree /> */}
+      <VectorThree />
     </RootWrapper>
   );
 };
