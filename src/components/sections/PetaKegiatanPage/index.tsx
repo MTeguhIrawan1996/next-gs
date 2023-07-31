@@ -2,10 +2,7 @@ import * as React from 'react';
 
 import { MapBook } from './parts';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IPetaKegiatanPageProps {}
-
-const PetaKegiatanPage: React.FC<IPetaKegiatanPageProps> = () => {
+const PetaKegiatanPage = () => {
   return <MapBook />;
 };
 

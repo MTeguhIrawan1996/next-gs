@@ -1,5 +1,6 @@
 import { SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
 
@@ -21,10 +22,14 @@ import {
   IRegencies,
   useReadAllRegencies,
 } from '@/graphql/query/readAllRegencies';
+import { useReadAllActivitesData } from '@/utils/rest-api/ActivityData/useReadAllActivitiesData';
 import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
 
 const DataKegiatanBook = () => {
+  const router = useRouter();
   const [page, setPage] = React.useState<number>(1);
+  const [searchTerm, setSerachTerm] = React.useState<string>('');
+  const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
   const [provincieFilterId, setProvincieFilterId] = React.useState<
     string | null
   >(null);
@@ -61,6 +66,18 @@ const DataKegiatanBook = () => {
     search: regenciesQuery === '' ? null : regenciesQuery,
     provinceId: provincieFilterId,
   });
+  const { data: activityData, isLoading: activityDataLoading } =
+    useReadAllActivitesData({
+      variable: {
+        limit: 10,
+        page: page,
+        year: activityYearId,
+        orderBy: 'provinceName',
+        provinceId: provincieFilterId,
+        regencyId: regenciesFilterId,
+        search: searchQuery,
+      },
+    });
 
   const renderFilterYear = React.useCallback((value: number) => {
     return {
@@ -93,6 +110,7 @@ const DataKegiatanBook = () => {
       {
         defaultValue: activityYearId,
         onChange: (value: string | null) => {
+          setPage(1);
           setActivityYear(!value ? `${filterYearItem?.[0].value}` : value);
         },
         data: filterYearItem ?? [],
@@ -102,7 +120,7 @@ const DataKegiatanBook = () => {
       },
       {
         onChange: (value: string | null) => {
-          // setPage(1);
+          setPage(1);
           setProvincieFilterId(value);
           setRegenciesFilterId(null);
         },
@@ -120,7 +138,7 @@ const DataKegiatanBook = () => {
       {
         value: regenciesFilterId,
         onChange: (value: string | null) => {
-          // setPage(1);
+          setPage(1);
           setRegenciesFilterId(value);
         },
         data: regenciesItem ?? [],
@@ -153,23 +171,46 @@ const DataKegiatanBook = () => {
     return (
       <GlobalDefaultTable
         tableProps={{
-          // fetching: AchievingLoading,
+          fetching: activityDataLoading,
           columns: [
-            { accessor: 'name', title: 'Nama Sekolah' },
-            { accessor: 'activityYear', title: 'Provinsi' },
-            { accessor: 'achievement1', title: 'Kabupaten' },
-            { accessor: 'achievement2', title: 'Nama Seniman' },
-            { accessor: 'achievement3', title: 'Tahun Kegiatan' },
+            {
+              accessor: 'name',
+              title: 'Nama Sekolah',
+              render: ({ school }) => school.name,
+            },
+            {
+              accessor: 'provincies',
+              title: 'Provinsi',
+              render: ({ school }) => school.provinceName,
+            },
+            {
+              accessor: 'regencies',
+              title: 'Kabupaten',
+              render: ({ school }) => school.regencyName,
+            },
+            {
+              accessor: 'artistName',
+              title: 'Nama Seniman',
+              render: ({ artist }) => artist.name,
+            },
+            {
+              accessor: 'year',
+              title: 'Tahun Kegiatan',
+              render: ({ activity }) => activity.year,
+            },
           ],
-          records: [],
-          // onRowClick: ({ id }) => {
-          //   router.push(`/siswa-berprestasi/${id}`);
-          // },
+          records: activityData?.data,
+          onRowClick: ({ id }) => {
+            router.push({
+              pathname: `/data-kegiatan/${id}`,
+              query: { year: activityYearId },
+            });
+          },
         }}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activityData?.data, activityDataLoading]);
 
   return (
     <InnerWrapper>
@@ -177,24 +218,26 @@ const DataKegiatanBook = () => {
         <Stack w="100%" spacing="lg">
           <SearchBar
             placeholder="Pencarian nama sekolah atau seniman"
-            // onChange={(event) => {
-            //   setSerachTerm(event.currentTarget.value);
-            // }}
-            // onSearch={() => {
-            //   setPage(1);
-            //   setSearchQuery(searchTerm === '' ? null : searchTerm);
-            // }}
+            onChange={(event) => {
+              setSerachTerm(event.currentTarget.value);
+            }}
+            onSearch={() => {
+              setPage(1);
+              setSearchQuery(searchTerm === '' ? null : searchTerm);
+            }}
           />
           <MultipleSelect MultipleSelectProps={filter} />
           {renderDataKegiatan}
-          <GlobalPagination
-            // isFetching={AchievingLoading}
-            setPage={setPage}
-            currentPage={page}
-            totalAllData={1}
-            totalData={1}
-            totalPage={1}
-          />
+          {activityData?.data.length ? (
+            <GlobalPagination
+              isFetching={activityDataLoading}
+              setPage={setPage}
+              currentPage={page}
+              totalAllData={activityData?.meta.totalAllData ?? 0}
+              totalData={activityData?.meta.totalData ?? 0}
+              totalPage={activityData?.meta.totalPage ?? 0}
+            />
+          ) : null}
         </Stack>
       </GSMSBoxWrapper>
     </InnerWrapper>

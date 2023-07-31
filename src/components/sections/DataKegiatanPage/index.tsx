@@ -1,4 +1,6 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
+import { shallow } from 'zustand/shallow';
 
 import {
   RootWrapper,
@@ -8,13 +10,21 @@ import {
   VectorTwo,
 } from '@/components/elements';
 
+import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
+
 import { DataKegiatanBook } from './parts';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IDataKegiatanPageProps {}
+const DataKegiatanPage = () => {
+  const router = useRouter();
+  const [setBreadcrumbs] = useBreadcrumbs(
+    (state) => [state.setBreadcrumbs],
+    shallow
+  );
 
-// eslint-disable-next-line unused-imports/no-unused-vars
-const DataKegiatanPage: React.FC<IDataKegiatanPageProps> = (props) => {
+  React.useEffect(() => {
+    setBreadcrumbs([{ label: 'Data Kegiatan', path: '/data-kegiatan' }]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
   return (
     <RootWrapper>
       <VectorOne />
