@@ -14,12 +14,19 @@ import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
 import { DetailPetaKegiatanBook } from './parts';
 
+interface BreadcrumbObj {
+  label: string;
+  path: string;
+}
+
 interface IDetailPetaKegiatanPageProps {
   data: ArtistReportOneResponse;
+  breadcrumbData: BreadcrumbObj[];
 }
 
 const DetailPetaKegiatanPage: React.FC<IDetailPetaKegiatanPageProps> = ({
   data,
+  breadcrumbData,
 }) => {
   const router = useRouter();
   const [setBreadcrumbs] = useBreadcrumbs(
@@ -28,10 +35,7 @@ const DetailPetaKegiatanPage: React.FC<IDetailPetaKegiatanPageProps> = ({
   );
 
   React.useEffect(() => {
-    setBreadcrumbs([
-      { label: 'Peta Kegiatan', path: '/peta-kegiatan' },
-      { label: 'Detail Peta Kegiatan', path: router.asPath },
-    ]);
+    setBreadcrumbs(breadcrumbData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
   return (
