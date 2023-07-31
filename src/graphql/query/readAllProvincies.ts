@@ -1,4 +1,6 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
+
+import { IFilterGlobalRequest } from '@/types/global';
 
 export const READ_ALL_PROVINCIES = gql`
   query ReadAllProvincies(
@@ -35,3 +37,21 @@ export interface ProvincesResponse {
     data: IProvincies[];
   };
 }
+
+export const useReadAllProvincies = (req: IFilterGlobalRequest) => {
+  const { data: provinciesData, loading: provinciesLoading } = useQuery<
+    ProvincesResponse,
+    IFilterGlobalRequest
+  >(READ_ALL_PROVINCIES, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    provinciesData,
+    provinciesLoading,
+  };
+};
