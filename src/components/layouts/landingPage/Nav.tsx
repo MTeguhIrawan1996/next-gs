@@ -35,6 +35,10 @@ const Links: LinksProps[] = [
     link: '/peta-kegiatan',
   },
   {
+    title: 'Data Kegiatan',
+    link: '/data-kegiatan',
+  },
+  {
     title: 'Galeri',
     link: '/galeri',
   },
