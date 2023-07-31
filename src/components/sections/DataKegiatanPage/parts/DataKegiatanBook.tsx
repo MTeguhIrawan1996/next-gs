@@ -1,5 +1,6 @@
 import { SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
@@ -24,6 +25,8 @@ import {
 } from '@/graphql/query/readAllRegencies';
 import { useReadAllActivitesData } from '@/utils/rest-api/ActivityData/useReadAllActivitiesData';
 import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
+
+import { RestErrorResponse } from '@/types/global';
 
 const DataKegiatanBook = () => {
   const router = useRouter();
@@ -76,6 +79,13 @@ const DataKegiatanBook = () => {
         provinceId: provincieFilterId,
         regencyId: regenciesFilterId,
         search: searchQuery,
+      },
+      onError: (err: RestErrorResponse) => {
+        notifications.show({
+          color: 'red',
+          title: 'Terjadi kesalahan',
+          message: err.error,
+        });
       },
     });
 

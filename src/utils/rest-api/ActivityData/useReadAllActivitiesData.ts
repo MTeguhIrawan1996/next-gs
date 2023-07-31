@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { axiosInstance } from '../axios';
 
-import { ApiResponse, AxiosRestErrorResponse } from '@/types/global';
+import { ApiResponse, RestErrorResponse } from '@/types/global';
 
 export interface ActivityData {
   id: string;
@@ -42,7 +42,7 @@ export const ReadOneRestActivityPlan = async ({
 }: ActivityDataRequest) => {
   try {
     const response = await axiosInstance.get(
-      `http://192.168.18.8:4007/landing-page/artist-reports/activity-datas/${year}`,
+      `/landing-page/artist-reports/activity-datas/${year}`,
       {
         params: {
           limit,
@@ -57,7 +57,7 @@ export const ReadOneRestActivityPlan = async ({
 
     return response.data;
   } catch (err: any) {
-    return Promise.reject(err);
+    return Promise.reject(err.response.data);
   }
 };
 
@@ -68,12 +68,12 @@ export const useReadAllActivitesData = ({
 }: {
   variable: ActivityDataRequest;
   onSuccess?: () => void;
-  onError?: (error: AxiosRestErrorResponse) => unknown;
+  onError?: (error: RestErrorResponse) => unknown;
 }) => {
   const { limit, page, year, orderBy, provinceId, regencyId, search } =
     variable;
 
-  return useQuery<ActivityDataResponse, AxiosRestErrorResponse>({
+  return useQuery<ActivityDataResponse, RestErrorResponse>({
     queryFn: async () => {
       const data = await ReadOneRestActivityPlan({
         limit,
