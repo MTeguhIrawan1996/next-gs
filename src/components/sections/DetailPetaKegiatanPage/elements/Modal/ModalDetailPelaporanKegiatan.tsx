@@ -42,11 +42,11 @@ const ModalDetailPelaporanKegiatan: React.FC<IModalDetailPelaporanProps> = ({
             classNameValue={classes.valueSectionDetailPlan}
             data={[
               {
-                key: 'Tanggal Kegiatan',
+                key: 'Waktu Kegiatan',
                 value: dateFromat(data?.data?.activityDate, 'dddd, LL'),
               },
               {
-                key: 'Materi',
+                key: 'Materi Kegiatan',
                 value: data?.data?.material ?? '-',
               },
               {
