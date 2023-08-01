@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloError, gql, useQuery } from '@apollo/client';
 
 import { IFilterGlobalRequest } from '@/types/global';
 
@@ -43,3 +43,21 @@ export interface RegenciesResponse {
 export interface RegenciesRequest extends IFilterGlobalRequest {
   provinceId: string | null;
 }
+
+export const useReadAllRegencies = (req: RegenciesRequest) => {
+  const { data: regenciesData, loading: regenciesLoading } = useQuery<
+    RegenciesResponse,
+    RegenciesRequest
+  >(READ_ALL_REGENCIES, {
+    variables: req,
+    onError: (err: ApolloError) => {
+      return err;
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  return {
+    regenciesData,
+    regenciesLoading,
+  };
+};
