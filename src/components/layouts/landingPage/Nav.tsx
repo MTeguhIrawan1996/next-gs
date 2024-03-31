@@ -126,6 +126,15 @@ const Navbar = () => {
                 </Button>
               </Link>
             )}
+            <Link
+              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button radius="lg" fw={400} fz={14} color="violet.6">
+                Daftar sekarang
+              </Button>
+            </Link>
           </Flex>
           <Burger
             opened={opened}
@@ -164,6 +173,15 @@ const Navbar = () => {
                     </Button>
                   </Link>
                 )}
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/auth/register`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button radius="lg" fw={400} fz={14} color="violet.6">
+                    Daftar sekarang
+                  </Button>
+                </Link>
               </Flex>
             </Paper>
           </>
