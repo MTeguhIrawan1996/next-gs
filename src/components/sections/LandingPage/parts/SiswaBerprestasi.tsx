@@ -9,15 +9,11 @@ import {
 } from '@/components/elements';
 
 import {
-  IGallery,
-  useReadAllGalleryLandingPage,
-} from '@/graphql/query/readAllGalleryLandingPage';
-
-import { IFile } from '@/types/global';
-import {
   AchievingStudents,
   useReadAllAchievingStudents,
 } from '@/graphql/query/readAllAchievingStudents';
+
+import { IFile } from '@/types/global';
 
 const SiswaBerprestasi = () => {
   const { AchievingData, AchievingLoading } = useReadAllAchievingStudents({

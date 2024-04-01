@@ -1,10 +1,6 @@
-import { Flex, SelectProps, Stack } from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
+import { Flex, Stack } from '@mantine/core';
 import * as React from 'react';
-import {
-  IActivityData,
-  useReadAllActivity,
-} from '@/graphql/query/readAllActivity';
+
 import {
   CardImage,
   CardImageSkeleton,
@@ -12,22 +8,11 @@ import {
   GlobalPagination,
   GSMSBoxWrapper,
   InnerWrapper,
-  MultipleSelect,
   SearchBar,
 } from '@/components/elements';
 
 import {
-  IDinases,
-  useReadAllActiveDinases,
-} from '@/graphql/query/readAllActiveDinases';
-import {
-  IGallery,
-  useReadAllGalleryLandingPage,
-} from '@/graphql/query/readAllGalleryLandingPage';
-import { ISchools, useReadAllSchools } from '@/graphql/query/readAllSchools';
-import {
   AchievingStudents,
-  AchievingStundets,
   useReadAllAchievingStudents,
 } from '@/graphql/query/readAllAchievingStudents';
 

@@ -134,7 +134,7 @@ const ModalTable: React.FC<IModalTableProps> = ({
             <Box w="100%">
               <GlobalPagination
                 currentLimit={limit}
-                setLimit={limit}
+                setLimit={setLimit}
                 currentPage={meta?.currentPage ?? 0}
                 setPage={onSetPage}
                 totalAllData={meta?.totalAllData ?? 0}

@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 import { Badge, Box, Flex, Paper, Stack, Text } from '@mantine/core';
 import * as React from 'react';
 
@@ -13,7 +14,6 @@ import {
 import { GalleryOneResponse } from '@/graphql/query/readOneGalleryLandingPage';
 import { dateFromat } from '@/utils/helper/dateFormat';
 import { googleDriveUrlRegex, youtubeUrlRegex } from '@/utils/helper/regex';
-import { Icon } from '@iconify/react';
 
 interface ISchoolInformationProps {
   data: GalleryOneResponse;

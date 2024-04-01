@@ -1,10 +1,7 @@
 import { Flex, SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import * as React from 'react';
-import {
-  IActivityData,
-  useReadAllActivity,
-} from '@/graphql/query/readAllActivity';
+
 import {
   CardImage,
   CardImageSkeleton,
@@ -20,6 +17,10 @@ import {
   IDinases,
   useReadAllActiveDinases,
 } from '@/graphql/query/readAllActiveDinases';
+import {
+  IActivityData,
+  useReadAllActivity,
+} from '@/graphql/query/readAllActivity';
 import {
   IGallery,
   useReadAllGalleryLandingPage,

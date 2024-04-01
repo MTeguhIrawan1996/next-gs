@@ -25,6 +25,7 @@ const Galeri = () => {
     dinasId: null,
     schoolId: null,
     type: null,
+    activityId: null,
   });
 
   const renderGallery = React.useCallback((value: IGallery, index: number) => {

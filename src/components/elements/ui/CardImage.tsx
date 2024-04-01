@@ -7,7 +7,6 @@ import {
   Group,
   Overlay,
   Stack,
-  StarIcon,
   Text,
 } from '@mantine/core';
 import Link from 'next/link';
