@@ -1,4 +1,4 @@
-import { Grid, Group, Pagination, Text } from '@mantine/core';
+import { Flex, Grid, Group, Pagination, Select, Text } from '@mantine/core';
 import * as React from 'react';
 
 import PaginationSkeleton from '../Skeleton/PaginationSkeleton';
@@ -10,6 +10,8 @@ interface IPaginationProps {
   totalData: number;
   setPage: (page: number) => void;
   isFetching?: boolean;
+  currentLimit: number;
+  setLimit: (limit: number) => void;
 }
 
 const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
@@ -19,6 +21,8 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
   totalPage,
   setPage,
   isFetching,
+  currentLimit,
+  setLimit,
 }) => {
   const [startData, setStartData] = React.useState<number>(0);
   const [endData, setEndData] = React.useState<number>(0);
@@ -77,6 +81,54 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
             <Pagination.Last />
           </Group>
         </Pagination.Root>
+      </Grid.Col>
+      <Grid.Col span={3}>
+        <Group align="center" h="100%">
+          <Flex direction="row" gap="md" align="center">
+            <Text
+              c="dark.2"
+              sx={{
+                fontSize: '12px',
+                fontWeight: 400,
+              }}
+            >
+              Baris per halaman
+            </Text>
+            <Select
+              radius="md"
+              data={[
+                {
+                  label: '10',
+                  value: '10',
+                },
+                {
+                  label: '25',
+                  value: '25',
+                },
+                {
+                  label: '50',
+                  value: '50',
+                },
+                {
+                  label: '75',
+                  value: '75',
+                },
+                {
+                  label: '100',
+                  value: '100',
+                },
+              ]}
+              value={String(currentLimit) || '10'}
+              placeholder="10"
+              onChange={(v) => {
+                setLimit(Number(v));
+                setPage(1);
+              }}
+              size="xs"
+              w={100}
+            />
+          </Flex>
+        </Group>
       </Grid.Col>
     </Grid>
   );

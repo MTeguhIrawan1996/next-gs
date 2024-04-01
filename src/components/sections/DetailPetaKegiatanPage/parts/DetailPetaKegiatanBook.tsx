@@ -37,6 +37,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
   const router = useRouter();
   const { classes } = landingPageStyle();
   const [page, setPage] = React.useState<number>(1);
+  const [limit, setLimit] = React.useState<number>(10);
   const [isModalDetail, setIsModalDetail] = React.useState<boolean>(false);
   const [idRow, setIdRow] = React.useState<string>('');
   const [order, setOrder] = React.useState<number>(0);
@@ -47,7 +48,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
     useReadOneRestActivityPlan({
       variable: {
         id: idActivityPlan,
-        limit: '10',
+        limit: String(limit),
         page: page.toString(),
         year: activityYear.toString(),
       },
@@ -284,6 +285,8 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
             <GlobalPagination
               isFetching={loadingActivityPlan}
               setPage={setPage}
+              currentLimit={limit}
+              setLimit={setLimit}
               currentPage={dataActivityPlan.meta.currentPage ?? page}
               totalAllData={dataActivityPlan.meta.totalAllData ?? 0}
               totalData={dataActivityPlan.meta.totalData ?? 0}

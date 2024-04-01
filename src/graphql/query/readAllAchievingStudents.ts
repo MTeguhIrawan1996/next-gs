@@ -1,6 +1,6 @@
 import { ApolloError, gql, useQuery } from '@apollo/client';
 
-import { MResponse } from '@/types/global';
+import { IFile, MResponse } from '@/types/global';
 
 export const READ_ALL_ACHIEVING_STUDENTS = gql`
   query ReadAllLandingPageHighAchievingStudents(
@@ -30,23 +30,32 @@ export const READ_ALL_ACHIEVING_STUDENTS = gql`
         name
         activityYear
         achievement
+        photo {
+          id
+          path
+          filename
+          url
+          originalFilename
+          mime
+        }
       }
     }
   }
 `;
 
-export interface AchievingStundets {
+export interface AchievingStudents {
   id: string;
   name: string;
   activityYear: number;
   achievement: string;
+  photo: IFile | null;
 }
 
-export interface AchievingStundetsResponse {
-  landingPageHighAchievingStudents: MResponse<AchievingStundets>;
+export interface AchievingStudentsResponse {
+  landingPageHighAchievingStudents: MResponse<AchievingStudents>;
 }
 
-export interface AchievingStundetsRequest {
+export interface AchievingStudentsRequest {
   page: number;
   limit: number;
   search: string | null;
@@ -54,10 +63,10 @@ export interface AchievingStundetsRequest {
   orderDir: string | null;
 }
 
-export const useReadAllAchievingStudents = (req: AchievingStundetsRequest) => {
+export const useReadAllAchievingStudents = (req: AchievingStudentsRequest) => {
   const { data: AchievingData, loading: AchievingLoading } = useQuery<
-    AchievingStundetsResponse,
-    AchievingStundetsRequest
+    AchievingStudentsResponse,
+    AchievingStudentsRequest
   >(READ_ALL_ACHIEVING_STUDENTS, {
     variables: req,
     onError: (err: ApolloError) => {

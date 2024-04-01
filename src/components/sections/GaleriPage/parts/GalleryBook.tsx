@@ -1,7 +1,10 @@
 import { Flex, SelectProps, Stack } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import * as React from 'react';
-
+import {
+  IActivityData,
+  useReadAllActivity,
+} from '@/graphql/query/readAllActivity';
 import {
   CardImage,
   CardImageSkeleton,
@@ -27,6 +30,7 @@ import { IFile } from '@/types/global';
 
 const GalleryBook = () => {
   const [page, setPage] = React.useState<number>(1);
+  const [limit, setLimit] = React.useState<number>(9);
   const [searchTerm, setSerachTerm] = React.useState<string>('');
   const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
   const [dinasesFilterId, setDinasesFilterId] = React.useState<string | null>(
@@ -41,8 +45,12 @@ const GalleryBook = () => {
   const [schoolsQuery] = useDebouncedValue<string>(schoolsSearchTerm, 400);
   const [typeId, setTypeId] = React.useState<string | null>(null);
 
+  const [activityId, setActivityId] = React.useState<string | null>(null);
+  const [activitySearchTerm, setActivitySearchTerm] =
+    React.useState<string>('');
+
   const { galleryData, galleryLoading } = useReadAllGalleryLandingPage({
-    limit: 9,
+    limit: limit,
     page: page,
     orderBy: 'checkedAt',
     orderDir: 'desc',
@@ -50,7 +58,17 @@ const GalleryBook = () => {
     dinasId: dinasesFilterId,
     schoolId: schoolsFilterId,
     type: typeId,
+    activityId: activityId,
   });
+  const { activityData, activityLoading } = useReadAllActivity({
+    page: undefined,
+    limit: 100,
+    orderBy: 'createdAt',
+    orderDir: 'desc',
+    haveGallery: true,
+    search: activitySearchTerm,
+  });
+
   const { dinasesData, dinasesLoading } = useReadAllActiveDinases({
     activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
     limit: 10,
@@ -83,10 +101,19 @@ const GalleryBook = () => {
       value: value.id,
     };
   }, []);
+
+  const renderActivity = React.useCallback((value: IActivityData) => {
+    return {
+      label: String(value.year),
+      value: value.id,
+    };
+  }, []);
+
   const renderGallery = React.useCallback((value: IGallery, index: number) => {
     const { activityReport, id, photo, videoLink } = value;
     const label =
       activityReport.activityPlan.artistReport.form.recommendation.school.name;
+    const activityYear = new Date(activityReport.activityDate).getFullYear();
 
     return (
       <CardImage
@@ -95,6 +122,7 @@ const GalleryBook = () => {
         imageProps={photo as IFile}
         videoLink={videoLink as string}
         href={`/galeri/${id}`}
+        activityYear={activityYear}
       />
     );
   }, []);
@@ -103,9 +131,24 @@ const GalleryBook = () => {
   const dinasesItem = dinasesData?.activity.dinases.data.map(renderDinases);
   const galleryItem =
     galleryData?.landingPageActivityReportAttachments.data.map(renderGallery);
+  const activityItem = activityData?.activities.data.map(renderActivity);
 
   const filter = React.useMemo(() => {
     const item: SelectProps[] = [
+      {
+        onChange: (value: string | null) => {
+          setPage(1);
+          setActivityId(value as string);
+        },
+        data: activityItem ?? [],
+        label: 'Tahun',
+        placeholder: activityLoading ? 'Memuat...' : 'Ketik dan pilih tahun',
+        searchable: true,
+        clearable: true,
+        nothingFound: null,
+        onSearchChange: setActivitySearchTerm,
+        searchValue: activitySearchTerm,
+      },
       {
         onChange: (value: string | null) => {
           setPage(1);
@@ -179,6 +222,8 @@ const GalleryBook = () => {
             <EmptyTableState />
           ) : (
             <GlobalPagination
+              currentLimit={limit}
+              setLimit={setLimit}
               setPage={setPage}
               isFetching={galleryLoading}
               currentPage={

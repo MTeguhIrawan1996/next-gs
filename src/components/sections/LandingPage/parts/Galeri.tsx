@@ -31,6 +31,7 @@ const Galeri = () => {
     const { activityReport, id, photo, videoLink } = value;
     const label =
       activityReport.activityPlan.artistReport.form.recommendation.school.name;
+    const activityYear = new Date(activityReport.activityDate).getFullYear();
 
     return (
       <CardImage
@@ -39,6 +40,7 @@ const Galeri = () => {
         imageProps={photo as IFile}
         videoLink={videoLink as string}
         href={`/galeri/${id}`}
+        activityYear={activityYear}
       />
     );
   }, []);
