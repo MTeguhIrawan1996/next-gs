@@ -88,7 +88,10 @@ export const useReadAllActivitesData = ({
     },
     onError: onError,
     onSuccess: onSuccess,
-    queryKey: ['activitiesData', { year, page, provinceId, regencyId, search }],
+    queryKey: [
+      'activitiesData',
+      { year, page, provinceId, regencyId, search, limit },
+    ],
     keepPreviousData: true,
   });
 };

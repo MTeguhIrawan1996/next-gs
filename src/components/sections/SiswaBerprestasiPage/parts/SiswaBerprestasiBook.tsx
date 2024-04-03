@@ -1,57 +1,64 @@
-import { Stack } from '@mantine/core';
-import { useRouter } from 'next/router';
+import { Flex, Stack } from '@mantine/core';
 import * as React from 'react';
 
 import {
-  GlobalDefaultTable,
+  CardImage,
+  CardImageSkeleton,
+  EmptyTableState,
   GlobalPagination,
   GSMSBoxWrapper,
   InnerWrapper,
   SearchBar,
 } from '@/components/elements';
 
-import { useReadAllAchievingStudents } from '@/graphql/query/readAllAchievingStudents';
+import {
+  AchievingStudents,
+  useReadAllAchievingStudents,
+} from '@/graphql/query/readAllAchievingStudents';
+
+import { IFile } from '@/types/global';
 
 const SiswaBerprestasiBook = () => {
-  const router = useRouter();
   const [page, setPage] = React.useState<number>(1);
+  const [limit, setLimit] = React.useState<number>(9);
   const [searchTerm, setSerachTerm] = React.useState<string>('');
   const [searchQuery, setSearchQuery] = React.useState<string | null>(null);
 
   const { AchievingData, AchievingLoading } = useReadAllAchievingStudents({
     page: page,
-    limit: 5,
+    limit: limit,
     orderBy: 'activityYear',
     orderDir: 'desc',
     search: searchQuery,
   });
 
-  const renderSiswaTable = React.useMemo(() => {
-    return (
-      <GlobalDefaultTable
-        tableProps={{
-          fetching: AchievingLoading,
-          columns: [
-            { accessor: 'name', title: 'Nama Siswa' },
-            { accessor: 'activityYear', title: 'Tahun Mengikuti GSMS' },
-            { accessor: 'achievement', title: 'Prestasi' },
-          ],
-          records: AchievingData?.landingPageHighAchievingStudents.data,
-          onRowClick: ({ id }) => {
-            router.push(`/siswa-berprestasi/${id}`);
-          },
-        }}
-      />
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AchievingData?.landingPageHighAchievingStudents.data, AchievingLoading]);
+  const renderAchieving = React.useCallback(
+    (value: AchievingStudents, index: number) => {
+      const { achievement, id, photo, activityYear, name } = value;
+
+      return (
+        <CardImage
+          key={index}
+          label={name}
+          imageProps={photo as IFile}
+          href={`/siswa-berprestasi/${id}`}
+          activityYear={activityYear}
+          description={achievement}
+        />
+      );
+    },
+    []
+  );
+
+  const achievingItem =
+    AchievingData?.landingPageHighAchievingStudents.data.map(renderAchieving);
 
   return (
     <InnerWrapper>
       <GSMSBoxWrapper>
         <Stack w="100%" spacing="lg">
           <SearchBar
-            placeholder="Pencarian"
+            placeholder="Cari nama seniman"
             onChange={(event) => {
               setSerachTerm(event.currentTarget.value);
             }}
@@ -60,12 +67,22 @@ const SiswaBerprestasiBook = () => {
               setSearchQuery(searchTerm === '' ? null : searchTerm);
             }}
           />
-          {renderSiswaTable}
-          {AchievingData?.landingPageHighAchievingStudents.data.length ? (
+
+          <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
+            {AchievingLoading ? <CardImageSkeleton /> : achievingItem}
+          </Flex>
+          {!achievingItem?.length && !AchievingLoading ? (
+            <EmptyTableState />
+          ) : (
             <GlobalPagination
-              isFetching={AchievingLoading}
+              currentLimit={limit}
+              setLimit={setLimit}
               setPage={setPage}
-              currentPage={page}
+              isFetching={AchievingLoading}
+              currentPage={
+                AchievingData?.landingPageHighAchievingStudents.meta
+                  .currentPage as number
+              }
               totalAllData={
                 AchievingData?.landingPageHighAchievingStudents.meta
                   .totalAllData as number
@@ -79,7 +96,7 @@ const SiswaBerprestasiBook = () => {
                   .totalPage as number
               }
             />
-          ) : null}
+          )}
         </Stack>
       </GSMSBoxWrapper>
     </InnerWrapper>

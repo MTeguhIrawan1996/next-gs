@@ -1,4 +1,5 @@
-import { Box, Paper, Stack, Text } from '@mantine/core';
+import { Icon } from '@iconify/react';
+import { Badge, Box, Flex, Paper, Stack, Text } from '@mantine/core';
 import * as React from 'react';
 
 import {
@@ -28,9 +29,19 @@ const SchoolInformation: React.FC<ISchoolInformationProps> = ({ data }) => {
       <Stack spacing="md">
         <GSMSBoxWrapper enableBack>
           <Stack w="100%" spacing="md">
-            <Text fw={600} fz={24}>
-              {activityPlan.artistReport.form.recommendation.school.name}
-            </Text>
+            <Flex direction="row" align="center" gap="sm">
+              <Text fw={600} fz={24}>
+                {activityPlan.artistReport.form.recommendation.school.name}
+              </Text>{' '}
+              <Badge variant="filled" size="md">
+                <Flex direction="row" gap="xs" align="center">
+                  <Icon icon="uil:calendar-alt" />
+                  {new Date(
+                    data.landingPageActivityReportAttachment.activityReport.activityDate
+                  ).getFullYear()}
+                </Flex>
+              </Badge>
+            </Flex>
             <Box w="95%" mx="auto">
               <KeyValuePairs
                 data={[

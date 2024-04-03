@@ -29,6 +29,8 @@ const ModalTable: React.FC<IModalTableProps> = ({
   getRecapSeniman,
 }) => {
   const [activePage, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(10);
+
   const value = data?.landingPageDinas;
   const record = value?.activityForms.data;
   const meta = value?.activityForms.meta;
@@ -41,7 +43,7 @@ const ModalTable: React.FC<IModalTableProps> = ({
             id: data.landingPageDinas.id,
             findAllDinasActivityFormsInput: {
               page: activePage,
-              limit: 10,
+              limit: limit,
               search: null,
               orderBy: 'createdAt',
               orderDir: 'desc',
@@ -131,6 +133,8 @@ const ModalTable: React.FC<IModalTableProps> = ({
             {renderDataTable}
             <Box w="100%">
               <GlobalPagination
+                currentLimit={limit}
+                setLimit={setLimit}
                 currentPage={meta?.currentPage ?? 0}
                 setPage={onSetPage}
                 totalAllData={meta?.totalAllData ?? 0}

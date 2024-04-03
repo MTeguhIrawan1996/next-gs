@@ -1,5 +1,14 @@
 import { Icon } from '@iconify/react';
-import { Box, Card, Group, Overlay, Stack, Text } from '@mantine/core';
+import {
+  Badge,
+  Box,
+  Card,
+  Flex,
+  Group,
+  Overlay,
+  Stack,
+  Text,
+} from '@mantine/core';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -19,6 +28,8 @@ interface ICardImageProps {
   imageProps?: IFile;
   href?: string;
   videoLink?: string;
+  activityYear?: number;
+  description?: string;
 }
 
 const CardImage: React.FC<ICardImageProps> = ({
@@ -28,6 +39,8 @@ const CardImage: React.FC<ICardImageProps> = ({
   imageProps,
   href,
   videoLink,
+  activityYear,
+  description,
 }) => {
   return (
     <Card shadow="xs" padding={0} radius="lg" withBorder w={320}>
@@ -54,8 +67,19 @@ const CardImage: React.FC<ICardImageProps> = ({
             </Text>
           </Group>
         ) : null}
+        <Flex direction="row" align="center" gap="sm">
+          <Text fw={500} fz={12} color="dark.6">
+            {label ?? 'Label'}{' '}
+          </Text>
+          <Badge variant="filled" size="md">
+            <Flex direction="row" gap="xs" align="center">
+              <Icon icon="uil:calendar-alt" />
+              {activityYear ?? '-'}
+            </Flex>
+          </Badge>
+        </Flex>
         <Text fw={500} fz={12} color="dark.6">
-          {label ?? 'Label'}
+          {description ?? null}
         </Text>
       </Stack>
     </Card>

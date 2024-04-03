@@ -28,6 +28,7 @@ const BeritaBook = () => {
   );
   const [dinasesSearchTerm, setDinasesSearchTerm] = React.useState<string>('');
   const [dinasesQuery] = useDebouncedValue<string>(dinasesSearchTerm, 400);
+  const [limit, setLimit] = React.useState<number>(9);
 
   const { dinasesData, dinasesLoading } = useReadAllActiveDinases({
     activityId: `${process.env.NEXT_PUBLIC_ACTIVITY_ID}`,
@@ -39,7 +40,7 @@ const BeritaBook = () => {
     level: null,
   });
   const { articlesData, articlesLoading } = useReadAllArticles({
-    limit: 9,
+    limit: limit,
     page: page,
     orderBy: 'publishedAt',
     orderDir: 'desc',
@@ -120,6 +121,8 @@ const BeritaBook = () => {
               isFetching={articlesLoading}
               setPage={setPage}
               currentPage={page}
+              currentLimit={limit}
+              setLimit={setLimit}
               totalAllData={
                 articlesData?.landingPageArticles.meta.totalAllData as number
               }

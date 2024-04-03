@@ -52,7 +52,7 @@ const DataKegiatanBook = () => {
     (state) => [state.activityDataYearId, state.setActivityDataYear],
     shallow
   );
-
+  const [limit, setLimit] = React.useState<number>(10);
   const { filterYearData, filterYearLoading } = useReadAllFilterYear();
   const { provinciesData, provinciesLoading } = useReadAllProvincies({
     limit: 10,
@@ -72,7 +72,7 @@ const DataKegiatanBook = () => {
   const { data: activityData, isLoading: activityDataLoading } =
     useReadAllActivitesData({
       variable: {
-        limit: 10,
+        limit: limit,
         page: page,
         year: activityYearId,
         orderBy: 'provinceName',
@@ -246,6 +246,8 @@ const DataKegiatanBook = () => {
               totalAllData={activityData?.meta.totalAllData ?? 0}
               totalData={activityData?.meta.totalData ?? 0}
               totalPage={activityData?.meta.totalPage ?? 0}
+              currentLimit={limit}
+              setLimit={setLimit}
             />
           ) : null}
         </Stack>
