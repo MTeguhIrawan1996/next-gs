@@ -12,7 +12,7 @@ import {
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
-import { DataKegiatanBook } from './parts';
+import { DataKegiatanBook, StatistikBook } from './parts';
 
 const DataKegiatanPage = () => {
   const router = useRouter();
@@ -22,14 +22,16 @@ const DataKegiatanPage = () => {
   );
 
   React.useEffect(() => {
-    setBreadcrumbs([{ label: 'Data Kegiatan', path: '/data-kegiatan' }]);
+    setBreadcrumbs([{ label: 'Data dan Statistik', path: '/data-statistik' }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
   return (
     <RootWrapper>
       <VectorOne />
-      <TitleContent label="Data Kegiatan" />
+      <TitleContent label="Statistik" />
+      <StatistikBook />
       <VectorTwo />
+      <TitleContent label="Data Kegiatan" />
       <DataKegiatanBook />
       <VectorThree />
     </RootWrapper>
