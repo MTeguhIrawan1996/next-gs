@@ -83,7 +83,9 @@ const HorizontalBarChart = (PROPS: HorizontalBarChartProps) => {
               },
             },
           }}
-          series={[{ data: PROPS.stats.map((el) => el.data) || [] }]}
+          series={[
+            { name: 'Jumlah', data: PROPS.stats.map((el) => el.data) || [] },
+          ]}
           type="bar"
           height="330px"
           width={1100}
