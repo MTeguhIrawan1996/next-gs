@@ -4,7 +4,6 @@ import { shallow } from 'zustand/shallow';
 
 import {
   RootWrapper,
-  TitleContent,
   VectorOne,
   VectorThree,
   VectorTwo,
@@ -12,7 +11,7 @@ import {
 
 import { useBreadcrumbs } from '@/utils/store/useBreadcrumbs';
 
-import { DataKegiatanBook, StatistikBook } from './parts';
+import { DataKegiatanBook } from './parts';
 
 const DataKegiatanPage = () => {
   const router = useRouter();
@@ -28,10 +27,7 @@ const DataKegiatanPage = () => {
   return (
     <RootWrapper>
       <VectorOne />
-      <TitleContent label="Statistik" />
-      <StatistikBook />
       <VectorTwo />
-      <TitleContent label="Data Kegiatan" />
       <DataKegiatanBook />
       <VectorThree />
     </RootWrapper>

@@ -55,11 +55,15 @@ export const countStats: CountStatsProps = {
   stats: [
     {
       label: 'Jumlah Seniman dan Asisten',
-      count: 1256,
+      count: 578,
+    },
+    {
+      label: 'Jumlah Dinas',
+      count: 84,
     },
     {
       label: 'Jumlah Sekolah',
-      count: 2467,
+      count: 765,
     },
   ],
 };

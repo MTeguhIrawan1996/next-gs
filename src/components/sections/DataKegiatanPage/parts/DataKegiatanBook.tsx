@@ -1,4 +1,4 @@
-import { SelectProps, Stack } from '@mantine/core';
+import { Flex, SelectProps, Stack, Title } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import {
   InnerWrapper,
   MultipleSelect,
   SearchBar,
+  TitleContent,
 } from '@/components/elements';
 
 import { useReadAllFilterYear } from '@/graphql/query/readAllFilterYear';
@@ -25,6 +26,8 @@ import {
 } from '@/graphql/query/readAllRegencies';
 import { useReadAllActivitesData } from '@/utils/rest-api/ActivityData/useReadAllActivitiesData';
 import { useActivityYearStore } from '@/utils/store/zustand/counterYear';
+
+import StatistikBook from './StatistikBook';
 
 import { RestErrorResponse } from '@/types/global';
 
@@ -224,34 +227,42 @@ const DataKegiatanBook = () => {
 
   return (
     <InnerWrapper>
-      <GSMSBoxWrapper>
-        <Stack w="100%" spacing="lg">
-          <SearchBar
-            placeholder="Pencarian nama sekolah atau seniman"
-            onChange={(event) => {
-              setSerachTerm(event.currentTarget.value);
-            }}
-            onSearch={() => {
-              setPage(1);
-              setSearchQuery(searchTerm === '' ? null : searchTerm);
-            }}
-          />
-          <MultipleSelect MultipleSelectProps={filter} />
-          {renderDataKegiatan}
-          {activityData?.data.length ? (
-            <GlobalPagination
-              isFetching={activityDataLoading}
-              setPage={setPage}
-              currentPage={page}
-              totalAllData={activityData?.meta.totalAllData ?? 0}
-              totalData={activityData?.meta.totalData ?? 0}
-              totalPage={activityData?.meta.totalPage ?? 0}
-              currentLimit={limit}
-              setLimit={setLimit}
+      <Flex direction="column" gap="lg">
+        <TitleContent label="Statistik" />
+        <MultipleSelect MultipleSelectProps={filter} />
+        <Title order={4} fw={900} align="center">
+          Grafik Jumlah Seniman dengan Bidang Seni yang Dipilih
+        </Title>
+        <StatistikBook />
+        <TitleContent label="Data Kegiatan" />
+        <GSMSBoxWrapper>
+          <Stack w="100%" spacing="lg">
+            <SearchBar
+              placeholder="Pencarian nama sekolah atau seniman"
+              onChange={(event) => {
+                setSerachTerm(event.currentTarget.value);
+              }}
+              onSearch={() => {
+                setPage(1);
+                setSearchQuery(searchTerm === '' ? null : searchTerm);
+              }}
             />
-          ) : null}
-        </Stack>
-      </GSMSBoxWrapper>
+            {renderDataKegiatan}
+            {activityData?.data.length ? (
+              <GlobalPagination
+                isFetching={activityDataLoading}
+                setPage={setPage}
+                currentPage={page}
+                totalAllData={activityData?.meta.totalAllData ?? 0}
+                totalData={activityData?.meta.totalData ?? 0}
+                totalPage={activityData?.meta.totalPage ?? 0}
+                currentLimit={limit}
+                setLimit={setLimit}
+              />
+            ) : null}
+          </Stack>
+        </GSMSBoxWrapper>
+      </Flex>
     </InnerWrapper>
   );
 };
