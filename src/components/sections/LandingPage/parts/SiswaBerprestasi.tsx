@@ -1,44 +1,63 @@
+import { Flex } from '@mantine/core';
 import * as React from 'react';
 
 import {
-  GlobalDefaultTable,
+  CardImage,
+  CardImageSkeleton,
+  EmptyTableState,
   LandingPageSectionWrapper,
 } from '@/components/elements';
 
-import { useReadAllAchievingStudents } from '@/graphql/query/readAllAchievingStudents';
+import {
+  AchievingStudents,
+  useReadAllAchievingStudents,
+} from '@/graphql/query/readAllAchievingStudents';
+
+import { IFile } from '@/types/global';
 
 const SiswaBerprestasi = () => {
   const { AchievingData, AchievingLoading } = useReadAllAchievingStudents({
     page: 1,
-    limit: 10,
+    limit: 3,
     orderBy: 'activityYear',
     orderDir: 'desc',
     search: null,
   });
 
-  const renderSiswaTable = React.useMemo(() => {
-    return (
-      <GlobalDefaultTable
-        tableProps={{
-          fetching: AchievingLoading,
-          columns: [
-            { accessor: 'name', title: 'Nama Siswa' },
-            { accessor: 'activityYear', title: 'Tahun Mengikuti GSMS' },
-            { accessor: 'achievement', title: 'Prestasi' },
-          ],
-          records: AchievingData?.landingPageHighAchievingStudents.data,
-        }}
-      />
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AchievingData?.landingPageHighAchievingStudents.data]);
+  const renderAchievement = React.useCallback(
+    (value: AchievingStudents, index: number) => {
+      const { name, id, photo, achievement, activityYear } = value;
+
+      return (
+        <CardImage
+          key={index}
+          label={name}
+          imageProps={photo as IFile}
+          href={`/siswa-berprestasi/${id}`}
+          activityYear={activityYear}
+          description={achievement}
+        />
+      );
+    },
+    []
+  );
+
+  const achievementItem =
+    AchievingData?.landingPageHighAchievingStudents.data.map(renderAchievement);
 
   return (
     <LandingPageSectionWrapper
       title="Siswa Berprestasi"
       href="/siswa-berprestasi"
     >
-      {renderSiswaTable}
+      <Flex w="90%" mx="auto" gap="lg" justify="center" wrap="wrap">
+        {!achievementItem?.length && !AchievingLoading ? (
+          <EmptyTableState />
+        ) : (
+          achievementItem
+        )}
+        {AchievingLoading ? <CardImageSkeleton /> : null}
+      </Flex>
     </LandingPageSectionWrapper>
   );
 };

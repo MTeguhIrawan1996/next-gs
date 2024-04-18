@@ -25,12 +25,14 @@ const Galeri = () => {
     dinasId: null,
     schoolId: null,
     type: null,
+    activityId: null,
   });
 
   const renderGallery = React.useCallback((value: IGallery, index: number) => {
     const { activityReport, id, photo, videoLink } = value;
     const label =
       activityReport.activityPlan.artistReport.form.recommendation.school.name;
+    const activityYear = new Date(activityReport.activityDate).getFullYear();
 
     return (
       <CardImage
@@ -39,6 +41,7 @@ const Galeri = () => {
         imageProps={photo as IFile}
         videoLink={videoLink as string}
         href={`/galeri/${id}`}
+        activityYear={activityYear}
       />
     );
   }, []);

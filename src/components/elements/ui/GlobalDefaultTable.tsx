@@ -58,8 +58,7 @@ export default function GlobalDefaultTable<T>({
         }
         fetching={fetching}
         defaultColumnRender={(row, _, accessor) => {
-          const data = row[accessor as keyof typeof row];
-          return data ? data : '-';
+          return row[accessor];
         }}
         noRecordsIcon={<></>}
         noRecordsText=""

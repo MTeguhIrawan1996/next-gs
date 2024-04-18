@@ -4,7 +4,6 @@ import { shallow } from 'zustand/shallow';
 
 import {
   RootWrapper,
-  TitleContent,
   VectorOne,
   VectorThree,
   VectorTwo,
@@ -22,13 +21,12 @@ const DataKegiatanPage = () => {
   );
 
   React.useEffect(() => {
-    setBreadcrumbs([{ label: 'Data Kegiatan', path: '/data-kegiatan' }]);
+    setBreadcrumbs([{ label: 'Data dan Statistik', path: '/data-statistik' }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
   return (
     <RootWrapper>
       <VectorOne />
-      <TitleContent label="Data Kegiatan" />
       <VectorTwo />
       <DataKegiatanBook />
       <VectorThree />

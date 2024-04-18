@@ -12,6 +12,7 @@ export const READ_ALL_GALLERY_LANDINGPAGE = gql`
     $schoolId: String
     $dinasId: String
     $type: String
+    $activityId: String
   ) {
     landingPageActivityReportAttachments(
       findAllActivityReportAttachmentInput: {
@@ -23,6 +24,7 @@ export const READ_ALL_GALLERY_LANDINGPAGE = gql`
         schoolId: $schoolId
         dinasId: $dinasId
         type: $type
+        activityId: $activityId
       }
     ) {
       meta {
@@ -43,6 +45,7 @@ export const READ_ALL_GALLERY_LANDINGPAGE = gql`
         }
         videoLink
         activityReport {
+          activityDate
           activityPlan {
             artistReport {
               form {
@@ -50,6 +53,9 @@ export const READ_ALL_GALLERY_LANDINGPAGE = gql`
                   school {
                     name
                   }
+                }
+                activity {
+                  year
                 }
               }
             }
@@ -65,6 +71,7 @@ export interface IGallery {
   photo: IFile | null;
   videoLink: string | null;
   activityReport: {
+    activityDate: string;
     activityPlan: {
       artistReport: {
         form: {
@@ -72,6 +79,9 @@ export interface IGallery {
             school: {
               name: string;
             };
+          };
+          activity: {
+            year: number;
           };
         };
       };
@@ -87,6 +97,7 @@ export interface GalleryRequest extends IFilterGlobalRequest {
   schoolId: string | null;
   dinasId: string | null;
   type: string | null;
+  activityId: string | null;
 }
 
 export const useReadAllGalleryLandingPage = (req: GalleryRequest) => {

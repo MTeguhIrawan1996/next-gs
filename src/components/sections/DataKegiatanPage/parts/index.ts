@@ -1,3 +1,3 @@
 import DataKegiatanBook from './DataKegiatanBook';
-
-export { DataKegiatanBook };
+import StatistikBook from './StatistikBook';
+export { DataKegiatanBook, StatistikBook };
