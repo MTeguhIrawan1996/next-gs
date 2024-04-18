@@ -1,4 +1,5 @@
 import { Flex, Stack } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import dynamic from 'next/dynamic';
 
 import { GSMSBoxWrapper } from '@/components/elements';
@@ -19,10 +20,16 @@ const HorizontalBarChart = dynamic(
   }
 );
 
+const BarChart = dynamic(() => import('@/components/elements/Stats/BarChart'), {
+  ssr: false,
+});
+
 export default function StatistikBook() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   return (
     <Flex
-      direction="row"
+      direction={isMobile ? 'column' : 'row'}
       justify="space-between"
       align=""
       sx={{
@@ -35,8 +42,12 @@ export default function StatistikBook() {
         <CountStats {...countStats} />
       </GSMSBoxWrapper>
       <GSMSBoxWrapper>
-        <Stack w="50%" spacing="lg">
-          <HorizontalBarChart {...statsDummyHorizon} />
+        <Stack w="100%" spacing="lg">
+          {isMobile ? (
+            <BarChart {...statsDummyHorizon} showXLabel />
+          ) : (
+            <HorizontalBarChart {...statsDummyHorizon} />
+          )}
         </Stack>
       </GSMSBoxWrapper>
     </Flex>

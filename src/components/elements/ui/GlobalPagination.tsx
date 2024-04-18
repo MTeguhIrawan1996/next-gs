@@ -1,4 +1,5 @@
 import { Flex, Grid, Group, Pagination, Select, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import * as React from 'react';
 
 import PaginationSkeleton from '../Skeleton/PaginationSkeleton';
@@ -26,6 +27,7 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
 }) => {
   const [startData, setStartData] = React.useState<number>(0);
   const [endData, setEndData] = React.useState<number>(0);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const calculateDataRange = React.useCallback(() => {
     if (totalData === 0 || totalAllData === 0) {
@@ -84,7 +86,7 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
       </Grid.Col>
       <Grid.Col span={3}>
         <Group align="center" h="100%">
-          <Flex direction="row" gap="md" align="center">
+          <Flex direction={isMobile ? 'column' : 'row'} gap="md" align="center">
             <Text
               c="dark.2"
               sx={{
@@ -125,7 +127,6 @@ const GlobalPagination: React.FunctionComponent<IPaginationProps> = ({
                 setPage(1);
               }}
               size="xs"
-              w={100}
             />
           </Flex>
         </Group>
