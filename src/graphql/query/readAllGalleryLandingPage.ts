@@ -54,6 +54,9 @@ export const READ_ALL_GALLERY_LANDINGPAGE = gql`
                     name
                   }
                 }
+                activity {
+                  year
+                }
               }
             }
           }
@@ -76,6 +79,9 @@ export interface IGallery {
             school: {
               name: string;
             };
+          };
+          activity: {
+            year: number;
           };
         };
       };

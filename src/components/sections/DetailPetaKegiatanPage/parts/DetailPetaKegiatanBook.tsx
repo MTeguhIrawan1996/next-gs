@@ -56,7 +56,7 @@ const DetailPetaKegiatanBook: React.FC<IDetailPetaKegiatanBookProps> = ({
         notifications.show({
           color: 'red',
           title: 'Terjadi kesalahan',
-          message: err.response?.data.message,
+          message: <>{err.response?.data.message}</>,
         });
       },
     });

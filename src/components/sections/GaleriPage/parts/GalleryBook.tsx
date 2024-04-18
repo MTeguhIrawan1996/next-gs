@@ -114,7 +114,8 @@ const GalleryBook = () => {
     const { activityReport, id, photo, videoLink } = value;
     const label =
       activityReport.activityPlan.artistReport.form.recommendation.school.name;
-    const activityYear = new Date(activityReport.activityDate).getFullYear();
+    const activityYear =
+      activityReport.activityPlan.artistReport.form.activity.year;
 
     return (
       <CardImage
