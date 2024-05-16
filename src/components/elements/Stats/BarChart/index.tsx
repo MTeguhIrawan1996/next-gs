@@ -21,10 +21,10 @@ const BarChart = (PROPS: BarChartProps) => {
           options={{
             chart: {
               height: 250, // Set height using REM
-              width: '100%', // Make width responsive
               toolbar: {
                 show: true,
               },
+              width: '100%',
             },
             responsive: [
               {

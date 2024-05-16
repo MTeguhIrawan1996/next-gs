@@ -233,7 +233,11 @@ const DataKegiatanBook = () => {
         <Title order={4} fw={900} align="center">
           Grafik Jumlah Seniman dengan Bidang Seni yang Dipilih
         </Title>
-        <StatistikBook />
+        <StatistikBook
+          year={activityYearId as any}
+          provinceId={provincieFilterId as string}
+          regencyId={regenciesFilterId as string}
+        />
         <TitleContent label="Data Kegiatan" />
         <GSMSBoxWrapper>
           <Stack w="100%" spacing="lg">
