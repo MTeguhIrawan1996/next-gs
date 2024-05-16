@@ -29,7 +29,7 @@ const HorizontalBarChart = (PROPS: HorizontalBarChartProps) => {
               },
             },
             dataLabels: {
-              enabled: false,
+              enabled: true,
             },
             legend: {
               show: true,
@@ -61,7 +61,7 @@ const HorizontalBarChart = (PROPS: HorizontalBarChartProps) => {
             },
             xaxis: {
               categories: PROPS.stats.map((el) => el.legend) || [],
-              stepSize: 1,
+              stepSize: 10,
               labels: {
                 style: {
                   fontSize: '12px',

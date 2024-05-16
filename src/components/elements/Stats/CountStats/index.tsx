@@ -1,8 +1,8 @@
 import { Flex, Text, Title } from '@mantine/core';
 
 interface CountStatsData {
-  label: string;
-  count: number;
+  legend: string;
+  data: number;
 }
 
 export interface CountStatsProps {
@@ -28,7 +28,7 @@ export default function CountStats(PROPS: CountStatsProps) {
           sx={{
             width: '100%',
           }}
-          key={el.label}
+          key={el.legend}
         >
           <Text
             size="xs"
@@ -40,7 +40,7 @@ export default function CountStats(PROPS: CountStatsProps) {
               width: '100%',
             }}
           >
-            {el.label}
+            {el.legend}
           </Text>
           <hr
             style={{
@@ -52,10 +52,10 @@ export default function CountStats(PROPS: CountStatsProps) {
             order={2}
             fw={700}
             sx={{
-              fontSize: '1.35rem',
+              fontSize: '1.625rem',
             }}
           >
-            {el.count
+            {el.data
               .toLocaleString('id-ID', { minimumFractionDigits: 3 })
               .split(',')
               .filter((_, i) => i == 0)
