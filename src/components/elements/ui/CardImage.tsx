@@ -60,20 +60,30 @@ const CardImage: React.FC<ICardImageProps> = ({
       </Card.Section>
       <Stack py="md" px="xs" pos="relative" spacing="xs">
         {enableDate ? (
-          <Group spacing={8}>
-            <Icon icon="tabler:calendar" fontSize={14} color="#868E96" />
+          <Group
+            spacing={8}
+            sx={{
+              minWidth: '100px',
+            }}
+          >
+            <Icon
+              icon="tabler:calendar"
+              height={14}
+              width={14}
+              color="#868E96"
+            />
             <Text fw={300} fz={10}>
               {dateFromat(labelDate, 'dddd, LL') ?? 'Senin, DD/MM/YY'}
             </Text>
           </Group>
         ) : null}
-        <Flex direction="row" align="center" gap="sm">
+        <Flex direction="row" align="center" gap="sm" justify="space-between">
           <Text fw={500} fz={12} color="dark.6">
             {label ?? 'Label'}{' '}
           </Text>
-          <Badge variant="filled" size="md">
+          <Badge variant="filled" size="md" miw={100}>
             <Flex direction="row" gap="xs" align="center">
-              <Icon icon="uil:calendar-alt" />
+              <Icon icon="uil:calendar-alt" height={14} width={14} />{' '}
               {activityYear ?? '-'}
             </Flex>
           </Badge>
