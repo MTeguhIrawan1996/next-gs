@@ -32,21 +32,38 @@ const Hero = () => {
           </Text>
         </Box>
         <Center className={classes.textBox}>
-          <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/doc/Juknis_GSMS.pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              radius="lg"
-              variant="light"
-              color="brand.6"
-              fz={14}
-              fw={400}
+          <Flex direction="row" gap="xl">
+            <Link
+              href={`${process.env.NEXT_PUBLIC_URL}/doc/Juknis_GSMS.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Unduh Juknis
-            </Button>
-          </Link>
+              <Button
+                radius="lg"
+                variant="light"
+                color="brand.6"
+                fz={14}
+                fw={400}
+              >
+                Unduh Juknis
+              </Button>
+            </Link>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_URL}/doc/Pengumuman_Penetapan_Seniman_GSMS.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                radius="lg"
+                variant="light"
+                color="brand.6"
+                fz={14}
+                fw={400}
+              >
+                Unduh Pengumuman Penetapan Seniman
+              </Button>
+            </Link>
+          </Flex>
         </Center>
       </Flex>
     </InnerWrapper>
