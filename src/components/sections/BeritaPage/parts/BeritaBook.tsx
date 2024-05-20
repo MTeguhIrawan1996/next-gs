@@ -65,6 +65,7 @@ const BeritaBook = () => {
         labelDate={publishedAt}
         imageProps={featureImage}
         href={`/berita/${slug}`}
+        enableActivityYear={false}
       />
     );
   }, []);
