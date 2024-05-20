@@ -30,6 +30,7 @@ interface ICardImageProps {
   videoLink?: string;
   activityYear?: number;
   description?: string;
+  enableActivityYear?: boolean;
 }
 
 const CardImage: React.FC<ICardImageProps> = ({
@@ -41,6 +42,7 @@ const CardImage: React.FC<ICardImageProps> = ({
   videoLink,
   activityYear,
   description,
+  enableActivityYear = true,
 }) => {
   return (
     <Card shadow="xs" padding={0} radius="lg" withBorder w={320}>
@@ -81,12 +83,14 @@ const CardImage: React.FC<ICardImageProps> = ({
           <Text fw={500} fz={12} color="dark.6">
             {label ?? 'Label'}{' '}
           </Text>
-          <Badge variant="filled" size="md" miw={100}>
-            <Flex direction="row" gap="xs" align="center">
-              <Icon icon="uil:calendar-alt" height={14} width={14} />{' '}
-              {activityYear ?? '-'}
-            </Flex>
-          </Badge>
+          {enableActivityYear ? (
+            <Badge variant="filled" size="md" miw={100}>
+              <Flex direction="row" gap="xs" align="center">
+                <Icon icon="uil:calendar-alt" height={14} width={14} />{' '}
+                {activityYear ?? '-'}
+              </Flex>
+            </Badge>
+          ) : null}
         </Flex>
         <Text fw={500} fz={12} color="dark.6">
           {description ?? null}
