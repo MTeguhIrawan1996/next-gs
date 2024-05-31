@@ -15,7 +15,7 @@ const DetailDataKegiatan = ({
     <DetailPetaKegiatanPage
       data={data}
       breadcrumbData={[
-        { label: 'Data Kegiatan', path: '/data-kegiatan' },
+        { label: 'Data Kegiatan', path: '/data-statistik' },
         { label: 'Detail Data Kegiatan', path: router.asPath },
       ]}
     />
