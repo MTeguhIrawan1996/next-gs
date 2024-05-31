@@ -221,7 +221,7 @@ const DataKegiatanBook = () => {
           records: activityData?.data,
           onRowClick: ({ id }) => {
             router.push({
-              pathname: `/data-kegiatan/${id}`,
+              pathname: `/data-statistik/${id}`,
               query: { year: activityYearId },
             });
           },
