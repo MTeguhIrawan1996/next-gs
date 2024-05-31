@@ -187,6 +187,16 @@ const DataKegiatanBook = () => {
           fetching: activityDataLoading,
           columns: [
             {
+              accessor: 'artistName',
+              title: 'Nama Seniman',
+              render: ({ artist }) => artist.name,
+            },
+            {
+              accessor: 'artExpertise',
+              title: 'Bidang Seni',
+              render: ({ artist }) => artist.artExpertise,
+            },
+            {
               accessor: 'name',
               title: 'Nama Sekolah',
               render: ({ school }) => school.name,
@@ -198,14 +208,10 @@ const DataKegiatanBook = () => {
             },
             {
               accessor: 'regencies',
-              title: 'Kabupaten',
+              title: 'Kabupaten / Kota',
               render: ({ school }) => school.regencyName,
             },
-            {
-              accessor: 'artistName',
-              title: 'Nama Seniman',
-              render: ({ artist }) => artist.name,
-            },
+
             {
               accessor: 'year',
               title: 'Tahun Kegiatan',
