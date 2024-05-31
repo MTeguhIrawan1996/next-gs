@@ -13,6 +13,7 @@ export interface ActivityData {
   };
   artist: {
     name: string;
+    artExpertise: string;
   };
   activity: {
     year: number;
